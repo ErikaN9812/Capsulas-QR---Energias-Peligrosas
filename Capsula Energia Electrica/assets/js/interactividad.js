@@ -1170,3 +1170,42 @@ $(function() {
     // Repetir el ciclo de mostrar/ocultar cada 2 segundos (ajustar según sea necesario)
     setInterval(showNextWord, 2000);
 });
+
+
+/*verdadero o falso*/
+let corret = 0;
+      setTimeout(() => {
+        $('.actVorF .tol').html($('.itemQ').length);                
+      }, "2000");
+      function actVorF(el, res) {
+        $('.actVorF button').attr('disabled', 'disabled');
+        //mostrar respuesta
+        if (res == 'correct') {
+          $(el).parents('.itemQ').find('img').attr('src','../../img/true.jpg');
+          corret = corret + 1;
+        } else {
+          $(el).parents('.itemQ').find('img').attr('src','../../img/false.jpg');
+        }
+        setTimeout(() => {
+          $(el).parents('.itemQ').addClass('hideT');
+          $('.actVorF .inc').html($('.hideT').length + 1);
+          //mostrar la siguiente pregunta
+          $('.itemQ').removeClass('view');
+          let view = '.actVorF > div:nth-child(' + ($('.hideT').length + 2) + ')'
+          $(view).addClass('view');
+          // mostrar resultados finales
+          if ($('.itemQ').length == $('.hideT').length) {
+            $('.actVorF .inc').html($('.hideT').length);
+            $('.actFin').show();
+            $('.actFin h1').html(corret + ' de ' + $('.itemQ').length);
+
+            // fin activity / delete diseble button --------------->
+            // ------------------->
+            $("#next").removeAttr("disabled").removeAttr("style");
+            localStorage.setItem('slider21', 'ok');
+            // ------------------->
+
+          }
+          $('.actVorF button').removeAttr('disabled');
+        }, "2000");
+      }
