@@ -1,0 +1,127 @@
+<!-- <?php
+require('../../functions_helpers.php'); /*load helper*/
+check_session(); /*check session by employee */
+$course_code = $_GET['course_code']; /* recibir el código del curso */
+
+$module_id = 36;
+$unique_course_id = check_permission_employee_course($course_code); /* Comprobar si el empleado tiene acceso al curso*/
+$extension_url = "?course_code=" . $course_code; /* variable url para pasar el código del curso*/
+
+$progress = progress_courses($course_code);
+$progreso_ruta_formacion = $progress['overallProgress'];
+$horas_formacion = $progress['totalHoras'];
+$progreso_curso = $progress['courseProgress'];
+
+//Calcula en que posicion se encuentra el alumno, referente a la evaluación 
+$puesto_alumno = get_module_score_user($unique_course_id, $module_id, $_SESSION['employee_data']['user_id']);
+
+//Calcula en que posicion se encuentra el alumno, referente a la fecha y hora que culminó el curso 	
+$puesto_curso = get_course_position($unique_course_id, $module_id);
+
+?> -->
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<!--library bootstrap v.5.0.2-->
+	<link rel="stylesheet" type="text/css" href="assets/bootstrap/css/bootstrap.css">
+	<link rel="stylesheet" type="text/css" href="assets/bootstrap/css/bootstrap-grid.css">
+	<link rel="stylesheet" type="text/css" href="assets/bootstrap/css/bootstrap-reboot.css">
+	<link rel="stylesheet" type="text/css" href="assets/bootstrap/css/bootstrap-utilities.css">
+	<script src="assets/bootstrap/js/bootstrap.bundle.js"></script>
+	<script src="assets/bootstrap/js/bootstrap.esm.js"></script>
+	<script src="assets/bootstrap/js/bootstrap.js"></script>
+	<!--library cascading style sheets-->
+	<link rel="stylesheet" type="text/css" href="assets/css/all.css">
+	<link rel="stylesheet" type="text/css" href="assets/css/style.css">
+	<link rel="stylesheet" type="text/css" href="assets/css/styleSlider.css">
+	<link rel="stylesheet" type="text/css" href="assets/css/switch.css">
+</head>
+<body>
+
+	<div class="ctMd">
+		<!--content-->
+		<div class="contentModule2">
+			<!--Datos claves de este curso-->
+			<div class="container current dividerBgInstruccion">
+				<div class="row">
+				  <div class="col-lg-12 col-md-12 imagen-instruccion">
+					<h1 class="tituloh1-center">Datos clave de este curso:</h1>
+					<div class="row">
+						<div class="col-lg-6 col-md-12">
+							<div class="cardInstrucciones-body">
+								<div class="cardInstrucciones">
+									<img src="assets/img/reloj-ins.svg" class="zoom-img">
+									<h5 class="tituloh5-center">Tiempo máximo estimado de duración virtual:</h5>
+									<p class="parrafo-center">1 hora</p>
+								  </div>
+							</div>  
+						</div>
+						<div class="col-lg-6 col-md-12">
+							<div class="cardInstrucciones-body">
+								<div class="cardInstrucciones">
+									<img src="assets/img/reloj-ins.svg" class="zoom-img">
+									<h5 class="tituloh5-center">Tiempo asociado a su perfil de formación:</h5>
+									<p class="parrafo-center">4 horas</p>
+								  </div>
+							</div>   
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-lg-6 col-md-12">
+							<div class="cardInstrucciones-body">
+								<div class="cardInstrucciones">
+									<img src="assets/img/curso-ins.svg" class="zoom-img">
+									<h5 class="tituloh5-center">Este curso le permitirá:</h5>
+									<p class="parrafo-center">Acceder a nuestra operación con el conocimiento necesario para ayudarnos a cuidar su salud y prevenir accidentes</p>
+								</div>
+							</div>					  
+						</div>
+						<div class="col-lg-6 col-md-12">
+							<div class="cardInstrucciones-body">
+								<div class="cardInstrucciones">
+									<img src="assets/img/curso-ins.svg" class="zoom-img">
+									<h5 class="tituloh5-center">Al finalizar este curso usted podrá:</h5>
+									<ul class="listadoinstruccion">
+									  <li>Aprender a gestionar el riesgo latente en los diferentes tipos de energía existentes en nuestra operación.</li>
+									  <li>Recordar los principios del bloqueo y etiquetado LOTO</li>
+									  <li>Conocer el procedimiento de bloqueo y etiquetado</li>
+									</ul>
+								  </div>
+							</div>     
+						</div>
+					</div>
+					<button id='siguiente' class="btn mt-3"> 
+						<i class="fa fa-arrow-right"></i> Siguiente</button>
+				  </div>
+				</div>
+			</div>
+			<!--Fin Datos claves de este curso-->
+
+		</div>
+	</div>
+
+  <!-- library javascript -->
+	<script src="assets/js/jquery-3.3.1.js"></script>
+	<script src="assets/js/trackingmanagern3.js"></script>
+  <script src="assets/js/sessvars.js"> </script>
+	<!-- <script src="assets/js/script.js"></script> -->
+	<script src="assets/js/tracking.js"></script>
+	<script>
+		$(document).ready(function() {
+			$("#siguiente").on('click', function() {
+		    	window.location.href = "introduccion2.html";
+			});
+		});
+
+		// chenge background
+		if ($('.current').hasClass('dividerBgInstruccion')) {
+				$('body').addClass('darkinstrucciones');
+			} else {
+				$('body').removeClass('darkinstrucciones');
+			}
+	</script>
+
+</body>
+</html>
