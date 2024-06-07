@@ -1,0 +1,1841 @@
+<!-- <?php
+require('../../functions_helpers.php'); /*load helper*/
+check_session(); /*check session by employee */
+$course_code = $_GET['course_code']; /* recibir el código del curso */
+//$module_id        = __my_simple_crypt__($_GET['module'], 'd');
+$module_id = 36;
+$unique_course_id = check_permission_employee_course($course_code); /* Comprobar si el empleado tiene acceso al curso*/
+$extension_url = "?course_code=" . $course_code; /* variable url para pasar el código del curso*/
+
+$progress = progress_courses($course_code);
+$progreso_ruta_formacion = $progress['overallProgress'];
+$horas_formacion = $progress['totalHoras'];
+$progreso_curso = $progress['courseProgress'];
+
+//Calcula en que posicion se encuentra el alumno, referente a la evaluación 
+$puesto_alumno = get_module_score_user($unique_course_id, $module_id, $_SESSION['employee_data']['user_id']);
+
+//Calcula en que posicion se encuentra el alumno, referente a la fecha y hora que culminó el curso 	
+$puesto_curso = get_course_position($unique_course_id, $module_id);
+?> -->
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<!-- library bootstrap v.5.0.2 -->
+	<link rel="stylesheet" type="text/css" href="assets/bootstrap/css/bootstrap.css">
+	<link rel="stylesheet" type="text/css" href="assets/bootstrap/css/bootstrap-grid.css">
+	<link rel="stylesheet" type="text/css" href="assets/bootstrap/css/bootstrap-reboot.css">
+	<link rel="stylesheet" type="text/css" href="assets/css/cards.css">
+	<link rel="stylesheet" type="text/css" href="assets/bootstrap/css/bootstrap-utilities.css">
+	<link rel="stylesheet" type="text/css" href="assets/bootstrap/css/bootstrap-icons.css">
+	<script src="assets/bootstrap/js/bootstrap.bundle.js"></script>
+	<script src="assets/bootstrap/js/bootstrap.esm.js"></script>
+	<script src="assets/bootstrap/js/bootstrap.js"></script>
+	<script src="assets/js/jquery-3.3.1.js"></script>
+	<script src="assets/js/touch-dnd.js"></script>
+	<!-- library cascading style sheets -->
+	<link rel="stylesheet" type="text/css" href="assets/css/all.css">
+	<link rel="stylesheet" type="text/css" href="assets/css/style.css">
+	<link rel="stylesheet" type="text/css" href="assets/css/styleSlider.css">
+	<link rel="stylesheet" type="text/css" href="assets/css/switch.css">
+
+	<!--Library Template-->
+	<link rel="stylesheet" type="text/css" href="assets/css/template/style-template.css">
+	<link rel="stylesheet" type="text/css" href="assets/css/template/custom.css">
+	<link rel="stylesheet" type="text/css" href="assets/css/template/font-icons.css">
+
+	<link rel="stylesheet" href="assets/js/jplayer/lib/circle-player/skin/circle.player.css">
+	<link rel="stylesheet" href="assets/js/magnify/css/magnify.css" />
+	
+	<!-- TOUR -->
+	<link rel="stylesheet" href="assets/js/introjs/introjs.css">
+	<!--Libreria iconos-->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.1/css/all.css" crossorigin="anonymous">
+	<!-- Font Icons -->
+	<link rel="stylesheet" href="css/font-icons.css">
+	
+
+	<!-- <script type="text/javascript" src="assets/js/jplayer/lib/jquery.min.js"></script> -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+	<script type="text/javascript" src="assets/js/jplayer/dist/jplayer/jquery.jplayer.min.js"></script>
+	<script type="text/javascript" src="assets/js/jplayer/lib/circle-player/js/jquery.transform2d.js"></script>
+	<script type="text/javascript" src="assets/js/jplayer/lib/circle-player/js/jquery.grab.js"></script>
+	<script type="text/javascript" src="assets/js/jplayer/lib/circle-player/js/mod.csstransforms.min.js"></script>
+	<script type="text/javascript" src="assets/js/jplayer/lib/circle-player/js/circle.player.js"></script>
+	<!-- TOUR -->
+	<script type="text/javascript" src="assets/js/introjs/intro.js"></script>
+	  <!-- Para Tooltip -->
+	  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+</head>
+
+<body>
+	<input type="hidden" id="course_code" value="<?= $course_code ?>">
+	<input type="hidden" id="module_id" value="<?= $module_id ?>">
+	<input type="hidden" id="unique_course_id" value="<?= $unique_course_id ?>">
+	<input type="hidden" id="userId" value="<?= $CI->session->userdata('employee_data')['user_id']; ?>">
+	<input type="hidden" id="fullName" value="<?= $CI->session->userdata('employee_data')['fullname']; ?>">
+
+	<!-- header -->
+	<div class="contentHeader">
+		<div>
+			<img class="logoTop logoRes" src="assets/img/logoG.png" onclick="progCircle(1);">
+
+			<!-- Switch English hints -->
+			<div class="container2">
+				<label class="toggle-switch">
+					<input type="checkbox" id="toggleSwitch">
+					<span class="slider" id='englishHints'></span>
+				</label>
+				<span class="toggle-label english-hints">English Hints</span>
+			</div>
+
+			<!-- button home -->
+			<div>
+				<button id="home" onclick="progCircle(1);">
+					<i class="fas fa-home"></i>
+				</button>
+			</div>
+			<!-- progress counter -->
+			<div class="txPg" id="slide_progress">
+				<span id="textProg">1</span> / <span id="nSlider"></span>
+				<div class="contCircleBarMovil">
+				</div>
+			</div>
+			<i id='menu_bar' class="fas fa-bars" style="padding: 10px 10px 10px 20px;"></i>
+		</div>
+		<!--menu-->
+		<div class="headerOpc">
+			<i class="fas fa-times"></i>
+			<br>
+			<h1>Hola! <b>
+					<!-- <?= ucwords($CI->session->userdata('employee_data')['fullname']); ?> -->
+				</b></h1>
+			<h5>Bienvenido a su Ruta de Aprendizaje!</h5>
+			<div class="headerProg" id='progreso'>
+				<p><b>Progreso: </b><span id="course-progress"><strong>
+							%</span></strong></p>
+			</div>
+			<hr>
+			<!-- Switch English hints -->
+			<div class="container3">
+				<label class="toggle-switch">
+					<input type="checkbox" id="toggleSwitchMenu">
+					<span class="slider"></span>
+				</label>
+				<span class="toggle-label english-hints">English Hints</span>
+			</div>
+			<br><br>
+			<ul>
+				<a href="index.html">
+				<!-- <a id='presentacion' href="index.php?course_code=<?= $course_code; ?>"> -->
+					<li><i class="fas fa-caret-right"></i> Presentación</li>
+				</a>
+				<a href="modulo.html" class="act">
+				<!-- <a id='contenido' href="modulo.php?course_code=<?= $course_code; ?>" class="act"> -->
+					<li><i class="fas fa-caret-right"></i> Contenido</li>
+				</a>
+				<a href="quiz.html">
+				<!-- <a id='evaluacion' href="quiz.php?course_code=<?= $course_code; ?>"> -->
+					<li><i class="fas fa-caret-right"></i> Evaluación</li>
+				</a>
+				<!-- <a id='tutorial' href="tutorial.php?course_code=<?= $course_code; ?>"> -->
+				<a href="tutorial.html">
+					<li><i class="fas fa-caret-right"></i> Tutorial</li>
+				</a>
+			</ul>
+			<hr>
+			<ul>
+				<a href="index.html">
+				<!-- <a id='homember' href="../../../courses/login.php"> -->
+					<li><i class="fas fa-caret-right"></i> Mis cursos</li>
+				</a>
+				<a href="modulo.html">
+				<!-- <a id='logout' href="../../../courses/logout.php"> -->
+					<li><i class="fas fa-caret-right"></i> Cerrar sesión</li>
+				</a>
+			</ul>
+			<hr>
+			<div class="statistics-container" id='estadisticas'>
+				<h6><strong>TUS ESTADISTICAS GENERALES</strong></h6>
+
+				<div class="statistic">
+					<img src="assets/img/ruta.png" alt="Progreso Ruta de Formación">
+					<span class="statistic-description">Has recorrido un
+						<?= $progreso_ruta_formacion; ?>% de tu ruta de aprendizaje.
+					</span>
+				</div>
+
+				<div class="statistic">
+					<img src="assets/img/tiempo.png" alt="Horas de Formación">
+					<span class="statistic-description">Llevas
+						<!-- <?= $horas_formacion; ?>  -->
+						horas de formación.
+					</span>
+				</div>
+				<hr>
+				<!-- <?php if ($puesto_alumno > 0 || $puesto_curso > 0): ?>
+					<h6><strong>TUS ESTADISTICAS PERSONALES</strong></h6>
+				<?php endif ?> -->
+
+				<!-- <?php if ($puesto_alumno > 0): ?>
+					<div class="statistic">
+						<img src="assets/img/evaluacion.png" alt="Puesto en la Evalución">
+						<span class="statistic-description">Estás en el puesto
+							<?= $puesto_alumno; ?> en la evaluación.
+						</span>
+					</div>
+				<?php endif ?>
+
+				<?php if ($puesto_curso > 0): ?>
+					<div class="statistic">
+						<img src="assets/img/finalizar.png" alt="Puesto a Realizar el Curso">
+						<span class="statistic-description">Eres el No.
+							<?= $puesto_curso; ?> en finalizar el curso.
+						</span>
+					</div>
+				<?php endif ?> -->
+
+			</div>
+			<div class="certificate">
+				<span class="certificate-text">© Sofactia. powered by Unydos</span>
+			</div>
+		</div>
+		 <!--BARRA DE PROGRESO PC -->
+		 <div class="contCircleBar contCircleBar-nav-bar">
+        </div>
+
+        <!--BARRA DE PROGRESO MOVIL -->
+        <div class="progBar">
+            <div style="width: 10% !important;"></div>
+        </div>
+	</div>
+
+	<!-- content slider -->
+	<div class="ctMd">
+		<!-- content -->
+		<div class="contentModule">
+			<!--Star slider01 Reflexionemos-->
+			<div class="container current">
+				<div class="row">
+					<div>
+						<p class="indPag">
+							<a href="#">Reflexionemos</a>
+						</p>
+						<span class="indPagMb"></span>
+					</div>
+					<div class="col-lg-6 col-md-12">
+						<h1 class="tituloh1-left">Reflexionemos</h1>
+						<hr>
+						<p class="parrafo-justify">De acuerdo con el NIOSH (El Instituto Nacional de Seguridad y Salud Ocupacional de Estados Unidos), los factores relacionados con ENERGÍAS PELIGROSAS que han ocasionado la muerte... son los siguientes:
+						</p>
+							<i class="inst mb-2">Haz clic sobre los botones verdes del Elefante CARL y escucha la descripción>></i>
+						<p class="parrafo-justify">En Emerald estamos comprometidos con tu Salud y tu Seguridad, por favor revisa atentamente este curso, puede SALVAR TU VIDA o la de un compañero tuyo en la operación.
+						</p>
+						<i class="inst mb-2">Haz clic sobre el audio</i>
+						<audio controls class="media-espanol audio-inicio" id="">
+							<source src="assets/audio/Sld_1_reflexionemos_v2.MP3" type="audio/mp3">
+						</audio>
+
+						<audio controls class="media-ingles" id="slip_2_ingles">
+							<source src="assets/audio/Sld_1_reflexionemos_ingles.mp3" type="audio/mp3">
+						</audio>
+					</div>
+					<div class="col-lg-6 col-md-12 mostrar-web">
+						<i class="inst mb-2">Haz clic sobre los botones para ver su descripción y escucha el audio</i>
+						<img src="assets/img/Carl-levantando-trompita.png" alt="Carl" class="imagen-carl-respon">
+						<button class="botonporcentaje" id="boton1" value="1">82%</button>
+						<audio controls class="media-espanol" id="slip_82_porciento" hidden>
+							<source src="assets/audio/SLIP_82_porciento.MP3" type="audio/mp3">
+						</audio>
+						<audio controls class="media-ingles" id="slip_82_porciento_ingles" hidden>
+							<source src="assets/audio/SLIP_82_porciento_ingles.MP3" type="audio/mp3">
+						</audio>
+						
+						<button class="botonporcentaje" id="boton2" value="2">11%</button>
+						<audio controls class="media-espanol" id="slip_11_porciento" hidden>
+							<source src="assets/audio/SLIP_11_porciento.MP3" type="audio/mp3">
+						</audio>
+						<audio controls class="media-inlges" id="slip_11_porciento_ingles" hidden>
+							<source src="assets/audio/SLIP_11_porciento_ingles.MP3" type="audio/mp3">
+						</audio>
+						
+						<button class="botonporcentaje" id="boton3" value="3">7%</button>
+						<audio controls class="media-espanol" id="slip_7_porciento" hidden>
+							<source src="assets/audio/SLIP_7_porciento.MP3" type="audio/mp3">
+						</audio>
+						<audio controls class="media-ingles" id="slip_7_porciento_ingles" hidden>
+							<source src="assets/audio/SLIP_7_porciento_ingles.MP3" type="audio/mp3">
+						</audio>
+					</div>
+
+					<div class="col-lg-6 col-md-12 mostrar-mobile">
+						<i class="inst mb-2">Haz clic sobre los botones para ver su descripción y escucha el audio</i>
+						<img src="assets/img/Carl-levantando-trompita.png" alt="Carl" class="imagen-carl-respon">
+						<button class="botonporcentaje2" id="boton1_mobile" value="1">82%</button>
+						<audio controls class="media-espanol" id="slip_82_porciento2" hidden>
+							<source src="assets/audio/SLIP_82_porciento.MP3" type="audio/mp3">
+						</audio>
+						<audio controls class="media-ingles" id="slip_82_porciento_ingles2" hidden>
+							<source src="assets/audio/SLIP_82_porciento_ingles.MP3" type="audio/mp3">
+						</audio>
+						
+						<button class="botonporcentaje2" id="boton2_mobile" value="2">11%</button>
+						<audio controls class="media-espanol" id="slip_11_porciento2" hidden>
+							<source src="assets/audio/SLIP_11_porciento.MP3" type="audio/mp3">
+						</audio>
+						<audio controls class="media-inlges" id="slip_11_porciento_ingles2" hidden>
+							<source src="assets/audio/SLIP_11_porciento.MP3" type="audio/mp3">
+						</audio>
+						
+						<button class="botonporcentaje2" id="boton3_mobile" value="3">7%</button>
+						<audio controls class="media-espanol" id="slip_7_porciento2" hidden>
+							<source src="assets/audio/SLIP_7_porciento.MP3" type="audio/mp3">
+						</audio>
+						<audio controls class="media-ingles" id="slip_7_porciento_ingles2" hidden>
+							<source src="assets/audio/SLIP_7_porciento.MP3" type="audio/mp3">
+						</audio>
+					</div>
+				</div>
+			</div>
+			<!--End slider01 Reflexionemos-->
+
+			<!--Star slider02 Bienvenidos-->
+			<div class="container">
+				<div class="row">
+					<div>
+						<p class="indPag">
+							<a href="#">Bienvenida</a>
+						</p>
+						<span class="indPagMb"></span>
+					</div>
+					<div class="col-lg-6 col-md-12">
+						<div class="contenido-lateral-izquierdo">
+							<h1 class="tituloh1-left" >Bienvenidos al módulo <span style="color: var(--greenprimary);">Operación Segura en presencia de Energías Peligrosas</span> </h1>
+						<p class="parrafo-justify">Bienvenid@s a este módulo virtual, en el cual queremos que todas las personas que trabajan con energías peligrosas, gestionen el riesgo 
+							latente en los diferentes tipos de energía existentes en nuestra operación.</p>
+							<i class="inst mb-2">Haz clic sobre el audio</i>
+							<audio controls class="media-espanol">
+								<source src="assets/audio/Sld2_bienvenidos.mp3" type="audio/mp3">
+							</audio>
+							<audio controls class="media-ingles" id="slip_2_ingles">
+								<source src="assets/audio/Sld2_bienvenidos_ingles.mp3" type="audio/mp3">
+							</audio>
+						</div>	
+					</div>
+
+					<!-- Carrusel -->
+					<div class="slider-box" id="carrusel">
+                
+					</div> 
+
+				</div>
+			</div>
+			<!--End slider02 Bienvenidos-->
+
+			<!--Inicio Estructura Tematica-->
+			<div class="container ">
+				<div class="row">
+					<div>
+						<p class="indPag">
+							<a href="#">Objetivos de aprendizaje</a>
+						</p>
+						<span class="indPagMb"></span>
+					</div>
+				  <div class="col-lg-12 col-md-12 imagen-instruccion">
+					<h1 class="tituloh1-center">Estructura temática</h1>
+					<p class="parrafo-center">A través del recorrido de este módulo, te invitamos a revisar estos 3 momentos de aprendizaje:</p>
+					<i class="inst mb-2">Desplaza el mouse sobre cada imagen para ver su contenido</i>
+				
+					<div class="contenido-central">
+						<div class="accordionseccion text-parrafo">
+						<ul>
+							<li tabindex="1" >
+								<div id="fondo-momento1">
+									<a href="#">
+									<h2 style="text-align: center;">Vamos a identificar los tipos de energía <br>
+										existentes en nuestro trabajo, <br>y la regulación en Colombia.</h2>
+									</a>
+								</div>
+							</li>
+							<li tabindex="2">
+								<div>
+									<a href="#">
+									<h2 style="text-align: center;">Recordaremos conceptos clave de Energía CERO,<br> y el proceso y tipos de etiquetado clave.</h2>
+									</a>
+								</div>
+							 </li>
+							<li tabindex="3">
+								<div>
+									<a href="#">
+									<h2 style="text-align: center;">Revisemos el procedimiento de <br>bloqueo y etiquetado (LOTO).</h2>
+									</a>
+								</div>
+							</li>
+							
+						</ul>
+						</div>
+					</div>
+				
+				  </div>
+				</div>
+			</div>
+			<!--Fin Estructura Tematica-->
+
+			<!--M1- La Energía en nuestro trabajo-->
+			<div class="container dividerBg">
+				<div class="row mx-auto" style="max-width: 1000px;">
+					<div class="col-md-12 col-lg-6">
+						<img class="mx-auto mb-3 imagen-M1-Carl" src="assets/img/M1-Carl.png">
+					</div>
+					<div class="col-lg-1 col-md-12"></div>
+					<div class="col-lg-5 col-md-12">
+						<h1 class="h1-colorwhite">M1- La Energía en nuestro trabajo</h1>
+						<hr style=" border: 1px solid var(--white); width: 100%; margin: 0 auto">
+						<h4 class="h4momento">Vamos a identificar <span style="color: var(--orange);">los tipos de energías
+						</span> existentes en nuestro trabajo, y la regulación en Colombia</h4>
+					
+						<audio controls class="media-espanol">
+							<source src="assets/audio/Sld4_momento_1.mp3" type="audio/mp3">
+						</audio>
+						<audio controls class="media-ingles">
+							<source src="assets/audio/Sld4_momento_1_ingles.mp3" type="audio/mp3">
+						</audio>
+					</div>
+				</div>
+			</div>
+			<!--Fin M1- La Energía en nuestro trabajo-->
+
+			<!--Alguna vez has..-->
+			<div class="container slider09">
+				<div class="row mx-auto">
+					<div>
+						<p class="indPag">
+							<a href="#">La energía en nuestro trabajo</a>
+						</p>
+						<span class="indPagMb"></span>
+					</div>
+					<div class="col-lg-12 col-md-12">
+						<div class="word-container mx-auto ">
+							<h1 class="titulo-sld5 ">¿Alguna vez has… 
+								<span class="word-wrapper">
+									<span class="word show" id="word1">Sufrido una quemadura</span>
+									<span class="word" id="word2">sufrido un choque eléctrico</span>
+									<span class="word" id="word3">experimentado un atrapamiento</span>
+								</span>
+								?</h1>
+							<hr>
+						</div>
+					</div>
+					<div class="col-lg-6 col-md-12">
+						<p >Si alguna vez has sufrido alguna quemadura, choque eléctrico, un atrapamiento de alguna parte del 
+							cuerpo (de un pie, o una mano con un guante atrapado con una máquina) Es porque estas 
+							interactuando con diferentes tipos de energía</p>
+						<audio controls class="media-espanol">
+							<source src="assets/audio/Sld5_alguna_vez_te_haz_v1.MP3" type="audio/mp3">
+						</audio>
+						<audio controls class="media-ingles">
+							<source src="assets/audio/Sld5_alguna_vez_te_haz_v2_ingles.mp3" type="audio/mp3">
+						</audio>
+						<button id="actividad_3" class="btn mt-3 track-element" data-bs-toggle="modal"
+							data-bs-target="#compartebtn"><i class="fab fa-whatsapp" aria-hidden="true"></i> Comparte</button>
+					</div>
+					<div class="col-lg-6 col-md-12" style="max-width: 1000px; margin: 0 auto;">
+						<i class="inst mt-4">Haz click sobre los circulos y descubre la imagen</i>
+						<div class="ctAct">
+							<div class="contenedor-center-alguna">
+								<img class="interrogacion track-element" id='actividad_6'
+									src="assets/img/signo_interrogacion.png" onclick="mostrarImagen(this)">
+								<img src="assets/img/sl14-1.png" style="display: none;">
+								<p class="parrafo-center">SUFRIDO UNA QUEMADURA</p>
+							</div>
+							<div  class="contenedor-center-alguna">
+								<img src="assets/img/signo_interrogacion.png" onclick="mostrarImagen(this)">
+								<img src="assets/img/sl14-3.png" style="display: none;">
+								<p class="parrafo-center" >CHOQUE ELÉCTRICO</p>
+							</div>
+							<div  class="contenedor-center-alguna">
+								<img src="assets/img/signo_interrogacion.png" onclick="mostrarImagen(this)">
+								<img src="assets/img/sl14-9.png" style="display: none;">
+								<p class="parrafo-center">ATRAPAMIENTO</p>
+							</div>	
+						</div>
+					</div>
+				</div>
+				<div class="modal fade" id="compartebtn" tabindex="-1" aria-hidden="true">
+					<div class="modal-dialog modal-dialog-centered">
+						<div class="modal-content">
+							<div class="modal-header">
+								<h5 class="modal-title">Comparte</h5>
+								<button type="button" class="btn-close" data-bs-dismiss="modal"
+									aria-label="Close"></button>
+							</div>
+							<div class="modal-body">
+								<img src="assets/img/botones/comparte-color.png" alt="" class="image-boton">
+								<p>
+									¿Has presenciado o vivido o un evento con energías peligrosas en el trabajo o en el hogar, y ¿cómo se pudo haber evitado?
+									<br>Comparte con tus compañeros en el grupo de WhatsApp…
+								</p>
+								<a href="https://chat.whatsapp.com/JMOUszqHzRjBtQ4TOaN7q4" target="_blank">
+									<button id='actividad_1' class="btn mt-3 track-element" > 
+										<i class="fab fa-whatsapp" aria-hidden="true"></i> Ir al grupo de WhatsApp</button></a>
+								<audio controls class="media-espanol">
+									<source src="assets/audio/Sld_5_comparte_whatsapp.mp3" type="audio/mp3">
+								</audio>
+								<audio controls class="media-ingles">
+									<source src="assets/audio/Sld_5_comparte_whatsapp_ingles.mp3" type="audio/mp3">
+								</audio>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!--Fin Alguna vez te has..-->
+
+			<!--Actividad Recordemos los 6 Tipos de Energías Peligrosas-->
+			<div class="container">
+				<div class="row">
+					<div>
+						<p class="indPag">
+							<a href="#">La energía en nuestro trabajo</a>
+						</p>
+						<span class="indPagMb"></span>
+					</div>
+					<h1 class="tituloh1-center">Recordemos los 6 Tipos de Energías Peligrosas</h1>
+						<i class="inst mb-2">Arrastra el nombre de la Energía Peligrosa que le corresponda a cada número, de acuerdo con su definición</i>
+					<div class="col-lg-5 col-md-12">
+						<div class="cardEnergias-body">
+							<div class="cardEnergias">
+								<img class="image-seis-energias" id="img-1"  src="assets/img/seis-energias/sld_energia_1.jpg" alt="Energia Quimica">
+							</div>
+						</div>
+						<div class="cardEnergias-body">
+							<div class="cardEnergias">
+								<img id="img-2" src="assets/img/seis-energias/sld_energia_2.jpg" alt="Energia Electrica" class="image-seis-energias">
+							</div>
+						</div>
+						<div class="cardEnergias-body">
+							<div class="cardEnergias">
+								<img id="img-3" src="assets/img/seis-energias/sld_energia_3.jpg" alt="Energia Hidraulica" class="image-seis-energias">
+							</div>
+						</div>
+					</div>
+					<div class="col-lg-2 col-md-12">
+						<div class="ctActivityDragDrop">
+							<div>
+								<div class="listOpcDrop">
+									<p class="mt-2">
+										<span class="item-arrastrar" id="drop1">1. <br><br></span> 
+										<span class="item-arrastrar" id="drop2">2. <br><br></span> 
+										<span class="item-arrastrar" id="drop3">3. <br><br></span> 
+										<span class="item-arrastrar" id="drop4">4. <br><br></span> 
+										<span class="item-arrastrar" id="drop5">5. <br><br></span> 
+										<span class="item-arrastrar" id="drop6">6. <br><br></span> 
+									</p>
+									<br />
+								</div>
+							</div>
+							<div class="ctActivityDragDropFny" style="display: none;">
+								<h4>Correcto !!</h4>
+							</div>
+						</div>
+					</div>
+
+					<div class="col-lg-5 col-md-12">
+						<div class="cardEnergias-body">
+							<div class="cardEnergias">
+								<img id="img-4" src="assets/img/seis-energias/sld_energia_4.jpg" alt="Energia Neumática" class="image-seis-energias">
+							</div>
+						</div>
+						<div class="cardEnergias-body">
+							<div class="cardEnergias">
+								<img id="img-5"  src="assets/img/seis-energias/sld_energia_5.jpg" alt="Energia Termica" class="image-seis-energias">
+							</div>
+						</div>
+						
+						<div class="cardEnergias-body">
+							<div class="cardEnergias">
+								<img id="img-6"  src="assets/img/seis-energias/sld_energia_6.jpg" alt="Energia Mecanica" class="image-seis-energias">
+							</div>
+						</div>
+					</div>
+
+					<div class="row col-lg-12 col-md-12">
+						<div class="ctActivityDragDrop">
+							<div>
+								<div class="listOpcDrop">
+								</div>
+							</div>
+							<div class="listOpcDrag text-center center">
+								<span class="item-arrastrar" id="drag5">Térmica</span>
+								<span class="item-arrastrar" id="drag2">Eléctrica </span>
+								<span class="item-arrastrar" id="drag6">Mecánica</span>
+								<span class="item-arrastrar" id="drag1">Química</span>
+								<span class="item-arrastrar" id="drag3">Hidráulica</span>
+								<span class="item-arrastrar" id="drag4">Neumática</span>
+							</div>
+							<div class="ctActivityDragDropFny" style="display: none;">
+								<h4>Correcto !!</h4>
+							</div>
+						</div>
+					<div class="row col-lg-12 col-md-12">
+						<div class="col-lg-3 col-md-12">
+							<button class="btn mt-3" data-bs-toggle="modal"
+							data-bs-target="#es_clave"><i class="fa fa-paperclip" aria-hidden="true"></i> Es clave que sepas</button>
+						</div>
+
+						<div class="col-lg-3 col-md-12">
+							<button class="btn mt-3" data-bs-toggle="modal"
+							data-bs-target="#recuerdabtn"><i class="fa fa-map-pin" aria-hidden="true"></i> Recuerda</button>
+						</div>
+						<div class="col-lg-3 col-md-12">
+							<button id="btn-validar-elementos" onclick="validarArrastreElementos()" class="btn mt-3" disabled><i class="fa fa-check" aria-hidden="true"></i> Validar</button>
+						</div>
+						<div class="col-lg-3 col-md-12">
+							<button id="btn-reiniciar-elementos" onclick="reiniciarActividad('',0,6)" class="btn mt-3" disabled><i class="fa fa-repeat" aria-hidden="true"></i> Reiniciar</button>
+						</div>
+						
+					</div>
+					</div>
+				</div>
+				<!-- Modal -->
+				<div class="modal fade" id="es_clave" tabindex="-1" aria-hidden="true">
+					<div class="modal-dialog modal-dialog-centered">
+						<div class="modal-content">
+							<div class="modal-header">
+								<h5 class="modal-title">Es clave que sepas</h5>
+								<button type="button" class="btn-close" data-bs-dismiss="modal"
+									aria-label="Close"></button>
+							</div>
+							<div class="modal-body">
+								<img src="assets/img/botones/es-clave-que-sepas-color.png" alt="" class="image-boton">
+								<p>
+									Energía Peligrosa es cualquier fuente o componente de energía que es liberado durante una operación y 
+									el mantenimiento de equipos o máquinas y que podría dejar una persona lesionada o la perdida material de un equipo
+								</p>
+								<audio controls class="media-espanol">
+									<source src="assets/audio/M7 - ENERGIAS slide 9 RECUERDA.mp3" type="audio/mp3">
+								</audio>
+								<audio controls class="media-ingles">
+									<source src="assets/audio/Slide_6_energias_ingles.mp3" type="audio/mp3">
+								</audio>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="modal fade" id="recuerdabtn" tabindex="-1" aria-hidden="true">
+					<div class="modal-dialog modal-dialog-centered">
+						<div class="modal-content">
+							<div class="modal-header">
+								<h5 class="modal-title">Recuerda</h5>
+								<button type="button" class="btn-close" data-bs-dismiss="modal"
+									aria-label="Close"></button>
+							</div>
+							<div class="modal-body">
+								<img src="assets/img/botones/recuerda-colo.png" alt="" class="image-boton">
+								<p>
+									De acuerdo con el NIOSH (Instituto Nacional para la Seguridad y Salud Ocupacional) de Estados Unidos. la energía 
+									CINÉTICA es la mecánica, mientras que la energía POTENCIAL es la que se encuentra en recipientes a presión, tanques a gas, sistemas hidráulicos o mecánicos.
+								</p>
+								<audio controls class="media-espanol">
+									<source src="assets/audio/sld_6_es_clave_sepas.mp3" type="audio/mp3">
+								</audio>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!--Fin Actividad Recordemos los 6 Tipos de Energías Peligrosas-->
+
+			<!--Regulacion de energias peligrosas-->
+			<div class="container">
+				<div class="row mx-auto">
+					<div>
+						<p class="indPag">
+							<a href="#">La energía en nuestro trabajo</a>
+						</p>
+						<span class="indPagMb"></span>
+					</div>
+					<div class="col-lg-12 col-md-12 text-center">
+						<h1>Regulación de energías peligrosas en Colombia</h1>
+						<p>Recordemos que todas las normas y regulaciones establecidas, se han desarrollado para 
+							proteger la integridad de los trabajadores y las empresas, conozcamos las principales:
+						</p>
+						<i class="inst mb-2">Haz clic sobre el audio</i>
+						<audio controls class="media-espanol">
+							<source src="assets/audio/Sld_7_regulacion_energias.mp3" type="audio/mp3">
+						</audio>
+						<audio controls class="media-ingles">
+							<source src="assets/audio/Sld_7_regulacion_energias_ingles.mp3" type="audio/mp3">
+						</audio>
+					</div>
+					<div class="col-lg-12 col-md-12 text-center">
+						<div class="horizontal-timeline">
+							<ul class="list-inline items mt-5 contenedor-center">
+								<li class="list-inline-item items-list">
+									<div class="px-2">
+										<div class="event-date badge">2009</div>
+										<p class="text-muted">Resolución 1348 de 2009</p>
+									</div>
+								</li>
+								
+								<li class="list-inline-item items-list">
+									<div class="px-2">
+										<div class="event-date badge">2019</div>
+										<p class="text-muted">Resolución 5018 de 2019</p>
+									</div>
+								</li>
+								<li class="list-inline-item items-list">
+									<div class="px-2">
+										<div class="event-date badge">RETIE</div>
+										<p class="text-muted">Basado en la Norma NFPA 70</p>
+									</div>
+								</li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!--Fin Regulacion de energias peligrosas-->
+
+			<!--Discute con tus colegas…-->
+			<div class="container">
+				<div class="row">
+					<div>
+						<p class="indPag">
+							<a href="#">La energía en nuestro trabajo</a>
+						</p>
+						<span class="indPagMb"></span>
+					</div>
+					<div class="col-lg-6 col-md-12">
+						<h1 class="tituloh1-center">Discute con tus colegas…</h1>
+						<p>De los seis (6) tipos de energías peligrosas, cuál(es) está(n) más cerca de tus actividades en el día a día</i>
+							<i class="inst mb-2">Haz clic sobre el audio</i>
+						<audio controls class="media-espanol">
+							<source src="assets/audio/BL-0001_Discute-con-tus-colegas.mp3" type="audio/mp3">
+						</audio>
+						<audio controls class="media-ingles">
+							<source src="assets/audio/Sld_8_discute_colegas_ingles_1.mp3" type="audio/mp3">
+						</audio>
+						
+						<button id="actividad_3" class="btn mt-3 track-element" data-bs-toggle="modal"
+							data-bs-target="#compartebtn-v2"><i class="fab fa-whatsapp" aria-hidden="true"></i> Comparte tu opinión</button>
+					</div>
+					<div class="col-lg-6 col-md-12">
+						<img class="image-discute-colegas" src="assets/img/discute_colegas.png" alt="discute-colegas">
+					</div>
+				</div>
+				<!-- Modal Herramienta-->
+				<div class="modal fade" id="compartebtn-v2" tabindex="-1" aria-hidden="true">
+					<div class="modal-dialog modal-dialog-centered">
+						<div class="modal-content">
+							<div class="modal-header">
+								<h5 class="modal-title">Ir al grupo de WhastApp</h5>
+								<button type="button" class="btn-close" data-bs-dismiss="modal"
+									aria-label="Close"></button>
+							</div>
+							<div class="modal-body">
+								<img src="assets/img/botones/comparte-color.png" alt="Comparte" class="image-boton">
+								<p>
+									De los tipos de energía peligrosa cual está más cerca de tus actividades diarias, 
+									comparte tu opinión en nuestro grupo de WhatsApp <br>
+								</p>
+								<div class="contenedor-center">
+									<a href="https://chat.whatsapp.com/JMOUszqHzRjBtQ4TOaN7q4" target="_blank">
+									<button id='actividad_1' class="btn mt-3 track-element" > 
+										<i class="fab fa-whatsapp" aria-hidden="true"></i> Ir al grupo de WhastApp</button></a>
+								</div>
+								
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!--Fin Discute con tus colegas…-->
+
+			<!-- slider9 M2- Principios del Bloqueo y etiquetado (LOTO)-->
+			<div class="container dividerBg">
+				<div class="row mx-auto" style="max-width: 1000px;">
+					<div class="col-md-12 col-lg-6">
+						<img class="mx-auto mb-3 imagen-M1-Carl" src="assets/img/M1-Carl.png">
+					</div>
+					<div class="col-lg-1 col-md-12"></div>
+					<div class="col-lg-5 col-md-12">
+						<h1 class="h1-colorwhite">M2- Principios del Bloqueo y etiquetado (LOTO)</h1>
+						<hr style=" border: 1px solid var(--white); width: 100%; margin: 0 auto">
+						<h4 class="h4momento">Recordaremos conceptos clave de <span style="color: var(--orange);"> Energía CERO,
+						</span>  y el proceso y tipos de etiquetado clave.</h4>
+						<audio controls class="media-espanol">
+							<source src="assets/audio/sld9_momento2.MP3" type="audio/mp3">
+						</audio>
+						<audio controls class="media-ingles">
+							<source src="assets/audio/sld9_momento2_ingles.MP3" type="audio/mp3">
+						</audio>
+					</div>
+				</div>
+			</div>
+			<!--Fin M2- Principios del Bloqueo y etiquetado (LOTO)-->
+
+			<!--Inicio La calve es energia cero-->
+			<div class="container">
+				<div class="row">
+					<div>
+						<p class="indPag">
+							<a href="#">Bloqueo y etiquetado (LOTO)</a>
+						</p>
+						<span class="indPagMb"></span>
+					</div>
+					<div class="col-lg-12 col-md-12">
+						<h1 class="tituloh1-center">La clave es ENERGÍA CERO!!</h1>
+						<p class="parrafo-center" style="margin-bottom: 1em;">Antes de darle servicio o mantenimiento a un equipo, verifica que todas las fuentes de energía estén:</p>
+					</div>
+					<div class="col-lg-4 col-md-12">
+						<img class="imagen-100" src="assets/img/Energia-cero.png" alt="Energia Cero">
+					</div>
+					<div class="col-lg-3">
+						<i class="inst mb-2">Pasa el mouse sobre cada palabra</i>
+							<ul class="listadoenergia">
+								<li class="zoom-img">Apagadas</li>
+                                <li class="zoom-img">Aisladas</li>
+                                <li class="zoom-img">Desconectadas</li>
+                                <li class="zoom-img">Purgadas</li>
+                                <li class="zoom-img">Encerradas</li>
+                                <li class="zoom-img">Inmovilizadas</li>
+                                <li class="zoom-img">Bloqueadas</li>
+                                <li class="zoom-img">Obstruidas</li>
+							</ul>
+					</div>
+					<div class="col-lg-4 col-md-12" >
+						<i class="inst mb-2">Haz clic sobre las flechas para cambiar de contenido</i>
+						<div class="contenedor-50">
+							<div id="carouselEnergia" class="carousel slide pc-i-2" data-bs-ride="carousel">
+								<div class="carousel-inner">
+								  <div class="carousel-item active">
+									<img src="assets/img/slide-energia-cero/Slide-1.jpg" class="d-block w-100" alt="...">
+									<div class="carousel-caption d-none d-md-block">
+									</div>
+								  </div>
+								  <div class="carousel-item">
+									<img src="assets/img/slide-energia-cero/Slide-2.jpg" class="d-block w-100" alt="...">
+									<div class="carousel-caption d-none d-md-block">
+									</div>
+								  </div>
+								  <div class="carousel-item">
+									<img src="assets/img/slide-energia-cero/Slide-3.jpg" class="d-block w-100" alt="...">
+									<div class="carousel-caption d-none d-md-block">
+									</div>
+								  </div>
+								  <div class="carousel-item">
+									<img src="assets/img/slide-energia-cero/Slide-4.jpg" class="d-block w-100" alt="...">
+									<div class="carousel-caption d-none d-md-block">
+									</div>
+								  </div>
+								</div>
+								<button class="carousel-control-prev" type="button" data-bs-target="#carouselEnergia" data-bs-slide="prev">
+								  <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+								  <span class="visually-hidden">Previous</span>
+								</button>
+								<button class="carousel-control-next" type="button" data-bs-target="#carouselEnergia" data-bs-slide="next">
+								  <span class="carousel-control-next-icon" aria-hidden="true"></span>
+								  <span class="visually-hidden">Next</span>
+								</button>
+							  </div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!--La calve es energia cero-->
+
+			<!--slider11 Reconoce los documentos clave-->
+			<div class="container">
+				<div class="row">
+					<div>
+						<p class="indPag">
+							<a href="#">Bloqueo y etiquetado (LOTO)</a>
+						</p>
+						<span class="indPagMb"></span>
+					</div>
+					<div class="col-lg-12 col-md-12">
+						<h1 class="tituloh1-center">Reconoce los documentos clave:</h1>
+					</div>
+					<div class="col-lg-6 col-md-12">
+						<img class="imagen-70" src="assets/img/Carl-PDF2.png" alt="Carl" style="margin-bottom: 0.5em;">
+						<p>CARL te presenta los documentos que te ayudan a cuidar de tu seguridad con las Energías Peligrosas:</p>
+						<hr>
+						<div class="mostrar-web">
+							<div class="pc-slideflex contenedor-center">
+								<div class="col-lg-6 col-md-12">
+									<button id='pdf_1' class="btndocumento mt-3" style=" display: block; margin: 0 auto;">
+										<i class="fa fa-hand-o-right" aria-hidden="true"></i> Permiso de trabajo</button>
+									<a href="assets/doc/HSEQ-F004-01 _Form_Permiso_Trabajo.pdf" 
+									download="HSEQ-F004-01 Form Permiso de Trabajo"></a>
+								</div>
+								<div class="col-lg-6 col-md-12">
+									<button id='pdf_2' class="btndocumento mt-3">
+										<i class="fa fa-hand-o-right" aria-hidden="true"></i> Certificado de apoyo aislamiento energías
+										peligrosas</button>
+									<a href="assets/doc/HSEQ-F004-01_Certificado_apoyo_aislamiento.pdf"
+										download="HSEQ-F004-01 Certificado apoyo aislamiento"></a>
+								</div>
+							</div>
+							<div class="contenedor-center">
+								<button id='pdf_3' class="btndocumento mt-3">
+									<i class="fa fa-hand-o-right" aria-hidden="true"></i> AST - Análisis Seguro de Trabajo</button>
+									<a href="assets/doc/HSEQ-F003-17_JSA_Form_Formato_AST.pdf" 
+									download="HSEQ-F003-17 JSA Form - Formato AST"></a>
+							</div>
+						</div>
+						<div class="mostrar-mobile">
+							<div class="pc-slideflex contenedor-center">
+								<div class="col-lg-6 col-md-12">
+									<button id='actividad_3' class="btndocumento mt-3" data-bs-toggle="modal" data-bs-target="#pdf_1_modal" style=" display: block; margin: 0 auto;">
+										<i class="fa fa-hand-o-right" aria-hidden="true"></i> Permiso de trabajo</button>
+									<a href="assets/doc/HSEQ-F004-01 _Form_Permiso_Trabajo.pdf" 
+									download="HSEQ-F004-01 Form Permiso de Trabajo"></a>
+								</div>
+								<div class="col-lg-6 col-md-12">
+									<button id='actividad_3' class="btndocumento mt-3" data-bs-toggle="modal" data-bs-target="#pdf_2_modal">
+										<i class="fa fa-hand-o-right" aria-hidden="true"></i> Certificado de apoyo aislamiento energías
+										peligrosas</button>
+									<a href="assets/doc/HSEQ-F004-01_Certificado_apoyo_aislamiento.pdf"
+										download="HSEQ-F004-01 Certificado apoyo aislamiento"></a>
+								</div>
+							</div>
+							<div class="contenedor-center">
+								<button id='actividad_3' class="btndocumento mt-3" data-bs-toggle="modal" data-bs-target="#pdf_3_modal">
+									<i class="fa fa-hand-o-right" aria-hidden="true"></i> AST - Análisis Seguro de Trabajo</button>
+									<a href="assets/doc/assets/doc/HSEQ-F003-17_JSA_Form_Formato_AST.pdf" 
+									download="HSEQ-F003-17 JSA Form - Formato AST"></a>
+							</div>
+						</div>
+						<hr>
+						<button id="actividad_3" class="btn mt-3" data-bs-toggle="modal"
+							data-bs-target="#no-olvidesbtn"><i class="fa fa-question" aria-hidden="true"></i> No olvides</button>
+					</div>
+					<div class="col-lg-6 col-md-12 mostrar-web">
+						<!-- Contenedor para mostrar el PDF -->
+						<div id="pdf_viewer" class="responsive-pdf">
+							<iframe id="pdf_documento" src="./assets/doc/HSEQ-F004-01_Form_Permiso_Trabajo.pdf" frameborder="0" width="100%" height="500px"></iframe>
+						</div>
+					</div>
+				</div>
+				<!-- Modal No olvides-->
+				<div class="modal fade" id="no-olvidesbtn" tabindex="-1" aria-hidden="true">
+					<div class="modal-dialog modal-dialog-centered">
+						<div class="modal-content">
+							<div class="modal-header">
+								<h5 class="modal-title">No olvides</h5>
+								<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+							</div>
+							<div class="modal-body">
+								<img src="assets/img/botones/no-olvides-color.png" alt="Herramienta" class="image-boton">
+								<p>
+									La meta de Emerald Energy es lograr cero pérdidas, protegiendo siempre la seguridad y salud de los
+									trabajadores, el ambiente, los activos de la empresa, y nuestro relacionamiento con el entorno, esto
+									a través de una oportuna identificación de peligros, valoración de los riesgos, e implementación de
+									medidas de control efectivas.
+									<br>¡TU eres la clave para lograrla!
+								</p>
+								<audio controls class="media-espanol">
+									<source src="assets/audio/Sld11_no_olvides_meta_emerald_v1.mp3" type="audio/mp3">
+								</audio>
+								<audio controls class="media-ingles">
+									<source src="assets/audio/Sld11_no_olvides_meta_emerald_ingles.mp3" type="audio/mp3">
+								</audio>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<!--pdf 1-->
+				<div class="modal fade" id="pdf_1_modal" tabindex="-1" aria-hidden="true">
+					<div class="modal-dialog modal-dialog-centered">
+						<div class="modal-content">
+							<div class="modal-header">
+								<h5 class="modal-title parrafo-center">Permiso de trabajo</h5>
+								<button type="button" class="btn-close" data-bs-dismiss="modal"
+									aria-label="Close"></button>
+							</div>
+							<div class="modal-body">
+								<img src="assets/img/botones/herramienta-color.png" alt="Herramienta" class="image-boton">
+								<p class="parrafo-center">
+									 Haz clic sobre el botón para descargar el Permiso de trabajo<br><br>
+								</p>
+								<div class="contenedor-center">
+									<a href="assets/doc/HSEQ-F004-01 _Form_Permiso_Trabajo.pdf" download="HSEQ-F004-01 Form Permiso de Trabajo">
+									<button id='actividad_1' class="btnpdf track-element" > 
+										<i class="fa fa-file-pdf-o"></i> Descárgalo aquí</button></a>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<!--pdf 2-->
+				<div class="modal fade" id="pdf_2_modal" tabindex="-1" aria-hidden="true">
+					<div class="modal-dialog modal-dialog-centered">
+						<div class="modal-content">
+							<div class="modal-header">
+								<h5 class="modal-title parrafo-center">Certificado de apoyo aislamiento energías
+									peligrosas</h5>
+								<button type="button" class="btn-close" data-bs-dismiss="modal"
+									aria-label="Close"></button>
+							</div>
+							<div class="modal-body">
+								<img src="assets/img/botones/herramienta-color.png" alt="Herramienta" class="image-boton">
+								<p class="parrafo-center">
+									 Haz clic sobre el botón para descargar el Certificado de apoyo aislamiento energías
+									 peligrosas<br><br>
+								</p>
+								<div class="contenedor-center">
+									<a href="assets/doc/HSEQ-F004-01_Certificado_apoyo_aislamiento.pdf" download="HSEQ-F004-01 Certificado apoyo aislamiento">
+									<button id='actividad_1' class="btnpdf track-element" > 
+										<i class="fa fa-file-pdf-o"></i> Descárgalo aquí</button></a>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<!--doc 3-->
+				<div class="modal fade" id="pdf_3_modal" tabindex="-1" aria-hidden="true">
+					<div class="modal-dialog modal-dialog-centered">
+						<div class="modal-content">
+							<div class="modal-header">
+								<h5 class="modal-title parrafo-center">AST - Análisis Seguro de Trabajo</h5>
+								<button type="button" class="btn-close" data-bs-dismiss="modal"
+									aria-label="Close"></button>
+							</div>
+							<div class="modal-body">
+								<img src="assets/img/botones/herramienta-color.png" alt="Herramienta" class="image-boton">
+								<p class="parrafo-center">
+									 Haz clic sobre el botón para descargar el AST - Análisis Seguro de Trabajo<br><br>
+								</p>
+								<div class="contenedor-center">
+									<a href="assets/doc/HSEQ-F003-17_JSA_Form_Formato_AST.pdf" download="HSEQ-F003-17 JSA Form - Formato AST">
+									<button id='actividad_1' class="btnpdf track-element" > 
+										<i class="fa fa-file-pdf-o"></i> Descárgalo aquí</button></a>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!--Fin Reconoce los documentos clave-->
+
+			<!--Actividad de Bloquear o Etiquetar-->
+			<div class="container">
+				<div class="row">
+					<div>
+						<p class="indPag">
+							<a href="#">Bloqueo y etiquetado (LOTO)</a>
+						</p>
+						<span class="indPagMb"></span>
+					</div>
+					<div class="col-lg-12 col-md-12">
+						<h1 class="tituloh1-center">¿Bloquear o Etiquetar…?</h1>
+						<p class="parrafo-center"><strong>¡Las dos (2) cosas!!</strong></p>
+						<p>Bloqueo / Etiquetado (LOTO por sus siglas en inglés: Lock Out Tag Out) se refiere a prácticas y procedimientos secuenciales específicos para proteger la seguridad de los 
+							empleados de la activación o inicio inesperado de máquinas y equipo</p>
+						<i class="inst mb-2">Organiza las letras en el orden correcto:</i>
+					<div class="center-actividad">
+							<ul class="actOrderElement" id="actOrderElement">
+								<li class="ui-state-default" value="2">
+									<img src="assets/img/act_loto/Loto-O-2.jpg">
+									<img class="ico" src="">
+								</li>
+								<li class="ui-state-default" value="3">
+									<img src="assets/img/act_loto/Loto-T-3.jpg"> 
+									<img class="ico" src="">
+								</li>
+								<li class="ui-state-default" value="4">
+									<img src="assets/img/act_loto/Loto-O-4.jpg" >
+									<img class="ico" src="">
+								</li>
+								<li class="ui-state-default" value="1">
+									<img src="assets/img/act_loto/Loto-L-1.jpg">
+									<img class="ico" src="">
+								</li>
+							  </ul>
+							  <div class="pc-slideflex">
+								<button class="btn btn-warning" onclick="actOrderElement(1)" style="margin-right: -5px; background-color: #BFEE30 !important; color: #0B3D5C !important;"> 
+									<i class="fa fa-check"></i> Verificar</button>
+								<button class="btn btn-warning" onclick="reiniciarActividad($('#actOrderElement'), [2,3,4,1],1)" style="margin-left: 20px; background-color: #BFEE30 !important; color: #0B3D5C !important;">
+								  <i class="fa fa-repeat"></i>  Reiniciar</button>
+							</div>
+							<button id="actividad_3" class="btn mt-3 track-element" data-bs-toggle="modal"
+							data-bs-target="#herramientabtn"><i class="fa fa-cog" aria-hidden="true"></i> Herramienta</button>
+					</div>
+					</div>
+				</div>
+				<!-- Modal Herramienta-->
+				<div class="modal fade" id="herramientabtn" tabindex="-1" aria-hidden="true">
+					<div class="modal-dialog modal-dialog-centered">
+						<div class="modal-content">
+							<div class="modal-header">
+								<h5 class="modal-title">Herramienta</h5>
+								<button type="button" class="btn-close" data-bs-dismiss="modal"
+									aria-label="Close"></button>
+							</div>
+							<div class="modal-body">
+								<img src="assets/img/botones/herramienta-color.png" alt="Herramienta" class="image-boton">
+								<p>
+									Emerald cuenta con un estándar para aislamiento de energías peligrosas “LOTO” cuyo código es HSEQ-S003-01 <br>
+									Recordemos que este estándar debe ser revisado y actualizado periódicamente según sea necesario, bien sea por requisito legal o por cambios en los procesos y/o la operación
+								</p>
+								<div class="contenedor-center">
+								</div>
+								<audio controls class="media-espanol">
+									<source src="assets/audio/Sdl12_bloquear_v2.mp3" type="audio/mp3">
+								</audio>
+								<audio controls class="media-ingles">
+									<source src="assets/audio/Sdl12_bloquear_ingles.mp3" type="audio/mp3">
+								</audio>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!--Fin Actividad de Bloquear o Etiquetar-->
+
+			<!--Reconoce los Elementos del KIT de Bloqueo-->
+			<!--Reconoce los elemenots 2-->
+			<div class="container">
+				<div class="row">
+					<div>
+						<p class="indPag">
+							<a href="#">Bloqueo y etiquetado (LOTO)</a>
+						</p>
+						<span class="indPagMb"></span>
+					</div>
+					<div class="col-md-12 col-lg-12">
+						<h1 class="tituloh1-center">Reconoce los Elementos del KIT de Bloqueo</h1>
+						<span class="indPagMb"><i class="inst mb-2">Navega horizontalmente para que puedas ver algunos de los diferentes elementos....</i></span><br><br>
+					</div>
+					<div class="col-lg-4 col-md-12">
+						<h5 class="tituloh5-center">ELEMENTOS DE BLOQUEO</h5>
+						<div id="carouselElementosbloqueo" class="carousel slide pc-i-2" data-bs-ride="carousel">
+							<div class="carousel-inner">
+							  <div class="carousel-item active">
+								<img src="assets/img/slide-kit-bloqueo/Elementos-bloqueo/Slide-1.jpg" class="d-block w-100" alt="...">
+								<div class="carousel-caption d-none d-md-block">
+								</div>
+							  </div>
+							  <div class="carousel-item">
+								<img src="assets/img/slide-kit-bloqueo/Elementos-bloqueo/Slide-2.jpg" class="d-block w-100" alt="...">
+								<div class="carousel-caption d-none d-md-block">
+								</div>
+							  </div>
+							  <div class="carousel-item">
+								<img src="assets/img/slide-kit-bloqueo/Elementos-bloqueo/Slide-3.jpg" class="d-block w-100" alt="...">
+								<div class="carousel-caption d-none d-md-block">
+								</div>
+							  </div>
+							  <div class="carousel-item">
+								<img src="assets/img/slide-kit-bloqueo/Elementos-bloqueo/Slide-4.jpg" class="d-block w-100" alt="...">
+								<div class="carousel-caption d-none d-md-block">
+								</div>
+							  </div>
+							  <div class="carousel-item">
+								<img src="assets/img/slide-kit-bloqueo/Elementos-bloqueo/Slide-5.jpg" class="d-block w-100" alt="...">
+								<div class="carousel-caption d-none d-md-block">
+								</div>
+							  </div>
+							  <div class="carousel-item">
+								<img src="assets/img/slide-kit-bloqueo/Elementos-bloqueo/Slide-6.jpg" class="d-block w-100" alt="...">
+								<div class="carousel-caption d-none d-md-block">
+								</div>
+							  </div>
+							  <div class="carousel-item">
+								<img src="assets/img/slide-kit-bloqueo/Elementos-bloqueo/Slide-7.jpg" class="d-block w-100" alt="...">
+								<div class="carousel-caption d-none d-md-block">
+								</div>
+							  </div>
+							</div>
+							<button class="carousel-control-prev" type="button" data-bs-target="#carouselElementosbloqueo" data-bs-slide="prev">
+							  <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+							  <span class="visually-hidden">Previous</span>
+							</button>
+							<button class="carousel-control-next" type="button" data-bs-target="#carouselElementosbloqueo" data-bs-slide="next">
+							  <span class="carousel-control-next-icon" aria-hidden="true"></span>
+							  <span class="visually-hidden">Next</span>
+							</button>
+						  </div>
+					</div>
+					<div class="col-lg-4 col-md-12">
+						<h5 class="tituloh5-center">CANDADOS</h5>
+						<div id="carouselCandado" class="carousel slide pc-i-2" data-bs-ride="carousel">
+							<div class="carousel-inner">
+							  <div class="carousel-item active">
+								<img src="assets/img/slide-kit-bloqueo/candado/Slide-1.jpg" class="d-block w-100" alt="...">
+								<div class="carousel-caption d-none d-md-block">
+								</div>
+							  </div>
+							  <div class="carousel-item">
+								<img src="assets/img/slide-kit-bloqueo/candado/Slide-2.jpg" class="d-block w-100" alt="...">
+								<div class="carousel-caption d-none d-md-block">
+								</div>
+							  </div>
+							  <div class="carousel-item">
+								<img src="assets/img/slide-kit-bloqueo/candado/Slide-3.jpg" class="d-block w-100" alt="...">
+								<div class="carousel-caption d-none d-md-block">
+								</div>
+							  </div>
+							  <div class="carousel-item">
+								<img src="assets/img/slide-kit-bloqueo/candado/Slide-4.jpg" class="d-block w-100" alt="...">
+								<div class="carousel-caption d-none d-md-block">
+								</div>
+							  </div>
+							  <div class="carousel-item">
+								<img src="assets/img/slide-kit-bloqueo/candado/Slide-5.jpg" class="d-block w-100" alt="...">
+								<div class="carousel-caption d-none d-md-block">
+								</div>
+							  </div>
+
+							</div>
+							<button class="carousel-control-prev" type="button" data-bs-target="#carouselCandado" data-bs-slide="prev">
+							  <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+							  <span class="visually-hidden">Previous</span>
+							</button>
+							<button class="carousel-control-next" type="button" data-bs-target="#carouselCandado" data-bs-slide="next">
+							  <span class="carousel-control-next-icon" aria-hidden="true"></span>
+							  <span class="visually-hidden">Next</span>
+							</button>
+						  </div>
+					</div>
+					<div class="col-lg-4 col-md-12">
+						<h5 class="tituloh5-center">ETIQUETAS</h5>
+						<div id="carouselEtiqueta" class="carousel slide pc-i-2" data-bs-ride="carousel">
+							<div class="carousel-inner">
+							  <div class="carousel-item active">
+								<img src="assets/img/slide-kit-bloqueo/etiqueta/Slide-1.jpg" class="d-block w-100" alt="...">
+								<div class="carousel-caption d-none d-md-block">
+								</div>
+							  </div>
+							  <div class="carousel-item">
+								<img src="assets/img/slide-kit-bloqueo/etiqueta/Slide-2.jpg" class="d-block w-100" alt="...">
+								<div class="carousel-caption d-none d-md-block">
+								</div>
+							  </div>
+							</div>
+							<button class="carousel-control-prev" type="button" data-bs-target="#carouselEtiqueta" data-bs-slide="prev">
+							  <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+							  <span class="visually-hidden">Previous</span>
+							</button>
+							<button class="carousel-control-next" type="button" data-bs-target="#carouselEtiqueta" data-bs-slide="next">
+							  <span class="carousel-control-next-icon" aria-hidden="true"></span>
+							  <span class="visually-hidden">Next</span>
+							</button>
+						  </div>
+					</div>
+				</div>
+			</div>
+			<!--Fin-->
+
+			<!--Divertiete Relacion los candados-->
+			<div class="container">
+				<div class="row">
+					<div>
+						<p class="indPag">
+							<a href="#">Bloqueo y etiquetado (LOTO)</a>
+						</p>
+						<span class="indPagMb"></span>
+					</div>
+					<div class="col-md-12 col-lg-12">
+						<h1 class="tituloh1-center">¡Diviértete! Relaciona los candados con cada caso</h1>
+						<span class="indPagMb"><i class="inst mb-2">Arrastra cada candado al tipo de bloqueo conveniente</i></span><br><br>
+					</div>
+
+					<div class="col-md-12 col-lg-12 actividad_candidatos">
+						<div class="titulo-actividad-candados">
+							<span>BLOQUE DE SISTEMA ELECTRICO</span>
+							<span>BLOQUE DE SISTEMA DE VALVULAS</span>
+							<span>BLOQUE DE ESCALERAS Y EQUIPOS</span>
+							<span>BLOQUE DE INSTRUMENTOS</span>
+							<span>EQUIPOS CONTRATISTAS</span>
+						</div>
+
+						<div class="grid-container-pairs" id="actividad_candado">
+							<span class="grid-item-pairs act3_drop" id="act3_drop1">
+								<img src="assets/img/candado-pregunta-1.jpg">
+								<hr><br>
+							</span>
+							<span class="grid-item-pairs act3_drop" id="act3_drop2"><img src="assets/img/candado-pregunta-2.jpg">
+								<hr><br></span>
+							<span class="grid-item-pairs act3_drop" id="act3_drop3"><img src="assets/img/candado-pregunta-3.jpg">
+								<hr><br></span>
+							<span class="grid-item-pairs act3_drop" id="act3_drop4"><img src="assets/img/candado-pregunta-4.jpg">
+								<hr><br></span>
+							<span class="grid-item-pairs act3_drop" id="act3_drop5"><img src="assets/img/candado-pregunta-5.jpg">
+							<hr><br></span>
+	
+							<!-- Arrastrar -->
+							<span class="grid-item-pairs act3_drag" id="act3_drag3" draggable="true">
+								<img src="assets/img/candado-repuesta-3.jpg">
+							</span>
+							<span class="grid-item-pairs act3_drag" id="act3_drag4" draggable="true">
+								<img src="assets/img/candado-repuesta-4.jpg">
+							</span>
+							<span class="grid-item-pairs act3_drag" id="act3_drag5" draggable="true">
+								<img src="assets/img/candado-repuesta-5.jpg">
+							</span>
+							<span class="grid-item-pairs act3_drag" id="act3_drag2" draggable="true">
+								<img src="assets/img/candado-repuesta-2.jpg">
+							</span>
+							<span class="grid-item-pairs act3_drag" id="act3_drag1" draggable="true">
+								<img src="assets/img/candado-repuesta-1.jpg">
+							</span>
+							
+						</div>
+					</div>
+
+					<div class="col-lg-12 col-md-12" style="display:flex;">
+						<button class="btn mt-3" data-bs-toggle="modal"
+							data-bs-target="#no-olvidesbtn-2"><i class="fa fa-question" aria-hidden="true"></i> No olvides</button>
+						<button class="btn mt-3" id="btn-validar-candados" onclick="validarArrastreCandados()" >
+							<i class="fa fa-check" aria-hidden="true"></i> Validar</button>
+						<button class="btn mt-3" id="btn-reiniciar-candados" onclick="reiniciarActividad('',0,5)" >
+							<i class="fa fa-refresh" aria-hidden="true"></i> Reiniciar</button>
+					</div>
+				</div>
+					<!-- Modal No olvides-->
+					<div class="modal fade" id="no-olvidesbtn-2" tabindex="-1" aria-hidden="true">
+						<div class="modal-dialog modal-dialog-centered">
+							<div class="modal-content">
+								<div class="modal-header">
+									<h5 class="modal-title">No olvides</h5>
+									<button type="button" class="btn-close" data-bs-dismiss="modal"
+										aria-label="Close"></button>
+								</div>
+								<div class="modal-body">
+									<img src="assets/img/botones/no-olvides-color.png" alt="Herramienta" class="image-boton">
+									<p>
+										Los candados del sistema de bloqueo son asignados al personal competente y responsable de realizar los trabajos en sistemas o equipos que operen con energías peligrosas. 
+										<br>Cada color en los candados corresponde a una energía especifica, y su composición o estructura debe cumplir los parámetros de seguridad para el tipo de energía que se desea aislar
+									</p>
+									<audio controls class="media-espanol">
+										<source src="assets/audio/M7-ENE" type="audio/mp3">
+									</audio>
+								</div>
+							</div>
+						</div>
+					</div>
+			</div>
+			<!--Fin-->
+
+
+			<!--sld 15 Revisemos los diferentes tipos-->
+			<div class="container ">
+				<div class="row">
+					<div>
+						<p class="indPag">
+							<a href="#">Bloqueo y etiquetado (LOTO)</a>
+						</p>
+						<span class="indPagMb"></span>
+					</div>
+					<div class="col-md-12 col-lg-12">
+						<h1 class="tituloh1-center">Revisemos los diferentes tipos de Energías Peligrosas en nuestra operación</h1>
+						<span class="indPagMb"><i class="inst mb-2">¡¡JUGUEMOS!! Busca los códigos QR, Escanéalos y aprendes sobre las 6 energías peligrosas</i></span>
+						<br><br>
+						</div>
+					
+						<div class="col-lg-6 col-md-12 ">
+							<img src="assets/img/pastilla_qr.png" alt="" class="img-pastilla">
+						</div>
+
+				<div class="col-lg-6 col-md-12 ">
+					<i class="inst mb-2">¡¡Identifica!!	Estos 6 iconos y escanea el QR para ver su contenido</i></span>
+						<div class="col-lg-12 contenedor-center">
+							<button id="actividad_3" class="btnicono mt-3 track-element no-clickeable">
+								<i class="fa-2x fas fa-bolt" aria-hidden="true"></i></i>
+						<br> <p class="parrafosld15">Energía <br>Eléctrica</p> 
+					</button>
+							<br>
+						<button id="actividad_3" class="btnicono mt-3 track-element no-clickeable" >
+							<i class="fa-2x fas fa-fire" aria-hidden="true"></i> 
+							<p class="parrafosld15">Energía <br>Térmica</p> 
+						</button>
+							<br>
+							<button id="actividad_3" class="btnicono mt-3 track-element no-clickeable">
+								<i class="fa-2x fas fa-cog" aria-hidden="true"></i>
+							<p class="parrafosld15">Energía <br>Mecánica</p> 
+						</button>
+						</div>
+						<div class="col-lg-12 contenedor-center">
+							
+							<br>
+						<button id="actividad_3" class="btnicono mt-3 track-element no-clickeable">
+							<i class="fa-2x fas fa-tint" aria-hidden="true"></i>
+							<p class="parrafosld15">Energía <br>Hidráulica </p> 
+						</button>
+						<button id="actividad_3" class="btnicono mt-3 track-element no-clickeable">
+							<i class="fa-2x fas fa-tools" aria-hidden="true"></i>
+							<p class="parrafosld15">Energía <br>Neumática</p> 
+						</button>
+						<button id="actividad_3" class="btnicono mt-3 track-element no-clickeable">
+							<i class="fa-2x fas fa-flask" aria-hidden="true"></i>
+							<p class="parrafosld15">Energía <br>Quimica</p> 
+						</button>
+						</div>
+					</div>
+				</div>
+			
+				<!--<div class="modal fade" id="video1" tabindex="-1" aria-hidden="true">
+					<div class="modal-dialog modal-dialog-centered">
+						<div class="modal-content">
+							<div class="modal-header">
+								<h5 class="modal-title">Energía Eléctrica</h5>
+								<button type="button" class="btn-close" data-bs-dismiss="modal"
+									aria-label="Close"></button>
+							</div>
+							<div class="modal-body" style="justify-content: center; align-items: center;">
+								<i class="inst mb-2">Haga clic para ejecutar el video</i>
+								<video controls poster style="max-width:200px; margin: 0 auto; margin-left: 30% !important;" class="mx-auto">
+									<source src="assets/video/Energia_Electrica.mp4" type="video/mp4">
+								</video>
+							</div>
+						</div>
+					</div>
+				</div>
+
+
+				<div class="modal fade" id="video2" tabindex="-1" aria-hidden="true">
+					<div class="modal-dialog modal-dialog-centered">
+						<div class="modal-content">
+							<div class="modal-header">
+								<h5 class="modal-title">Energía Térmica</h5>
+								<button type="button" class="btn-close" data-bs-dismiss="modal"
+									aria-label="Close"></button>
+							</div>
+							<div class="modal-body" style="justify-content: center; align-items: center;">
+								<i class="inst mb-2">Haga clic para ejecutar el video</i>
+								<video controls poster style="max-width:200px; margin: 0 auto; margin-left: 30% !important;" class="mx-auto">
+									<source src="assets/video/Energia_Termica.mp4" type="video/mp4">
+								</video>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="modal fade" id="video3" tabindex="-1" aria-hidden="true">
+					<div class="modal-dialog modal-dialog-centered">
+						<div class="modal-content">
+							<div class="modal-header">
+								<h5 class="modal-title">Energía Mecánica</h5>
+								<button type="button" class="btn-close" data-bs-dismiss="modal"
+									aria-label="Close"></button>
+							</div>
+							<div class="modal-body" style="justify-content: center; align-items: center;">
+								<i class="inst mb-2">Haga clic para ejecutar el video</i>
+								<video controls poster style="max-width:200px; margin: 0 auto; margin-left: 30% !important;" class="mx-auto">
+									<source src="assets/video/Energia_Mecanica.mp4" type="video/mp4">
+								</video>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="modal fade" id="video4" tabindex="-1" aria-hidden="true">
+					<div class="modal-dialog modal-dialog-centered">
+						<div class="modal-content">
+							<div class="modal-header">
+								<h5 class="modal-title">Energía Neumática</h5>
+								<button type="button" class="btn-close" data-bs-dismiss="modal"
+									aria-label="Close"></button>
+							</div>
+							<div class="modal-body" style="justify-content: center; align-items: center;">
+								<i class="inst mb-2">Haga clic para ejecutar el video</i>
+								<video controls poster style="max-width:200px; margin: 0 auto; margin-left: 30% !important;" class="mx-auto">
+									<source src="assets/video/Energia Neumatica.mp4" type="video/mp4">
+								</video>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="modal fade" id="video_hidraulica" tabindex="-1" aria-hidden="true">
+					<div class="modal-dialog modal-dialog-centered">
+						<div class="modal-content">
+							<div class="modal-header">
+								<h5 class="modal-title">Energía Hidráulica</h5>
+								<button type="button" class="btn-close" data-bs-dismiss="modal"
+									aria-label="Close"></button>
+							</div>
+							<div class="modal-body" style="justify-content: center; align-items: center;">
+								<i class="inst mb-2">Haga clic para ejecutar el video</i>
+								<video controls poster style="max-width:200px; margin: 0 auto; margin-left: 30% !important;" class="mx-auto">
+									<source src="assets/video/energia hidraulica.mp4" type="video/mp4">
+								</video>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="modal fade" id="video_quimica" tabindex="-1" aria-hidden="true">
+					<div class="modal-dialog modal-dialog-centered">
+						<div class="modal-content">
+							<div class="modal-header">
+								<h5 class="modal-title">Energía Quimica</h5>
+								<button type="button" class="btn-close" data-bs-dismiss="modal"
+									aria-label="Close"></button>
+							</div>
+							<div class="modal-body" style="justify-content: center; align-items: center;">
+								<i class="inst mb-2">Haga clic para ejecutar el video</i>
+								<video controls poster style="max-width:200px; margin: 0 auto; margin-left: 30% !important;" class="mx-auto">
+									<source src="assets/video/" type="video/mp4">
+								</video>
+							</div>
+						</div>
+					</div>
+				</div>-->
+
+				</div>
+			<!--Fin Revisemos-->
+
+			<!--M3- M3- Procedimiento de bloqueo y etiquetado (LOTO)-->
+			<div class="container dividerBg">
+				<div class="row mx-auto" style="max-width: 1000px;">
+					<div class="col-md-12 col-lg-6">
+						<img class="mx-auto mb-3 imagen-M1-Carl" src="assets/img/M1-Energia-Carl.png">
+					</div>
+					<div class="col-lg-1 col-md-12"></div>
+					<div class="col-lg-5 col-md-12">
+						<h1 class="h1-colorwhite">M3- Procedimiento de bloqueo y etiquetado (LOTO)</h1>
+						<hr style=" border: 1px solid var(--white); width: 100%; margin: 0 auto">
+						<h4 class="h4momento">Revisemos el <span style="color: var(--orange);"> procedimiento de bloqueo y etiquetado 
+						</span> (LOTO)</h4>
+						<br />
+						<audio controls class="media-espanol">
+							<source src="assets/audio/sld16_momento3.MP3" type="audio/mp3">
+						</audio>
+						<audio controls class="media-ingles">
+							<source src="assets/audio/sld16_momento3_ingles.MP3" type="audio/mp3">
+						</audio>
+					</div>
+				</div>
+			</div>
+			<!--Fin M3- Procedimiento de bloqueo y etiquetado (LOTO)-->
+
+			<!--Inicio sld 18-->
+			<div class="container">
+				<div class="row mx-auto" style="max-width: 1000px;">
+					<div>
+						<p class="indPag">
+							<a href="#">Procedimiento de Bloqueo y etiquetado (LOTO)</a>
+						</p>
+						<span class="indPagMb"></span>
+					</div>
+					<h1 style="text-align:center;">Revisemos el procedimiento de bloqueo y etiquetado</h1>
+					<hr>
+					<div class="col-lg-4 col-md-4 text-center">
+						<img class="img_slide_07" src="assets/img/slide-loto/info/Slide-1.jpg" >
+						<h1 class="titulo18">1. Preparación para apagado</h1>
+						<p class="parrafo14">Antes que un empleado autorizado, o un empleado afectado desconecte o apague la maquina o dispositivo, 
+							debe tener muy claro la clase y magnitud de la energía, los peligros de la energía a ser controlada y los métodos y la forma de controlar la misma.
+						</p>
+						<i class="inst mb-2">Haz clic sobre el audio</i>
+						<audio controls class="media-espanol">
+							<source src="assets/audio/sld_17_Preparacion_para_apagado.MP3" type="audio/mp3">
+						</audio>
+						<audio controls class="media-ingles">
+							<source src="assets/audio/sld_17_Preparacion_para_apagado_ingles.MP3" type="audio/mp3">
+						</audio>
+						<hr>
+					</div>
+					<div class="col-lg-4 col-md-4 text-center">
+						<img class="img_slide_07" src="assets/img/slide-loto/info/Slide-2.jpg" >
+						<h1 class="titulo18">2. Apagado de máquinas o equipos</h1>
+						<p class="parrafo14">Las máquinas o equipos deben ser apagados, utilizando los diagramas de apoyo, el certificado de aislamiento de la compañía, 
+							o cualquier otro soporte técnico, realizado previamente por la autoridad Ejecutante y aprobada.
+						</p>
+						<i class="inst mb-2">Haz clic sobre el audio</i>
+						<audio controls class="media-espanol">
+							<source src="assets/audio/sld_17_Apagado_maquinas_equipos.MP3" type="audio/mp3">
+						</audio>
+						<audio controls class="media-ingles">
+							<source src="assets/audio/sld_17_Apagado_maquinas_equipos_ingles.MP3" type="audio/mp3">
+						</audio>
+						<hr>
+					</div>
+					<div class="col-lg-4 col-md-4 text-center">
+						<img class="img_slide_07" src="assets/img/slide-loto/info/Slide-3.jpg" >
+						<h1 class="titulo18">3. Aislamiento de máquinas o equipos</h1>
+						<p class="parrafo14">Todos los dispositivos de aislamiento necesarios para controlar la energía para la máquina o equipo, serán físicamente ubicadas y operadas, 
+							de tal manera que estas aíslen la maquina o equipo de la(s) fuente(s) de energía.</p>
+						<i class="inst mb-2">Haz clic sobre el audio</i>
+						<audio controls class="media-espanol">
+							<source src="assets/audio/sld_17_aislamiento_maquinas_equipos.MP3" type="audio/mp3">
+						</audio>
+						<audio controls class="media-ingles">
+							<source src="assets/audio/sld_17_aislamiento_maquinas_equipos_ingles.MP3" type="audio/mp3">
+						</audio>
+						<hr>
+					</div>
+					<div class="col-lg-4 col-md-4 text-center">
+						<img class="img_slide_07" src="assets/img/slide-loto/info/Slide-4.jpg" >
+						<h1 class="titulo18">4. Aseguramiento y etiquetado</h1>
+						<p class="parrafo14">Es responsabilidad del ejecutor y de quien autoriza, revisar los planos, diagramas, etc... para identificar los puntos de aislamiento y medir en la fuente para verificar 
+							la intensidad de la energía, presión, etc. y volver a medir una vez este efectuado el aislamiento.
+						</p>
+						<i class="inst mb-2">Haz clic sobre el audio</i>
+						<audio controls class="media-espanol">
+							<source src="assets/audio/sld17_aseguramiento_y_etiquetado.MP3" type="audio/mp3">
+						</audio>
+						<audio controls class="media-ingles">
+							<source src="assets/audio/sld17_aseguramiento_y_etiquetado_ingles.MP3" type="audio/mp3">
+						</audio>
+						<hr>
+					</div>
+					<div class="col-lg-4 col-md-4 text-center">
+						<img class="img_slide_07" src="assets/img/slide-loto/info/Slide-5.jpg" >
+						<h1 class="titulo18">5. Energía Residual</h1>
+						<p class="parrafo14">Siguiendo la aplicación de dispositivos de aseguramiento y etiquetado a dispositivos de aislamiento de energía, toda la energía potencial, residual o almacenada será descargada, 
+							desconectada, o en otras formas poner o colocar en un estado de cero energías.
+						</p>
+						<i class="inst mb-2">Haz clic sobre el audio</i>
+						<audio controls class="media-espanol">
+							<source src="assets/audio/sld17_energia_residual.MP3" type="audio/mp3">
+						</audio>
+						<audio controls class="media-ingles">
+							<source src="assets/audio/sld17_energia_residual_ingles.MP3" type="audio/mp3">
+						</audio>
+						<hr>
+					</div>
+					<div class="col-lg-4 col-md-4 text-center">
+						<img class="img_slide_07" src="assets/img/slide-loto/info/Slide-6.jpg" >
+						<h1 class="titulo18">6. Liberación de seguros y etiquetas</h1>
+						<p class="parrafo14">Antes que los dispositivos de aseguramiento y etiquetas sean removidos, y la energía restaurada a la maquina o dispositivo, los procedimientos y acciones serán seguidos por el empleado 
+							y contratista autorizado.
+						</p>
+						<i class="inst mb-2">Haz clic sobre el audio</i>
+						<audio controls class="media-espanol">
+							<source src="assets/audio/sld17_Liberacion-seguros-etiquetas.MP3" type="audio/mp3">
+						</audio>
+						<audio controls class="media-ingles">
+							<source src="assets/audio/sld17_Liberacion-seguros-etiquetas_ingles.MP3" type="audio/mp3">
+						</audio>
+						<hr>
+					</div>
+				</div>
+			</div>
+			<!--Fin sld17-->
+
+			<!--Revismos el procedimiento de Loto- etiqueteado-->
+			<div class="container">
+				<div class="row">
+					<div>
+						<p class="indPag">
+							<a href="#">Procedimiento de Bloqueo y etiquetado (LOTO)</a>
+						</p>
+						<span class="indPagMb"></span>
+					</div>
+					<div class="col-md-12 col-lg-12">
+						<h1 class="tituloh1-center">Revisemos el procedimiento de bloqueo y etiquetado (LOTO)</h1>
+						<span class="indPagMb"><i class="inst mb-2">Arrastra horizontalmente para poner en orden los pasos del procedimiento de bloqueo y etiquetado (LOTO)						</i></span><br><br>
+					</div>
+
+					<div class="col-lg-12 col-md-12">
+						<div class="center-actividad" >
+							<ul class="actOrderElement2" id="actOrderElement2" style="flex-wrap: nowrap !important;">
+                                <li class="ui-state-default" value="3">
+									<img src="assets/img/slide-loto/Slide-3.jpg">
+									<img class="ico" src="">
+								</li>
+								<li class="ui-state-default" value="2">
+									<img src="assets/img/slide-loto/Slide-2.jpg"> 
+									<img class="ico" src="">
+								</li>
+								<li class="ui-state-default" value="6">
+									<img src="assets/img/slide-loto/Slide-6.jpg" >
+									<img class="ico" src="">
+								</li>
+								<li class="ui-state-default" value="4">
+									<img src="assets/img/slide-loto/Slide-4.jpg">
+									<img class="ico" src="">
+								</li>
+								<li class="ui-state-default" value="1">
+									<img src="assets/img/slide-loto/Slide-1.jpg">
+									<img class="ico" src="">
+								</li>
+								<li class="ui-state-default" value="5">
+									<img src="assets/img/slide-loto/Slide-5.jpg">
+									<img class="ico" src="">
+								</li>
+							  </ul>
+							  <div class="pc-slideflex">
+								<button class="btn btn-warning" onclick="actOrderElement2(1)" style="margin-right: -5px; background-color: #BFEE30 !important; color: #0B3D5C !important;">
+									<i class="fa fa-check"></i> Verificar</button>
+								<button class="btn btn-warning" onclick="reiniciarActividad($('#actOrderElement2'), [2,3,4,1,5,6],1)" style="margin-left: 20px; background-color: #BFEE30 !important; color: #0B3D5C !important;">
+									<i class="fa fa-repeat"></i>  Reiniciar</button>
+							</div>
+							<button id="actividad_3" class="btn mt-3 track-element" data-bs-toggle="modal"
+							data-bs-target="#herramientabtn-3"><i class="fa fa-cog" aria-hidden="true"></i> Herramienta</button>
+					</div>
+					</div>
+				</div>
+					<!-- Modal Herramienta-->
+					<div class="modal fade" id="herramientabtn-3" tabindex="-1" aria-hidden="true">
+						<div class="modal-dialog modal-dialog-centered">
+							<div class="modal-content">
+								<div class="modal-header">
+									<h5 class="modal-title">Herramienta</h5>
+									<button type="button" class="btn-close" data-bs-dismiss="modal"
+										aria-label="Close"></button>
+								</div>
+								<div class="modal-body">
+									<img src="assets/img/botones/herramienta-color.png" alt="Herramienta" class="image-boton">
+									<p>
+										Recordemos que para realizar trabajos que requieran aislamiento de energías peligrosas, debe diligenciarse el certificado de apoyo y adjuntarlo al PTW, y además debe hacerse un plan LOTO.<br><br>
+									</p>
+									<div class="contenedor-center">
+										<i class="inst mb-2">Busca o encuéntralo en el EMS de HSEQ en la Intranet de Emerald</i>
+									</div>
+									<audio controls class="media-espanol">
+										<source src="assets/audio/Sld18_herramienta.mp3" type="audio/mp3">
+									</audio>
+									<audio controls class="media-ingles">
+										<source src="assets/audio/Sld18_herramienta_ingles.mp3" type="audio/mp3">
+									</audio>
+								</div>
+							</div>
+						</div>
+					</div>
+			</div>
+			<!--Fin-->
+
+	<!-- sliderfinal NO REMOVER -->   
+	<div class="container">
+		<h1></h1>
+	</div>
+		</div>
+	
+	</div>
+
+	<!-- button next & prev -->
+	<button id="pagIndex" class="bntNextPrev" onclick="btnPrev()" style="left: 10px;">
+		<i class="fas fa-angle-left"></i>
+	</button>
+	<!-- button next & prev -->
+	<button id="prev" class="bntNextPrev" style="display: none;">
+		<i class="fas fa-angle-left"></i>
+	</button>
+	<!-- button next & prev -->
+	<button id="next" class="bntNextPrev">
+		<i class="fas fa-angle-right"></i>
+	</button>
+
+	 <div class="contentFooter">
+		<!--<div class="contCircleBar">
+		</div>-->
+		<img src="assets/img/ftImg01.png">
+	</div> 
+
+	<!-- library javascript -->
+	<script src="assets/js/getProgressActivity.js"></script>
+	<script src="assets/js/trackingmanager_activities.js"></script>
+	<script src="assets/js/trackingmanagern3.js"></script>
+	<script src="assets/js/sessvars.js"> </script>
+	<script src="assets/js/touch-dnd.js"></script>
+	<script src="https://mlearning1.sofactia.com/wp-content/plugins/h5p/h5p-php-library/js/h5p-resizer.js" charset="UTF-8"></script>
+	<script src="assets/js/script.js"></script>
+	<script type="text/javascript" src="assets/js/magnify/js/jquery.magnify.js"></script>
+	<script src="assets/js/interactividad.js"></script>
+	
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui-touch-punch/0.2.3/jquery.ui.touch-punch.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/interactjs/dist/interact.min.js"></script>
+	<script>
+		createCirclesMovil();
+
+		function allowDrop(event) {
+			event.preventDefault();
+		}
+
+		function drag(event) {
+			event.dataTransfer.setData("text", event.target.id);
+		}
+
+		function drop(event) {
+			event.preventDefault();
+			var data = event.dataTransfer.getData("text");
+			var dropTarget = event.target;
+
+			// Verifica si el destino es una de las zonas de destino
+			if (dropTarget.id === "act2_drop1" || dropTarget.id === "act2_drop2" || dropTarget.id === "act2_drop3" || dropTarget.id === "act2_drop4") {
+				dropTarget.appendChild(document.getElementById(data));
+			}
+		}
+		// function animation slide ------->
+		aniSl19(1);
+		function aniSl19(e) {
+
+			// number of slider
+			var sliders = $(".contentModule > div").length;
+			$('#nSlider').html(sliders - 1);
+			var progressBar = Math.round((e/sliders)*100);
+			$(".progBar > div").css("width",progressBar+"%");
+			if (e === 1) {
+				$("#prev").css('display', 'none');
+				$("#pagIndex").css('display', 'inline-block');
+			} else {
+				$("#pagIndex").css('display', 'none');
+			}
+			if (e === 2) {
+				$("#pagIndex").css('display', 'none');
+				$("#next-btn").on('click', function () {
+					$("#next").click();
+				});
+
+			}
+			console.log(sliders);
+			if (e === sliders) {
+				$("#next").css('display', 'none');
+				// window.location.href = "quiz.php?course_code=<?= $course_code; ?>";
+				window.location.href = "quiz.html";
+			}
+			// change background
+			if ($('.current').hasClass('dividerImg')) {
+				$('body').addClass('darkStyleimg');
+			} else {
+				$('body').removeClass('darkStyleimg');
+			}
+
+
+			// chenge background
+			if ($('.current').hasClass('dividerBg')) {
+				$('body').addClass('darkStyle');
+				$('.english-hints').addClass('white-text');
+				$('.contCircleBar').addClass('back-color-progress');
+			} else {
+				$('body').removeClass('darkStyle');
+				$('.english-hints').removeClass('white-text');
+				$('.contCircleBar').removeClass('back-color-progress');
+			}
+		}
+
+		// function redirect pag index
+		function btnPrev() {
+			// window.location.href = "index.php?course_code=<?= $course_code; ?>";
+			window.location.href = "index.html";
+		};
+
+		// trackingManager.init({
+		// 	'trackClass': '.track-element',
+		// 	'progressEl': '#progreso_01'
+		// },
+		// 	'<?= $CI->session->userdata('employee_data')['user_id']; ?>', '<?= $unique_course_id; ?>', '<?= $module_id; ?>');
+
+		// sessvars.fullname = "<?= $CI->session->userdata('employee_data')['fullname']; ?>";
+		// sessvars.id_empleado = "<?= $CI->session->userdata('employee_data')['user_id']; ?>";
+
+		// document.addEventListener('visibilitychange', handleVisibilityChange, false);
+
+
+	</script>
+</body>
+
+</html>
