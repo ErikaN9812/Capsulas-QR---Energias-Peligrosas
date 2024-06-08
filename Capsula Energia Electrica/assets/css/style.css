@@ -811,7 +811,7 @@ button.btn-sm {
         display: none;
     }
     .contentHeader > div:nth-child(1) {
-        grid-template-columns: 100px 1fr 1px 80px 55px;
+        grid-template-columns: 120px 1fr 1px 80px 55px;
     }
 }
 .fdMn {
