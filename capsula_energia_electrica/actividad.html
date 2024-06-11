@@ -1,23 +1,3 @@
-<!-- <?php
-require('../../functions_helpers.php'); /*load helper*/
-check_session(); /*check session by employee */
-$course_code = $_GET['course_code']; /* recibir el código del curso */
-//$module_id        = __my_simple_crypt__($_GET['module'], 'd');
-$module_id = 36;
-$unique_course_id = check_permission_employee_course($course_code); /* Comprobar si el empleado tiene acceso al curso*/
-$extension_url = "?course_code=" . $course_code; /* variable url para pasar el código del curso*/
-
-$progress = progress_courses($course_code);
-$progreso_ruta_formacion = $progress['overallProgress'];
-$horas_formacion = $progress['totalHoras'];
-$progreso_curso = $progress['courseProgress'];
-
-//Calcula en que posicion se encuentra el alumno, referente a la evaluación 
-$puesto_alumno = get_module_score_user($unique_course_id, $module_id, $_SESSION['employee_data']['user_id']);
-
-//Calcula en que posicion se encuentra el alumno, referente a la fecha y hora que culminó el curso 	
-$puesto_curso = get_course_position($unique_course_id, $module_id);
-?> -->
 <!DOCTYPE html>
 <html>
 
@@ -43,8 +23,8 @@ $puesto_curso = get_course_position($unique_course_id, $module_id);
 	<link rel="stylesheet" type="text/css" href="assets/css/switch.css">
 
 	<!--Library Template-->
-	<link rel="stylesheet" type="text/css" href="assets/css/template/style-template.css">
-	<link rel="stylesheet" type="text/css" href="assets/css/template/custom.css">
+	<!-- <link rel="stylesheet" type="text/css" href="assets/css/template/style-template.css">
+	<link rel="stylesheet" type="text/css" href="assets/css/template/custom.css"> -->
 	<link rel="stylesheet" type="text/css" href="assets/css/template/font-icons.css">
 
 	<link rel="stylesheet" href="assets/js/jplayer/lib/circle-player/skin/circle.player.css">
@@ -53,10 +33,10 @@ $puesto_curso = get_course_position($unique_course_id, $module_id);
 	<!-- TOUR -->
 	<link rel="stylesheet" href="assets/js/introjs/introjs.css">
 	<!--Libreria iconos-->
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.1/css/all.css" crossorigin="anonymous">
+	<!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.1/css/all.css" crossorigin="anonymous"> -->
 	<!-- Font Icons -->
-	<link rel="stylesheet" href="css/font-icons.css">
+	<!-- <link rel="stylesheet" href="css/font-icons.css"> -->
 	
 
 	<!-- <script type="text/javascript" src="assets/js/jplayer/lib/jquery.min.js"></script> -->
@@ -74,11 +54,6 @@ $puesto_curso = get_course_position($unique_course_id, $module_id);
 </head>
 
 <body>
-	<input type="hidden" id="course_code" value="<?= $course_code ?>">
-	<input type="hidden" id="module_id" value="<?= $module_id ?>">
-	<input type="hidden" id="unique_course_id" value="<?= $unique_course_id ?>">
-	<input type="hidden" id="userId" value="<?= $CI->session->userdata('employee_data')['user_id']; ?>">
-	<input type="hidden" id="fullName" value="<?= $CI->session->userdata('employee_data')['fullname']; ?>">
 
 	<!-- header -->
 	<div class="contentHeader">
@@ -106,103 +81,7 @@ $puesto_curso = get_course_position($unique_course_id, $module_id);
 				
 			</div>
 		</div>
-		<!--menu-->
-		<div class="headerOpc">
-			<i class="fas fa-times"></i>
-			<br>
-			<h1>Hola! <b>
-					<!-- <?= ucwords($CI->session->userdata('employee_data')['fullname']); ?> -->
-				</b></h1>
-			<h5>Bienvenido a su Ruta de Aprendizaje!</h5>
-			<div class="headerProg" id='progreso'>
-				<p><b>Progreso: </b><span id="course-progress"><strong>
-							%</span></strong></p>
-			</div>
-			<hr>
-			<!-- Switch English hints -->
-			<div class="container3">
-				<label class="toggle-switch">
-					<input type="checkbox" id="toggleSwitchMenu">
-					<span class="slider"></span>
-				</label>
-				<span class="toggle-label english-hints">English Hints</span>
-			</div>
-			<br><br>
-			<ul>
-				<a href="index.html">
-				<!-- <a id='presentacion' href="index.php?course_code=<?= $course_code; ?>"> -->
-					<li><i class="fas fa-caret-right"></i> Presentación</li>
-				</a>
-				<a href="modulo.html" class="act">
-				<!-- <a id='contenido' href="modulo.php?course_code=<?= $course_code; ?>" class="act"> -->
-					<li><i class="fas fa-caret-right"></i> Contenido</li>
-				</a>
-				<a href="quiz.html">
-				<!-- <a id='evaluacion' href="quiz.php?course_code=<?= $course_code; ?>"> -->
-					<li><i class="fas fa-caret-right"></i> Evaluación</li>
-				</a>
-				<!-- <a id='tutorial' href="tutorial.php?course_code=<?= $course_code; ?>"> -->
-				<a href="tutorial.html">
-					<li><i class="fas fa-caret-right"></i> Tutorial</li>
-				</a>
-			</ul>
-			<hr>
-			<ul>
-				<a href="index.html">
-				<!-- <a id='homember' href="../../../courses/login.php"> -->
-					<li><i class="fas fa-caret-right"></i> Mis cursos</li>
-				</a>
-				<a href="modulo.html">
-				<!-- <a id='logout' href="../../../courses/logout.php"> -->
-					<li><i class="fas fa-caret-right"></i> Cerrar sesión</li>
-				</a>
-			</ul>
-			<hr>
-			<div class="statistics-container" id='estadisticas'>
-				<h6><strong>TUS ESTADISTICAS GENERALES</strong></h6>
-
-				<div class="statistic">
-					<img src="assets/img/ruta.png" alt="Progreso Ruta de Formación">
-					<span class="statistic-description">Has recorrido un
-						<?= $progreso_ruta_formacion; ?>% de tu ruta de aprendizaje.
-					</span>
-				</div>
-
-				<div class="statistic">
-					<img src="assets/img/tiempo.png" alt="Horas de Formación">
-					<span class="statistic-description">Llevas
-						<!-- <?= $horas_formacion; ?>  -->
-						horas de formación.
-					</span>
-				</div>
-				<hr>
-				<!-- <?php if ($puesto_alumno > 0 || $puesto_curso > 0): ?>
-					<h6><strong>TUS ESTADISTICAS PERSONALES</strong></h6>
-				<?php endif ?> -->
-
-				<!-- <?php if ($puesto_alumno > 0): ?>
-					<div class="statistic">
-						<img src="assets/img/evaluacion.png" alt="Puesto en la Evalución">
-						<span class="statistic-description">Estás en el puesto
-							<?= $puesto_alumno; ?> en la evaluación.
-						</span>
-					</div>
-				<?php endif ?>
-
-				<?php if ($puesto_curso > 0): ?>
-					<div class="statistic">
-						<img src="assets/img/finalizar.png" alt="Puesto a Realizar el Curso">
-						<span class="statistic-description">Eres el No.
-							<?= $puesto_curso; ?> en finalizar el curso.
-						</span>
-					</div>
-				<?php endif ?> -->
-
-			</div>
-			<div class="certificate">
-				<span class="certificate-text">© Sofactia. powered by Unydos</span>
-			</div>
-		</div>
+	
 		 <!--BARRA DE PROGRESO PC -->
 		 <div class="contCircleBar contCircleBar-nav-bar">
         </div>
@@ -250,7 +129,7 @@ $puesto_curso = get_course_position($unique_course_id, $module_id);
 		<!--End slider01 Reflexionemos-->
 
 		<!--slider 02 actividad-->
-		<div class="container ">
+		<div class="container">
 			<div class="row">
 				<div>
 					<p class="indPag">
@@ -409,13 +288,13 @@ $puesto_curso = get_course_position($unique_course_id, $module_id);
 						<h1></h1>
 					</div>
 					<br>
-					<div class="btn-reintentar text-center" style="display: flex; justify-content: center; display:none; padding:15px; cursor: pointer;">
+					<!-- <div class="btn-reintentar text-center" style="display: flex; justify-content: center; display:none; padding:15px; cursor: pointer;">
 						<a class="btn-reiniciar" onclick="reiniciarActividadGrafica(this);">
 							<i class="fa fa-repeat"></i> Reiniciar</button></a>
-					</div>
+					</div> -->
 
 				</div>
-				<button class="btn" type="submit" style="color: #fff; background: #009A3D; padding: 10px 30px; border-radius: 30px 0px 30px 30px; border: none; font-size: 1.2rem; box-shadow: rgb(0 160 175 / 30%) 0px 8px 24px;">Finalizar</button>
+				<button class="btn btn-finalizar" disabled style="color: #fff; background: #009A3D; padding: 10px 30px; border-radius: 30px 0px 30px 30px; border: none; font-size: 1.2rem; box-shadow: rgb(0 160 175 / 30%) 0px 8px 24px;">Finalizar</button>
 			</div>
 			</div>
 		</div>
@@ -430,11 +309,7 @@ $puesto_curso = get_course_position($unique_course_id, $module_id);
 	</div>
 
 	<!-- button next & prev -->
-	<button id="pagIndex" class="bntNextPrev" onclick="btnPrev()" style="left: 10px;">
-		<i class="fas fa-angle-left"></i>
-	</button>
-	<!-- button next & prev -->
-	<button id="prev" class="bntNextPrev" style="display: none;">
+	<button id="prev" class="bntNextPrev">
 		<i class="fas fa-angle-left"></i>
 	</button>
 	<!-- button next & prev -->
@@ -454,99 +329,21 @@ $puesto_curso = get_course_position($unique_course_id, $module_id);
 	<script src="assets/js/trackingmanagern3.js"></script>
 	<script src="assets/js/sessvars.js"> </script>
 	<script src="assets/js/touch-dnd.js"></script>
-	<script src="https://mlearning1.sofactia.com/wp-content/plugins/h5p/h5p-php-library/js/h5p-resizer.js" charset="UTF-8"></script>
 	<script src="assets/js/script.js"></script>
-	<script type="text/javascript" src="assets/js/magnify/js/jquery.magnify.js"></script>
+
 	<script src="assets/js/interactividad.js"></script>
 	
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui-touch-punch/0.2.3/jquery.ui.touch-punch.min.js"></script>
-	<script src="https://cdn.jsdelivr.net/npm/interactjs/dist/interact.min.js"></script>
 	<script>
+
 		createCirclesMovil();
-
-		function allowDrop(event) {
-			event.preventDefault();
-		}
-
-		function drag(event) {
-			event.dataTransfer.setData("text", event.target.id);
-		}
-
-		function drop(event) {
-			event.preventDefault();
-			var data = event.dataTransfer.getData("text");
-			var dropTarget = event.target;
-
-			// Verifica si el destino es una de las zonas de destino
-			if (dropTarget.id === "act2_drop1" || dropTarget.id === "act2_drop2" || dropTarget.id === "act2_drop3" || dropTarget.id === "act2_drop4") {
-				dropTarget.appendChild(document.getElementById(data));
-			}
-		}
-		// function animation slide ------->
-		aniSl19(1);
-		function aniSl19(e) {
-
-			// number of slider
-			var sliders = $(".contentModule > div").length;
-			$('#nSlider').html(sliders - 1);
-			var progressBar = Math.round((e/sliders)*100);
-			$(".progBar > div").css("width",progressBar+"%");
-			if (e === 1) {
-				$("#prev").css('display', 'none');
-				$("#pagIndex").css('display', 'inline-block');
-			} else {
-				$("#pagIndex").css('display', 'none');
-			}
-			if (e === 2) {
-				$("#pagIndex").css('display', 'none');
-				$("#next-btn").on('click', function () {
-					$("#next").click();
-				});
-
-			}
-			console.log(sliders);
-			if (e === sliders) {
-				$("#next").css('display', 'none');
-				// window.location.href = "quiz.php?course_code=<?= $course_code; ?>";
-				window.location.href = "quiz.html";
-			}
-			// change background
-			if ($('.current').hasClass('dividerImg')) {
-				$('body').addClass('darkStyleimg');
-			} else {
-				$('body').removeClass('darkStyleimg');
-			}
-
-
-			// chenge background
-			if ($('.current').hasClass('dividerBg')) {
-				$('body').addClass('darkStyle');
-				$('.english-hints').addClass('white-text');
-				$('.contCircleBar').addClass('back-color-progress');
-			} else {
-				$('body').removeClass('darkStyle');
-				$('.english-hints').removeClass('white-text');
-				$('.contCircleBar').removeClass('back-color-progress');
-			}
-		}
-
-		// function redirect pag index
 		function btnPrev() {
 			// window.location.href = "index.php?course_code=<?= $course_code; ?>";
 			window.location.href = "index.html";
 		};
 
-		// trackingManager.init({
-		// 	'trackClass': '.track-element',
-		// 	'progressEl': '#progreso_01'
-		// },
-		// 	'<?= $CI->session->userdata('employee_data')['user_id']; ?>', '<?= $unique_course_id; ?>', '<?= $module_id; ?>');
-
-		// sessvars.fullname = "<?= $CI->session->userdata('employee_data')['fullname']; ?>";
-		// sessvars.id_empleado = "<?= $CI->session->userdata('employee_data')['user_id']; ?>";
-
-		// document.addEventListener('visibilitychange', handleVisibilityChange, false);
-
+		$(".btn-finalizar").on("click", function(){
+			window.location.href = "fin.html";
+		});
 
 	</script>
 </body>
