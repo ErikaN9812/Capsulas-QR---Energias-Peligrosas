@@ -746,7 +746,7 @@ button.btn-sm {
     margin: 0 auto;
     position: relative;
     display: grid;
-    grid-template-columns: 210px 1fr 55px 80px 55px;
+    grid-template-columns: 410px 1fr;
     align-items: center;
     text-align: center;
     padding: 0 10px;
@@ -812,7 +812,7 @@ button.btn-sm {
         display: none;
     }
     .contentHeader > div:nth-child(1) {
-        grid-template-columns: 120px 1fr 1px 80px 55px;
+        grid-template-columns: 1fr;
     }
 }
 .fdMn {
