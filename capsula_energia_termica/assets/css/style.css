@@ -456,7 +456,7 @@ button.btn {
     border-radius: 30px;
     border: none;
     font-size: 16px;
-    color: #fff !important;
+    color: #fff ;
     box-shadow: rgb(0 160 175 / 30%) 0px 8px 24px;
 }
 
