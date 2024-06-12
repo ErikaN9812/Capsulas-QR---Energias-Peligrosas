@@ -1985,3 +1985,13 @@ iframe:after {
     .actVorF .btn {
       margin: 10px;
     }
+
+
+
+    @media(max-width: 734px){
+        .actVorF .itemQ {
+            display: none;
+            padding: 5px;
+        }
+
+    }

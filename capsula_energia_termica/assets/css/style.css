@@ -2030,3 +2030,16 @@ iframe:after {
     .actVorF .btn {
       margin: 10px;
     }
+
+
+    @media(max-width: 734px){
+        .actVorF .itemQ {
+         
+            padding: 5px;
+        }
+
+        .parrafo-center{
+            line-height: 1.2em;
+        }
+
+    }
