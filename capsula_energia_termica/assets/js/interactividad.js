@@ -9,9 +9,31 @@ $(document).ready(function() {
     setTimeout(() => {
         $(".actVorF .tol").html($(".itemQ").length);
     }, "2000");
-
-  
 });
+
+
+function reiniciarActividad(el) {
+    corret = 0;
+    $(".actFin").hide();
+    $(".btn-reintentar").hide();
+    $('.btn-finalizar').attr('disabled', true);
+    $(".itemQ").removeClass("hideT view");
+    $(".itemQ").removeClass("view");
+
+    $(el).parents(".itemQ").addClass("hideT");
+    $(".actVorF .inc").html(1);
+
+    let view = ".actVorF > div:nth-child(2)";
+    $(view).addClass("view");
+
+    for (let i = 1; i <= 4; i++) {
+      let imgID = "#img-copast-" + (i < 10 ? "0" : "") + i;
+    
+      $(imgID).attr("src", "assets/img/ar_activador.jpg");
+      
+    }
+  }
+
 
 let corret = 0;
   function actVorF(el, res) {
@@ -35,18 +57,24 @@ let corret = 0;
       if ($(".itemQ").length == $(".hideT").length) {
         $(".actVorF .inc").html($(".hideT").length);
         $(".actFin").show();
-        $(".btn-reintentar").show();
         $(".actFin .p-res").css("font-size", "30px");
         $(".actFin .p-res").css("text-align", "center");
         $(".actFin h1").css("text-align", "center");
         $(".actFin button").css("text-align", "center");
         $(".actFin h1").html(corret + " de " + $(".itemQ").length);
         $('.btn-finalizar').attr('disabled', false);
-        // localStorage.setItem("slider28", "ok");
+
+        $('#numero_preguntas').val($(".hideT").length);
+        $('#preguntas_correctas').val(corret);
+
+        if(corret < $(".hideT").length){
+            $(".btn-reintentar").show();
+        }
+
       }
       $(".actVorF button").removeAttr("disabled");
     }, "1000");
-  }
+}
 
 
 function aniSl19(e) {
