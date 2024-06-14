@@ -257,6 +257,11 @@ img {
     height: auto;
 }
 
+.imagencarlfin{
+    width: 90%;
+    margin: 0 auto;
+}
+
 
 video {
     position: relative;
@@ -1959,6 +1964,12 @@ iframe:after {
         margin: 0;
         line-height: 2rem;
         text-align: center;
+    }
+
+    .imagencarlfin{
+        width: 100%;
+        margin: 0 auto;
+        padding-top: 5%;
     }
 
     }
