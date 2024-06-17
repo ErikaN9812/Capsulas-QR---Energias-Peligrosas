@@ -101,29 +101,35 @@
 				<div class="row">
 					<div>
 						<p class="indPag">
-							<a href="#">Video</a>
+							<a href="#">Cápsula de Refuerzo QR</a>
 						</p>
 						<span class="indPagMb"></span>
-					</div>
-					<div class="col-lg-6 col-md-12">
-						<h1 class="tituloh1-center">Energia Quimica</h1>
+					</div>	
+					<div class="col-lg-12 col-md-12">
+						<h1 class="tituloh1-center">Energía Eléctrica </h1>
 						<hr>
-						<i class="inst mb-2">Veamos este video de Energía Electrica </i>		
+						<p class="parrafo-center">Observa atentamente este video que te permitirá conocer este tipo de ENERGÍA PELIGROSA en nuestra operación, y las recomendaciones para prevenir sus riesgos:</p>		
+					</div>	
+					
+					<div class="col-lg-6 col-md-12">
+						
 						<div class="media-espanol contenedor-center">
-							<video controls poster class="mx-auto videocontainer">
+							<video controls poster="assets/img/poster.jpg" class="mx-auto videocontainer">
 								<source src="assets/video/Energia_Electrica.mp4" type="video/mp4">
 							</video>
 						</div>
 						<div class="media-ingles contenedor-center">
-							<video controls poster class="mx-auto videocontainer">
-								<source src="assets/video/Energia_Neumatica_Ingles.mp4" type="video/mp4">
+							<video controls poster="assets/img/poster_ingles.jpg" class="mx-auto videocontainer">
+								<source src="assets/video/Energia_Electrica_ingles.mp4" type="video/mp4">
 							</video>
 						</div>
+						<i class="inst mb-2 mobile-mostrar">Continuemos, haz clic en las flechas para avanzar</i>		
 					</div>
-
+						
 					<div class="col-lg-6 col-md-12 pc-mostrar">
 						<img src="assets/img/Carl-levantando-trompita.png" alt="" class="imagen-80">
 					</div>
+
 				</div>
 			</div>
 		<!--End slider01 Reflexionemos-->
@@ -139,162 +145,40 @@
 				</div>
 			<div class="col-lg-6 col-md-12">
 				<h1 class="tituloh1-center">Actividad de refuerzo</h1>
-				<p>Con base en el video que viste anteriormente, realiza la actividad </p>
+				<p class="parrafo-center" >Ahora apliquemos lo visto en el video anterior, realizando esta actividad de refuerzo</p>
 				<img src="assets/img/pastilla.png" alt="" class="imagen-40 pc-mostrar">
 			</div>
 			<div class="col-lg-6 col-md-12">
-
-				<i class="inst mb-2">Selecciona si es Verdadero o Falso según el video que has visto anteriormente</i>
-				
-				<div class="actVorF ">
-					<div class="counta">
-						<span class="inc">1</span>/<span class="tol"></span>
+				<i class="inst mb-2">Según el texto, arrastra la palabra correspondiente al espacio disponible para completar el 100% de la frase:</i>
+				<div class="ctActivityDragDrop">
+					<div>
+					  <div class="listOpcDrop">
+						<p class="mt-2">Debe evitarse la utilización de equipos <span id="drop1"><!--eléctricos --></span> en caso de lluvia o humedad cuando los <span id="drop2"><!--cables--></span> 
+							u otro material eléctrico atraviesen  <span id="drop3"><!--charcos--></span>, los pies pisen agua o alguna parte del cuerpo esté mojada.
+							<br>En ambientes <span id="drop4"><!--húmedos--></span> hay que asegurarse de que todos los elementos de la instalación responden a las condiciones de utilización.
+							<br>Debe evitarse realizar reparaciones <span id="drop5"><!--provisionales--></span>. Los cables <span id="drop6"><!--dañados--></span> hay que reemplazarlos por otros nuevos. 
+						    Toda máquina portátil eléctrica deberá disponer de un sistema de <span id="drop6"><!--protección--></span>. El más usual es el doble aislamiento.</p>
+					  </div>
 					</div>
-					<div class="itemQ view">
-						<div class="row">
-						<div class="col-lg-8 col-md-6"  style="display: flex; justify-content: center;">
-						<p ><b>Tarea 1</b>
-							<br>
-							Cumplir los requerimientos de la licencia ambiental y los requisitos de PMA 
-						</p>
-						</div>
-						<div class="col-lg-4 col-md-6 text-center" style="display: flex; justify-content: center;">
-						<img src="assets/img/ar_activador.jpg" id="img-copast-01">
-						</div>
-						</div>
-						<hr>
-						<div class="check mt-2 text-center"  style="display: flex; justify-content: center;">
-							<button class="btn" onclick="actVorF(this, 'correct')">Verdadero</button>
-							<button class="btn" onclick="actVorF(this, 'incorrect')">Falso</button>
-						</div>
+					<div class="listOpcDrag mt-3">
+					  <span id="drag4">húmedos</span>
+					  <span id="drag2">cables</span>
+					  <span id="drag3">charcos</span>
+					  <span id="drag5">provisionales</span>
+					  <span id="drag1">eléctricos</span>
+					  <span id="drag7">protección</span>
+					  <span id="drag6">dañados</span>
 					</div>
-					<div class="itemQ">
-						<div class="row">
-							<div class="col-lg-8 col-md-6"  style="display: flex; justify-content: center;">
-								<p> <b>Tarea 2</b>
-									<br>
-									Diseñar las actividades del proyecto dando cumplimiento a licencia ambiental y el PMA 
-								</p>
-							</div>
-							<div class="col-lg-4 col-md-6 text-center" style="display: flex; justify-content: center;">
-									<img src="assets/img/ar_activador.jpg" id="img-copast-02">
-							</div>
-						</div>
-						<hr>
-						<div class="check mt-2 text-center"  style="display: flex; justify-content: center;">
-							<button class="btn" onclick="actVorF(this, 'incorrect')">Verdadero</button>
-							<button class="btn" onclick="actVorF(this, 'correct')">Falso</button>
-						</div>
+					<div class="ctActivityDragDropFny" style="display: none;">
+					  <h4 class="text-center">Correcto !!</h4>
 					</div>
-
-					<div class="itemQ">
-						<div class="row">
-							<div class="col-lg-8 col-md-6"  style="display: flex; justify-content: center;">
-								<p> <b>Tarea 3</b>
-									<br>
-									Socializar la licencia ambiental y el PMA con los trabajadores 
-								</p>
-							</div>
-							<div class="col-lg-4 col-md-6 text-center" style="display: flex; justify-content: center;">
-								<img src="assets/img/ar_activador.jpg" id="img-copast-03">
-							</div>
-						</div>
-						<hr>
-						<div class="check mt-2 text-center"  style="display: flex; justify-content: center;">
-							<button class="btn" onclick="actVorF(this, 'correct')">Durante</button>
-							<button class="btn" onclick="actVorF(this, 'incorrect')">Falso</button>
-						</div>
-					</div>
-
-					<div class="itemQ">
-						<div class="row">
-							<div class="col-lg-8 col-md-6"  style="display: flex; justify-content: center;">
-								<p ><b>Tarea 4</b>
-									<br>
-									Pagar tasas por uso de agua y por vertimientos de aguas residuales 
-								</p>
-							</div>
-							<div class="col-lg-4 col-md-6 text-center" style="display: flex; justify-content: center;">
-								<img src="assets/img/ar_activador.jpg" id="img-copast-04">
-							</div>
-						</div>
-						<hr>
-						<div class="check mt-2 text-center"  style="display: flex; justify-content: center;">
-							<button class="btn" onclick="actVorF(this, 'incorrect')">Durante</button>
-							<button class="btn" onclick="actVorF(this, 'correct')">Falso</button>
-						</div>
-					</div>
-					<div class="itemQ">
-						<div class="row">
-							<div class="col-lg-8 col-md-6"  style="display: flex; justify-content: center;">
-								<p ><b>Tarea 5</b>
-									<br>
-									Tener en cuenta restricciones y limitaciones ambientales para la ubicación del proyecto 
-								</p>
-							</div>
-							<div class="col-lg-4 col-md-6 text-center" style="display: flex; justify-content: center;">
-								<img src="assets/img/ar_activador.jpg" id="img-copast-05">
-							</div>
-						</div>
-						<hr>
-						<div class="check mt-2 text-center"  style="display: flex; justify-content: center;">
-							<button class="btn" onclick="actVorF(this, 'incorrect')">Durante</button>
-							<button class="btn" onclick="actVorF(this, 'correct')">Falso</button>
-						</div>
-					</div>
-
-					<div class="itemQ">
-						<div class="row">
-							<div class="col-lg-8 col-md-6"  style="display: flex; justify-content: center;">
-								<p ><b>Tarea 6</b>
-									<br>
-									Socializar la licencia ambiental y el PMA con las comunidades, gobiernos locales y contratistas
-								</p>
-							</div>
-							<div class="col-lg-4 col-md-6 text-center" style="display: flex; justify-content: center;">
-						
-								<img src="assets/img/ar_activador.jpg" id="img-copast-06">
-							</div>
-						</div>
-						<hr>
-						<div class="check mt-2 text-center"  style="display: flex; justify-content: center;">
-							<button class="btn" onclick="actVorF(this, 'correct')">Antes</button>
-							<button class="btn" onclick="actVorF(this, 'incorrect')">Verdadero</button>
-						</div>
-					</div>
-
-					<div class="itemQ">
-						<div class="row">
-							<div class="col-lg-8 col-md-6"  style="display: flex; justify-content: center;">
-								<p ><b>Tarea 7</b>
-									<br>
-									Socializar el plan de gestión del riesgo con las comunidades y el gobierno local 
-								</p>
-							</div>
-							<div class="col-lg-4 col-md-6 text-center" style="display: flex; justify-content: center;">
-						
-								<img src="assets/img/ar_activador.jpg" id="img-copast-06">
-							</div>
-						</div>
-						<hr>
-						<div class="check mt-2 text-center"  style="display: flex; justify-content: center;">
-							<button class="btn" onclick="actVorF(this, 'incorrect')">Antes</button>
-							<button class="btn" onclick="actVorF(this, 'correct')">Verdadero</button>
-						</div>
-					</div>
-
-					<div class="actFin" style="display:none;">
-						<p class="my-2 p-res">Respuesta correctas</p>
-						<h1></h1>
-					</div>
-					<br>
-					<!-- <div class="btn-reintentar text-center" style="display: flex; justify-content: center; display:none; padding:15px; cursor: pointer;">
-						<a class="btn-reiniciar" onclick="reiniciarActividadGrafica(this);">
-							<i class="fa fa-repeat"></i> Reiniciar</button></a>
-					</div> -->
-
 				</div>
-				<button class="btn btn-finalizar" disabled style="color: #fff; background: #009A3D; padding: 10px 30px; border-radius: 30px 0px 30px 30px; border: none; font-size: 1.2rem; box-shadow: rgb(0 160 175 / 30%) 0px 8px 24px;">Finalizar</button>
+				<div class="pc-slideflex2">
+					<button class="btn btn-validar"><i class="fas fa-check"></i> Validar</button>
+					<button class="btn btn-reiniciar"> <i class="fas fa-sync"></i> Reiniciar</button>
+				</div>
+				<br>
+			  <button class="btn btn-finalizar" disabled style="color: #fff; background: #009A3D; padding: 10px 30px; border-radius: 30px 0px 30px 30px; border: none; font-size: 1.2rem; box-shadow: rgb(0 160 175 / 30%) 0px 8px 24px;">Finalizar</button>
 			</div>
 			</div>
 		</div>
