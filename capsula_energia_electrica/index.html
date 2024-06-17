@@ -63,22 +63,21 @@
         text-align: center;
       }
       button {
-        position: absolute;
-        z-index: 3;
-        max-width: 250px;
-        left: 0;
-        right: 0;
-        margin: 0 auto;
-        bottom: 10%;
-        color: #fff !important;
-        background: #009A3D;
+        color: #ffffff;
+        background: #ffbd06;
         padding: 10px 30px;
         border-radius: 30px 0px 30px 30px;
         border: none;
-        font-size: 2.2rem;
+        font-size: 22px;
         box-shadow: rgb(0 160 175 / 30%) 0px 8px 24px;
+        max-width: 200px;
+        z-index: 3;
+        left: 0;
+        right: 0;
+        margin: 0 auto;
       }
-      button:hover {
+
+        button:hover {
         cursor: pointer;
         filter: grayscale(50%);
       }
@@ -126,7 +125,7 @@
       .imgpastilla{
           padding-top: 5%;
           padding-bottom: 5%;
-          width: 45%;
+          width: 60%;
           margin: 0 auto;
       }
       .labelform{
@@ -170,6 +169,29 @@
           .mobile-mostrar {
               display: block;
           }
+
+          .imgpastilla{
+          padding-top: 5%;
+          padding-bottom: 5%;
+          width: 80%;
+          margin: 0 auto;
+          }
+
+          button {
+            position: absolute;
+          color: #ffffff;
+          background: #ffbd06;
+          padding: 10px 30px;
+          border-radius: 30px 0px 30px 30px;
+          border: none;
+          font-size: 22px;
+          box-shadow: rgb(0 160 175 / 30%) 0px 8px 24px;
+          max-width: 200px;
+          z-index: 3;
+          left: 0;
+          right: 0;
+          margin: 0 auto;
+        }
       }
   
       .icon-circle {
@@ -206,7 +228,7 @@
         }
         .column {
           width: 100%;
-          margin-bottom: 20px;
+          margin-bottom: 5%;
         }
       }
       @media (max-width: 734px) {
@@ -241,25 +263,22 @@
       <div class="columns">
         <div class="column">
           <img src="assets/img/logoW.png" class="logo-home">
-		  <div class="displayflex">
-			<div class="icon-circle">
-				<i class="fa-2x fas fa-flask" aria-hidden="true"></i>
-			</div>
-			<img src="assets/img/pastilla.png" alt="" class="imgpastilla">
-		  </div>
-			
-          <h1 class="titulo" style="color: #badde1">Cápsula de refuerzo de Energía Química </h1>
+          <h1 class="titulo mostrar-web" style="color: #badde1">Cápsula de refuerzo de Energía Eléctrica </h1>
+          <img src="assets/img/pastilla_electrica.png" alt="" class="imgpastilla">
+
+          <h1 class="titulo mostrar-mobile" style="color: #badde1; line-height: 1.3em;">Cápsula de refuerzo de <br>Energía Eléctrica </h1>
+          <hr style="width: 80%; margin: 0 auto; margin-top: 2%;" class="mobile-mostrar">
           <br>
-		  <div class="mobile-mostrar">
-		  <p class="parrafo">Hola, continuemos con nuestro aprendizaje sobre las Energías Peligrosas en nuestra operación</p>
-          <p class="parrafo">Ingresa tus datos para empezar</p>
-		  </div>
+          <div class="mobile-mostrar">
+            <p class="parrafo">Hola, continuemos con nuestro aprendizaje sobre las Energías Peligrosas en nuestra operación</p>
+            <p class="parrafo">Ingresa tus datos para empezar</p>
+          </div>
         </div>
         <div class="column">
-			<div class="pc-mostrar">
-				<p class="parrafo">Hola, continuemos con nuestro aprendizaje sobre las Energías Peligrosas en nuestra operación</p>
-				<p class="parrafo">Ingresa tus datos para empezar</p>
-			</div>
+          <div class="pc-mostrar">
+            <p class="parrafo">Hola, continuemos con nuestro aprendizaje sobre las Energías Peligrosas en nuestra operación</p>
+            <p class="parrafo">Ingresa tus datos para empezar</p>
+          </div>
 
           <div class="form-label">
             <label for="nombre" class="labelform">Nombre Completo:</label>
@@ -268,7 +287,10 @@
             <label for="cedula" class="labelform">Cédula:</label>
             <input type="number" id="cedula" name="cedula" required class="inputform">
             
-            <button class="btn btn-enviar" style="color: #fff; background: #009A3D; padding: 10px 30px; border-radius: 30px 0px 30px 30px; border: none; font-size: 1.2rem; box-shadow: rgb(0 160 175 / 30%) 0px 8px 24px;">Enviar</button>
+            <button class="button btn-enviar">Ingresar</button>
+            <br>
+            <br>
+            <br>
           </div>
         </div>
       </div>
