@@ -299,31 +299,39 @@
   <script>
     $( document ).ready(function() {
       $(".btn-enviar").on("click", function(){
-        window.location.href = "actividad.html";
-        // let nombre = $('#nombre').val();
-        // let cedula = $('#cedula').val();  
+        // window.location.href = "actividad.html";
+        let nombre = $('#nombre').val();
+        let cedula = $('#cedula').val();  
 
-        // if(nombre == '' || cedula == ''){
-        //   alert('¡Debe rellenar todos los datos!');
-        //   return false;
-        // }
+        if(nombre == '' || cedula == ''){
+          alert('¡Debe rellenar todos los datos!');
+          return false;
+        }
 
-        // $.ajax({
-        //   type: "POST",
-        //   url: "../../functions_helpers.php?capsula_qr=energia_electrica",
-        //   dataType: "json",
-        //   data:{
-        //     nombre:nombre,
-        //     cedula:cedula
-        //   },
-        //   success: function(res){
-        //     if (res.message === '1') {
-        //       window.location.href = "actividad.php";
-        //     }else{
-        //       window.reload();
-        //     }
-        //   }
-        // });    
+        $.ajax({
+          type: "POST",
+          url: "../../functions_helpers.php?capsula_qr=energia_electrica",
+          dataType: "json",
+          data:{
+            nombre:nombre,
+            cedula:cedula
+          },
+          success: function(res){
+            if (res.message === '1') {
+
+            let params = new URLSearchParams({
+              nombre_capsula: res.nombre_capsula,
+              cedula: res.cedula
+            }).toString();
+            
+              window.location.href = "actividad.php?" + params;
+            }else if(res.message == '2'){
+              window.location.href = "realizado.php";
+            }else{
+              window.reload();
+            }
+          }
+        });    
       });
     });
   </script>

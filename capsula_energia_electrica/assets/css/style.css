@@ -1799,6 +1799,17 @@ iframe:after {
       font-weight: bold;
   }
 
+  .correctAnswer {
+    background-color: #009e25 !important;
+    border: 1px solid green !important;
+    color: white !important;
+  }
+  .incorrectAnswer {
+    background-color: #a34f56 !important;
+    border: 1px solid red !important;
+    color: white !important;
+  }
+
     	  
 /* Estilo personalizado para las ventanas emergentes - TOUR*/
 	.custom-tooltip {

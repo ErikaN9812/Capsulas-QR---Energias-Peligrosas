@@ -1,6 +1,25 @@
+<?php
+	$CI = require('../../ci_instance.php');
+	require('../../config.php');
+
+	$cedula = $CI->db->escape($_GET['cedula']);
+	$nombre_capsula = $CI->db->escape($_GET['nombre_capsula']);
+
+	$sql = "SELECT *
+			FROM capsulas_qr 
+			WHERE cedula = $cedula
+			AND nombre_capsula = $nombre_capsula 
+			AND preguntas_correctas IS NOT NULL";
+
+	$realizado = @$CI->db->query($sql)->result_array();
+
+	if(!empty($realizado)){
+		header("Location: realizado.php");
+		exit();
+	}
+?>
 <!DOCTYPE html>
 <html>
-
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -54,7 +73,8 @@
 </head>
 
 <body>
-
+	<input type="text" id="nombre_capsula" value="<?=$nombre_capsula = isset($_GET['nombre_capsula']) ? $_GET['nombre_capsula'] : '';?>" hidden>
+	<input type="text" id="cedula" value="<?=isset($_GET['cedula']) ? $_GET['cedula'] : '';?>" hidden>
 	<!-- header -->
 	<div class="contentHeader">
 		<div>
@@ -198,10 +218,15 @@
 						</select>
 					  </span>. El más usual es el doble aislamiento.
 					</p>
-				  </div>
+				</div>
+				<br>
+				<div style="text-align:center;">
+					<p hidden id="p_respuestas"><strong><span id="respuestas_correctas"></span> respuestas correctas de 7</strong></p>
+				</div>
+				<br>
 				<div class="pc-slideflex2">
-					<button class="btn btn-validar"><i class="fas fa-check"></i> Validar</button>
-					<button class="btn btn-reiniciar"> <i class="fas fa-sync"></i> Reiniciar</button>
+					<button class="btn btn-validar" onclick="validateSelects();" ><i class="fas fa-check"></i> Validar</button>
+					<button class="btn btn-reiniciar" onclick="resetSelects();"> <i class="fas fa-sync"></i> Reiniciar</button>
 				</div>
 				<br>
 			  <button class="btn btn-finalizar" disabled style="color: #fff; background: #009A3D; padding: 10px 30px; border-radius: 30px 0px 30px 30px; border: none; font-size: 1.2rem; box-shadow: rgb(0 160 175 / 30%) 0px 8px 24px;">Finalizar</button>
@@ -240,20 +265,38 @@
 	<script src="assets/js/sessvars.js"> </script>
 	<script src="assets/js/touch-dnd.js"></script>
 	<script src="assets/js/script.js"></script>
-
 	<script src="assets/js/interactividad.js"></script>
 	
 	<script>
 
 		createCirclesMovil();
-		function btnPrev() {
-			// window.location.href = "index.php?course_code=<?= $course_code; ?>";
-			window.location.href = "index.html";
-		};
 
 		$(".btn-finalizar").on("click", function(){
-			window.location.href = "fin.html";
-		});
+			let nombre_capsula = $('#nombre_capsula').val();
+			let cedula = $('#cedula').val();  
+			let numero_preguntas = 7;  
+			let preguntas_correctas_2 = $('#respuestas_correctas').text();  
+
+			$.ajax({
+				type: "POST",
+				url: "../../functions_helpers.php?capsula_qr=energia_termica&update_capsula=1",
+				dataType: "json",
+				data:{
+					nombre_capsula:nombre_capsula,
+					cedula:cedula,
+					numero_preguntas:numero_preguntas,
+					preguntas_correctas:preguntas_correctas_2,
+				},
+				success: function(res){
+					if (res.message == '1') {
+						window.location.href = "fin.php";
+					}else{
+						window.reload();
+
+					}
+				}
+			});    
+      });
 
 	</script>
 </body>
