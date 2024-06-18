@@ -139,16 +139,65 @@ function pausarMultimedia(){
 
     });
 }
-
+var contActividad = 0;
+var contActividadCorrectas = 0; 
 /*actividad seleccionar imagenes*/
 function actSelectImg(el, data) {
-    $(el).addClass(data).find('.resAct').attr('src','assets/img/' + data + '.png');
-    setTimeout(() => {
-      if ($('.actSelectImg .check').length == $('.actSelectImg .checkAct').length) {
-        $('.actSelectImg .result').show();
-        $('.actSelectImg .good').html(($('.actSelectImg .checkAct').length - $('.actSelectImg .xmarkAct').length));
-        $('.actSelectImg .total').html($('.actSelectImg .check').length);
-        $('.actSelectImg .itemAct').removeAttr('onclick');
-      }
-    }, "200");
-  }
+
+    if(contActividad < 3){
+        $(el).addClass(data).find('.resAct').attr('src','assets/img/' + data + '.png');
+        contActividad++;
+    }
+
+    if(data=='checkAct'){
+        contActividadCorrectas++;
+        $('#respuestas_correctas').text(contActividadCorrectas);
+    }
+
+    if (contActividad >= 3) {
+        $('.actSelectImg .itemAct').not('.checkAct, .xmarkAct').addClass('back-gris');
+        $('.btn-finalizar').attr('disabled',false);
+    }
+  } 
+  
+function reiniciarActividad(){ 
+    $('.actSelectImg').empty();
+
+    var newContent = `
+        <div class="grid-container">
+            <div class="itemAct xmark" onclick="actSelectImg(this, 'xmarkAct')"> 
+                <img src="assets/img/slide_1.jpg"> <!--¡PIÉNSALO BIEN! Este no es un ejemplo de energía hidráulica.-->
+                <img class="resAct" src="">
+            </div>
+            <div class="itemAct check" onclick="actSelectImg(this, 'checkAct')"> 
+                <img src="assets/img/slide_2.jpg">  <!--¡ES CORRECTO! Es un ejemplo de energía hidráulica.-->
+                <img class="resAct" src="">
+            </div>
+            <div class="itemAct xmark" onclick="actSelectImg(this, 'xmarkAct')">
+                <img src="assets/img/slide_3.jpg"> <!--¡PIÉNSALO BIEN! Este no es un ejemplo de energía hidráulica.-->
+                <img class="resAct" src="">
+            </div>
+            <div class="itemAct check" onclick="actSelectImg(this, 'checkAct')">
+                <img src="assets/img/slide_4.jpg"> <!--¡ES CORRECTO! Es un ejemplo de energía hidráulica.-->
+                <img class="resAct" src="">
+            </div>
+            <div class="itemAct check" onclick="actSelectImg(this, 'checkAct')">
+                <img src="assets/img/slide_5.jpg"> <!--¡ES CORRECTO! Es un ejemplo de energía hidráulica.-->
+                <img class="resAct" src="">
+            </div>
+            <div class="itemAct xmark" onclick="actSelectImg(this, 'xmarkAct')"> 
+                <img src="assets/img/slide_6.jpg"> <!--¡PIÉNSALO BIEN! Este no es un ejemplo de energía hidráulica.-->
+                <img class="resAct" src="">
+            </div>
+        </div>
+
+        <div style="text-align:center;">
+            <p><strong><span id="respuestas_correctas">0</span> respuestas correctas de 3</strong></p>
+        </div>
+    `;
+
+    $(".actSelectImg").append(newContent);
+    contActividad = 0;
+    contActividadCorrectas = 0; 
+    $('.btn-finalizar').attr('disabled',true);
+}

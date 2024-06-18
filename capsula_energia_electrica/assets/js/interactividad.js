@@ -10,7 +10,7 @@ $(document).ready(function() {
         $(".actVorF .tol").html($(".itemQ").length);
     }, "2000");
 
-  
+    populateSelects();
 });
 
 let corret = 0;
@@ -141,85 +141,6 @@ function pausarMultimedia(){
 }
 
 
-/*arrastrar palabras*/
-// item 1
-$("#drag1").draggable({
-    revert: 'invalid',
-    snap: '#drop1',
-    snapMode: 'corner',
-    snapTolerance: '22'
-  });
-  $("#drop1").droppable({
-    accept: '#drag1'
-  }).on('droppable:drop',function(e){
-    $(this).addClass("corret");
-  });
-
-  // item 2
-  $("#drag2").draggable({
-    revert: 'invalid',
-    snap: '#drop2',
-    snapMode: 'corner',
-    snapTolerance: '22'
-  });
-  $("#drop2").droppable({
-    accept: '#drag2'
-  }).on('droppable:drop',function(e){
-    $(this).addClass("corret");
-  });
-
-  // item 3
-  $("#drag3").draggable({
-    revert: 'invalid',
-    snap: '#drop3',
-    snapMode: 'corner',
-    snapTolerance: '22'
-  });
-  $("#drop3").droppable({
-    accept: '#drag3'
-  }).on('droppable:drop',function(e){
-    $(this).addClass("corret");
-  });
-
-  // item 4
-  $("#drag4").draggable({
-    revert: 'invalid',
-    snap: '#drop4',
-    snapMode: 'corner',
-    snapTolerance: '22'
-  });
-  $("#drop4").droppable({
-    accept: '#drag4'
-  }).on('droppable:drop',function(e){
-    $(this).addClass("corret");
-  });
-
-  // item 5
-  $("#drag5").draggable({
-    revert: 'invalid',
-    snap: '#drop5',
-    snapMode: 'corner',
-    snapTolerance: '22'
-  });
-  $("#drop5").droppable({
-    accept: '#drag5'
-  }).on('droppable:drop',function(e){
-    $(this).addClass("corret");
-  });
-
-  // item 6
-  $("#drag6").draggable({
-    revert: 'invalid',
-    snap: '#drop6',
-    snapMode: 'corner',
-    snapTolerance: '22'
-  });
-  $("#drop6").droppable({
-    accept: '#drag6'
-  }).on('droppable:drop',function(e){
-    $(this).addClass("corret");
-  });
-
 /*Lista despegable*/
 const options = [
   'charcos',
@@ -230,6 +151,17 @@ const options = [
   'cables',
   'dañados',
 ];
+
+const correctAnswers = {
+  drop1: 'eléctricos',
+  drop2: 'cables',
+  drop3: 'charcos',
+  drop4: 'húmedos',
+  drop5: 'provisionales',
+  drop6: 'dañados',
+  drop7: 'protección'
+};
+
 
 const selects = document.querySelectorAll('.word-select');
 
@@ -262,14 +194,40 @@ function resetSelects() {
     select.value = '';
     Array.from(select.options).forEach(option => {
       option.style.display = 'block';
+      select.classList.remove('incorrectAnswer');
+      select.classList.remove('correctAnswer');
+
     });
   });
+
+  $('#p_respuestas').attr('hidden', true);
+  $('.btn-finalizar').attr('disabled', true);
+  respuestas_correctas = 0;
+  $('#respuestas_correctas').text(0);
 }
 
 selects.forEach(select => {
   select.addEventListener('change', updateSelects);
 });
 
-document.addEventListener('DOMContentLoaded', () => {
-  populateSelects();
-});
+
+function validateSelects() {
+  let respuestas_correctas = 0;
+  selects.forEach(select => {
+    const selectId = select.id;
+
+    if (select.value === correctAnswers[selectId]) {
+      select.classList.add('correctAnswer');
+      select.classList.remove('incorrectAnswer');
+      respuestas_correctas++;
+    } else {
+      select.classList.add('incorrectAnswer');
+      select.classList.remove('correctAnswer');
+    }
+  });
+
+  $('#p_respuestas').attr('hidden', false);
+  $('#respuestas_correctas').text(respuestas_correctas);
+  $('.btn-finalizar').attr('disabled', false);
+  respuestas_correctas = 0;
+}
