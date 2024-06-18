@@ -220,3 +220,56 @@ $("#drag1").draggable({
     $(this).addClass("corret");
   });
 
+/*Lista despegable*/
+const options = [
+  'eléctricos',
+  'cables',
+  'charcos',
+  'húmedos',
+  'provisionales',
+  'dañados',
+  'protección'
+];
+
+const selects = document.querySelectorAll('.word-select');
+
+function populateSelects() {
+  selects.forEach(select => {
+    options.forEach(option => {
+      const opt = document.createElement('option');
+      opt.value = option;
+      opt.textContent = option;
+      select.appendChild(opt);
+    });
+  });
+}
+
+function updateSelects() {
+  const selectedValues = Array.from(selects).map(select => select.value);
+  selects.forEach(select => {
+    Array.from(select.options).forEach(option => {
+      if (selectedValues.includes(option.value) && option.value !== select.value) {
+        option.style.display = 'none';
+      } else {
+        option.style.display = 'block';
+      }
+    });
+  });
+}
+
+function resetSelects() {
+  selects.forEach(select => {
+    select.value = '';
+    Array.from(select.options).forEach(option => {
+      option.style.display = 'block';
+    });
+  });
+}
+
+selects.forEach(select => {
+  select.addEventListener('change', updateSelects);
+});
+
+document.addEventListener('DOMContentLoaded', () => {
+  populateSelects();
+});

@@ -149,30 +149,56 @@
 				<img src="assets/img/pastilla.png" alt="" class="imagen-40 pc-mostrar">
 			</div>
 			<div class="col-lg-6 col-md-12">
-				<i class="inst mb-2">Según el texto, arrastra la palabra correspondiente al espacio disponible para completar el 100% de la frase:</i>
-				<div class="ctActivityDragDrop">
-					<div>
-					  <div class="listOpcDrop">
-						<p class="mt-2">Debe evitarse la utilización de equipos <span id="drop1"><!--eléctricos --></span> en caso de lluvia o humedad cuando los <span id="drop2"><!--cables--></span> 
-							u otro material eléctrico atraviesen  <span id="drop3"><!--charcos--></span>, los pies pisen agua o alguna parte del cuerpo esté mojada.
-							<br>En ambientes <span id="drop4"><!--húmedos--></span> hay que asegurarse de que todos los elementos de la instalación responden a las condiciones de utilización.
-							<br>Debe evitarse realizar reparaciones <span id="drop5"><!--provisionales--></span>. Los cables <span id="drop6"><!--dañados--></span> hay que reemplazarlos por otros nuevos. 
-						    Toda máquina portátil eléctrica deberá disponer de un sistema de <span id="drop6"><!--protección--></span>. El más usual es el doble aislamiento.</p>
-					  </div>
-					</div>
-					<div class="listOpcDrag mt-3">
-					  <span id="drag4">húmedos</span>
-					  <span id="drag2">cables</span>
-					  <span id="drag3">charcos</span>
-					  <span id="drag5">provisionales</span>
-					  <span id="drag1">eléctricos</span>
-					  <span id="drag7">protección</span>
-					  <span id="drag6">dañados</span>
-					</div>
-					<div class="ctActivityDragDropFny" style="display: none;">
-					  <h4 class="text-center">Correcto !!</h4>
-					</div>
-				</div>
+				<i class="inst mb-2">Selecciona la opción correcta en la lista desplegable de acuerdo con el siguiente texto:</i>
+				<div class="activity">
+					<p>
+					  Debe evitarse la utilización de equipos 
+					  <span class="custom-select-wrapper">
+						<select id="drop1" class="custom-select word-select">
+						  <option value="" disabled selected>Seleccione...</option>
+						</select> 
+					  </span>
+					  en caso de lluvia o humedad cuando los 
+					  <span class="custom-select-wrapper">
+						<select id="drop2" class="custom-select word-select">
+						  <option value="" disabled selected>Seleccione...</option>
+						</select>
+					  </span>
+					  u otro material eléctrico atraviesen  
+					  <span class="custom-select-wrapper">
+						<select id="drop3" class="custom-select word-select">
+						  <option value="" disabled selected>Seleccione...</option>
+						</select>
+					  </span>, 
+					  los pies pisen agua o alguna parte del cuerpo esté mojada.
+					  <br>En ambientes 
+					  <span class="custom-select-wrapper">
+						<select id="drop4" class="custom-select word-select">
+						  <option value="" disabled selected>Seleccione...</option>
+						</select>
+					  </span>
+					  hay que asegurarse de que todos los elementos de la instalación responden a las condiciones de utilización.
+					  Debe evitarse realizar reparaciones 
+					  <span class="custom-select-wrapper">
+						<select id="drop5" class="custom-select word-select">
+						  <option value="" disabled selected>Seleccione...</option>
+						</select>
+					  </span>. 
+					  <br>Los cables 
+					  <span class="custom-select-wrapper">
+						<select id="drop6" class="custom-select word-select">
+						  <option value="" disabled selected>Seleccione...</option>
+						</select>
+					  </span>
+					  hay que reemplazarlos por otros nuevos. 
+					  Toda máquina portátil eléctrica deberá disponer de un sistema de 
+					  <span class="custom-select-wrapper">
+						<select id="drop7" class="custom-select word-select">
+						  <option value="" disabled selected>Seleccione...</option>
+						</select>
+					  </span>. El más usual es el doble aislamiento.
+					</p>
+				  </div>
 				<div class="pc-slideflex2">
 					<button class="btn btn-validar"><i class="fas fa-check"></i> Validar</button>
 					<button class="btn btn-reiniciar"> <i class="fas fa-sync"></i> Reiniciar</button>

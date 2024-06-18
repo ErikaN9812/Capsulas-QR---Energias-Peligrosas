@@ -1191,3 +1191,66 @@
       }
     }
   }
+
+
+  /*actividad lista despegable*/
+
+  .activity {
+    padding: 2%;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  .activity p {
+    font-size: 16px;
+    font-family: 'Montserrat', Arial, sans-serif;
+    color: #8f8f8f;
+    line-height: 1.5em;
+    text-align: justify;
+  }
+
+  .custom-select-wrapper {
+    position: relative;
+    display: inline-block;
+    width: 100%;
+    max-width: 120px;
+    margin-bottom: 5px;
+  }
+
+  .custom-select {
+    appearance: none;
+    background-color: #fff;
+    border: 1px solid #6b6b6b;
+    border-radius: 4px;
+    padding: 2px;
+    font-size: 14px;
+    color: #3a3a3a;
+    width: 100%;
+    cursor: pointer;
+    outline: none;
+    transition: border-color 0.3s;
+  }
+
+  .custom-select:focus {
+    border-color:  #005ABB;
+  }
+
+  .custom-select-wrapper::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    right: 15px;
+    width: 0;
+    height: 0;
+    pointer-events: none;
+    border-left: 6px solid transparent;
+    border-right: 6px solid transparent;
+    border-top: 6px solid #333;
+    transform: translateY(-50%);
+  }
+
+  .custom-select option {
+    padding: 5px;
+    background-color: #fff;
+    font-size: 15px;
+  }
