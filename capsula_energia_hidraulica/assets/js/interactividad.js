@@ -140,3 +140,15 @@ function pausarMultimedia(){
     });
 }
 
+/*actividad seleccionar imagenes*/
+function actSelectImg(el, data) {
+    $(el).addClass(data).find('.resAct').attr('src','assets/img/' + data + '.png');
+    setTimeout(() => {
+      if ($('.actSelectImg .check').length == $('.actSelectImg .checkAct').length) {
+        $('.actSelectImg .result').show();
+        $('.actSelectImg .good').html(($('.actSelectImg .checkAct').length - $('.actSelectImg .xmarkAct').length));
+        $('.actSelectImg .total').html($('.actSelectImg .check').length);
+        $('.actSelectImg .itemAct').removeAttr('onclick');
+      }
+    }, "200");
+  }

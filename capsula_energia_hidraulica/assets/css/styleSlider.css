@@ -808,31 +808,6 @@
 
 /*--------*/
 /*actSelectImg*/
-.actSelectImg > div {
-    position: relative;
-}
-.actSelectImg .itemAct {
-    max-width: 340px;
-    position: relative;
-    display: inline-block;
-    margin: 10px;
-}
-.actSelectImg .itemAct:hover {
-    cursor: pointer;
-    filter: grayscale(30%);
-    transform: scale(1.01);
-}
-.actSelectImg .itemAct .resAct {
-    position: absolute;
-    max-width: 100px;
-    margin: 0 auto;
-    left: 0;
-    right: 0;
-    top: calc(50% - 50px);
-}
-.actSelectImg .result {
-    display: none;
-}
 
 
 /*--------*/
@@ -1254,3 +1229,69 @@
     background-color: #fff;
     font-size: 15px;
   }
+
+  /*actividad seleccionar imagen*/
+
+  .actSelectImg > div {
+    position: relative;
+}
+.actSelectImg .itemAct {
+    max-width: 340px;
+    position: relative;
+    display: inline-block;
+    margin: 10px;
+    border: 1px solid #223845;
+}
+.actSelectImg .itemAct:hover {
+    cursor: pointer;
+    filter: grayscale(30%);
+    transform: scale(1.01);
+}
+.actSelectImg .itemAct .resAct {
+    position: absolute;
+    margin: 0 auto;
+    max-width: 30%;
+    margin: 0 auto;
+    left: 0;
+    right: 0;
+    top: calc(50% - 50px);
+}
+.actSelectImg .itemAct img {
+  width: 50%;
+  margin: 0 auto;
+}
+.actSelectImg .result {
+    display: none;
+}
+.actSelectImg .itemAct img:nth-child(1) {
+    filter: grayscale(.5);
+}
+
+.grid-container {
+  width: 100%;
+  height: auto;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+  position: relative;
+  min-height: 150px;
+  max-height:  auto;
+  max-width: 100%;
+  margin: 0 auto;
+}
+
+@media screen and (max-width: 734px) {
+  .actSelectImg .itemAct img {
+    width: 100%;
+  }
+
+  .actSelectImg .itemAct .resAct {
+    position: absolute;
+    margin: 0 auto;
+    max-width: 50%;
+    margin: 0 auto;
+    left: 0;
+    right: 0;
+    top: calc(50% - 50px);
+}
+}

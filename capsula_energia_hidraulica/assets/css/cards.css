@@ -497,18 +497,6 @@ body {
             transform: scale(1.01);
         }
 
-.grid-container {
-  width: 50vw;
-  height: 50vh;
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  grid-template-rows: repeat(2, 1fr);
-  position: relative;
-  min-height: 150px;
-  max-height: 300px;
-  max-width: 80%;
-  margin: 0 auto;
-}
 
 .grid-item {
   position: relative;
