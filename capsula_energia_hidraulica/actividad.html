@@ -106,7 +106,7 @@
 						<span class="indPagMb"></span>
 					</div>	
 					<div class="col-lg-12 col-md-12">
-						<h1 class="tituloh1-center">Energía Eléctrica </h1>
+						<h1 class="tituloh1-center">Energía Hidráulica</h1>
 						<hr>
 						<p class="parrafo-center">Observa atentamente este video que te permitirá conocer este tipo de ENERGÍA PELIGROSA en nuestra operación, y las recomendaciones para prevenir sus riesgos:</p>		
 					</div>	
@@ -114,13 +114,13 @@
 					<div class="col-lg-6 col-md-12">
 						
 						<div class="media-espanol contenedor-center">
-							<video controls poster="assets/img/poster.jpg" class="mx-auto videocontainer">
-								<source src="assets/video/Energia_Electrica.mp4" type="video/mp4">
+							<video controls poster="assets/img/poster_hidraulica.jpg" class="mx-auto videocontainer">
+								<source src="assets/video/energia_hidraulica.mp4" type="video/mp4">
 							</video>
 						</div>
 						<div class="media-ingles contenedor-center">
-							<video controls poster="assets/img/poster_ingles.jpg" class="mx-auto videocontainer">
-								<source src="assets/video/Energia_Electrica_ingles.mp4" type="video/mp4">
+							<video controls poster="assets/img/poster_hidraulica_ingles.jpg" class="mx-auto videocontainer">
+								<source src="assets/video/energia_hidraulica_ingles.mp4" type="video/mp4">
 							</video>
 						</div>
 						<i class="inst mb-2 mobile-mostrar">Continuemos, haz clic en las flechas para avanzar</i>		
@@ -149,63 +149,49 @@
 				<img src="assets/img/pastilla.png" alt="" class="imagen-40 pc-mostrar">
 			</div>
 			<div class="col-lg-6 col-md-12">
-				<i class="inst mb-2">Selecciona la opción correcta en la lista desplegable de acuerdo con el siguiente texto:</i>
-				<div class="activity">
-					<p>
-					  Debe evitarse la utilización de equipos 
-					  <span class="custom-select-wrapper">
-						<select id="drop1" class="custom-select word-select">
-						  <option value="" disabled selected>Seleccione...</option>
-						</select> 
-					  </span>
-					  en caso de lluvia o humedad cuando los 
-					  <span class="custom-select-wrapper">
-						<select id="drop2" class="custom-select word-select">
-						  <option value="" disabled selected>Seleccione...</option>
-						</select>
-					  </span>
-					  u otro material eléctrico atraviesen  
-					  <span class="custom-select-wrapper">
-						<select id="drop3" class="custom-select word-select">
-						  <option value="" disabled selected>Seleccione...</option>
-						</select>
-					  </span>, 
-					  los pies pisen agua o alguna parte del cuerpo esté mojada.
-					  <br>En ambientes 
-					  <span class="custom-select-wrapper">
-						<select id="drop4" class="custom-select word-select">
-						  <option value="" disabled selected>Seleccione...</option>
-						</select>
-					  </span>
-					  hay que asegurarse de que todos los elementos de la instalación responden a las condiciones de utilización.
-					  Debe evitarse realizar reparaciones 
-					  <span class="custom-select-wrapper">
-						<select id="drop5" class="custom-select word-select">
-						  <option value="" disabled selected>Seleccione...</option>
-						</select>
-					  </span>. 
-					  <br>Los cables 
-					  <span class="custom-select-wrapper">
-						<select id="drop6" class="custom-select word-select">
-						  <option value="" disabled selected>Seleccione...</option>
-						</select>
-					  </span>
-					  hay que reemplazarlos por otros nuevos. 
-					  Toda máquina portátil eléctrica deberá disponer de un sistema de 
-					  <span class="custom-select-wrapper">
-						<select id="drop7" class="custom-select word-select">
-						  <option value="" disabled selected>Seleccione...</option>
-						</select>
-					  </span>. El más usual es el doble aislamiento.
-					</p>
-				  </div>
+				<i class="inst mb-2">Selecciona las imágenes que corresponden a formas de Energía Hidráulica:</i>
+				<div class="actSelectImg text-center">
+					
+					<div class="grid-container">
+						<div class="itemAct xmark" onclick="actSelectImg(this, 'xmarkAct')"> 
+							<img src="assets/img/slide_1.jpg"> <!--¡PIÉNSALO BIEN! Este no es un ejemplo de energía hidráulica.-->
+							<img class="resAct" src="">
+						</div>
+						<div class="itemAct check track-element" onclick="actSelectImg(this, 'checkAct')"> 
+							<img src="assets/img/slide_2.jpg">  <!--¡ES CORRECTO! Es un ejemplo de energía hidráulica.-->
+							<img class="resAct" src="">
+						</div>
+						<div class="itemAct xmark" onclick="actSelectImg(this, 'xmarkAct')">
+							<img src="assets/img/slide_3.jpg"> <!--¡PIÉNSALO BIEN! Este no es un ejemplo de energía hidráulica.-->
+							<img class="resAct" src="">
+						</div>
+						<div class="itemAct check" onclick="actSelectImg(this, 'checkAct')">
+							<img src="assets/img/slide_4.jpg"> <!--¡ES CORRECTO! Es un ejemplo de energía hidráulica.-->
+							<img class="resAct" src="">
+						</div>
+						<div class="itemAct check" onclick="actSelectImg(this, 'checkAct')">
+							<img src="assets/img/slide_5.jpg"> <!--¡ES CORRECTO! Es un ejemplo de energía hidráulica.-->
+							<img class="resAct" src="">
+						</div>
+						<div class="itemAct xmark" onclick="actSelectImg(this, 'xmarkAct')"> 
+							<img src="assets/img/slide_6.jpg"> <!--¡PIÉNSALO BIEN! Este no es un ejemplo de energía hidráulica.-->
+							<img class="resAct" src="">
+						</div>
+					</div>
+
+					<div class="result">
+						<p>Respuestas correctas</p>
+						<h4><span class="good"></span>/<span class="total"></span></h4>
+					</div>
+				</div>
 				<div class="pc-slideflex2">
-					<button class="btn btn-validar"><i class="fas fa-check"></i> Validar</button>
 					<button class="btn btn-reiniciar"> <i class="fas fa-sync"></i> Reiniciar</button>
 				</div>
 				<br>
-			  <button class="btn btn-finalizar" disabled style="color: #fff; background: #009A3D; padding: 10px 30px; border-radius: 30px 0px 30px 30px; border: none; font-size: 1.2rem; box-shadow: rgb(0 160 175 / 30%) 0px 8px 24px;">Finalizar</button>
+			  		<button class="btn btn-finalizar" disabled style="color: #fff; background: #009A3D; padding: 10px 30px; border-radius: 30px 0px 30px 30px; border: none; font-size: 1.2rem; box-shadow: rgb(0 160 175 / 30%) 0px 8px 24px;">Finalizar</button>
+			
 			</div>
+
 			</div>
 		</div>
 
