@@ -833,12 +833,41 @@ button.btn-sm {
     .contentHeader .opcMovil .txPg {
         display: none;
     }
+
+/*content header*/
+.contentHeaderfin {
+    width: 100%;
+    position: relative;
+    z-index: 3;
+    height: 70px;
+    background: #e5e5e530;
+    border-bottom: 1px solid #e5e5e5;
+    border-top: 1px solid #e5e5e5;
+}
+.contentHeaderfin > div:nth-child(1) {
+    max-width: 1200px;
+    height: 70px;
+    width: 100%;
+    margin: 0 auto;
+    position: relative;
+    display: grid;
+    grid-template-columns: 400px;
+    align-items: center;
+    text-align: center;
+    padding: 0 10px;
+    border-left: 1px solid #e5e5e5;
+    border-right: 1px solid #e5e5e5;
+}
 @media (max-width:400px) {
     #home {
         display: none;
     }
     .contentHeader > div:nth-child(1) {
         grid-template-columns: 120px 1fr 1px 80px 55px;
+    }
+
+    .contentHeaderfin > div:nth-child(1) {
+        grid-template-columns: 1fr;
     }
 }
 .fdMn {

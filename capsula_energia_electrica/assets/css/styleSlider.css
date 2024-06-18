@@ -1196,7 +1196,7 @@
   /*actividad lista despegable*/
 
   .activity {
-    padding: 1.5%;
+    padding: 2%;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   }
@@ -1250,6 +1250,7 @@
   }
 
   .custom-select option {
-    padding: 10px;
+    padding: 5px;
     background-color: #fff;
+    font-size: 15px;
   }
