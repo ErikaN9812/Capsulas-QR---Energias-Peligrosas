@@ -106,7 +106,7 @@
 						<span class="indPagMb"></span>
 					</div>	
 					<div class="col-lg-12 col-md-12">
-						<h1 class="tituloh1-center">Energía Hidráulica</h1>
+						<h1 class="tituloh1-center">Energía Neumática</h1>
 						<hr>
 						<p class="parrafo-center">Observa atentamente este video que te permitirá conocer este tipo de ENERGÍA PELIGROSA en nuestra operación, y las recomendaciones para prevenir sus riesgos:</p>		
 					</div>	
@@ -114,13 +114,13 @@
 					<div class="col-lg-6 col-md-12">
 						
 						<div class="media-espanol contenedor-center">
-							<video controls poster="assets/img/poster_hidraulica.jpg" class="mx-auto videocontainer">
-								<source src="assets/video/energia_hidraulica.mp4" type="video/mp4">
+							<video controls poster="assets/img/poster_neumatica.png" class="mx-auto videocontainer">
+								<source src="assets/video/Energia_Neumatica.mp4" type="video/mp4">
 							</video>
 						</div>
 						<div class="media-ingles contenedor-center">
-							<video controls poster="assets/img/poster_hidraulica_ingles.jpg" class="mx-auto videocontainer">
-								<source src="assets/video/energia_hidraulica_ingles.mp4" type="video/mp4">
+							<video controls poster="assets/img/poster_neumatica_ingles.png" class="mx-auto videocontainer">
+								<source src="assets/video/Energía_Neumatica_Ingles.mp4" type="video/mp4">
 							</video>
 						</div>
 						<i class="inst mb-2 mobile-mostrar">Continuemos, haz clic en las flechas para avanzar</i>		
@@ -135,7 +135,7 @@
 		<!--End slider01 Reflexionemos-->
 
 		<!--slider 02 actividad-->
-		<div class="container">
+		<div class="container preguntas_01">
 			<div class="row">
 				<div>
 					<p class="indPag">
@@ -149,44 +149,24 @@
 				<img src="assets/img/pastilla.png" alt="" class="imagen-40 pc-mostrar">
 			</div>
 			<div class="col-lg-6 col-md-12">
-				<i class="inst mb-2">De las 6 imágenes disponibles, elige 3 que representen formas de energía hidráulica:</i>
-				<div class="actSelectImg text-center">
-					
-					<div class="grid-container">
-						<div class="itemAct xmark" onclick="actSelectImg(this, 'xmarkAct')"> 
-							<img src="assets/img/slide_1.jpg"> <!--¡PIÉNSALO BIEN! Este no es un ejemplo de energía hidráulica.-->
-							<img class="resAct" src="">
-						</div>
-						<div class="itemAct check track-element" onclick="actSelectImg(this, 'checkAct')"> 
-							<img src="assets/img/slide_2.jpg">  <!--¡ES CORRECTO! Es un ejemplo de energía hidráulica.-->
-							<img class="resAct" src="">
-						</div>
-						<div class="itemAct xmark" onclick="actSelectImg(this, 'xmarkAct')">
-							<img src="assets/img/slide_3.jpg"> <!--¡PIÉNSALO BIEN! Este no es un ejemplo de energía hidráulica.-->
-							<img class="resAct" src="">
-						</div>
-						<div class="itemAct check" onclick="actSelectImg(this, 'checkAct')">
-							<img src="assets/img/slide_4.jpg"> <!--¡ES CORRECTO! Es un ejemplo de energía hidráulica.-->
-							<img class="resAct" src="">
-						</div>
-						<div class="itemAct check" onclick="actSelectImg(this, 'checkAct')">
-							<img src="assets/img/slide_5.jpg"> <!--¡ES CORRECTO! Es un ejemplo de energía hidráulica.-->
-							<img class="resAct" src="">
-						</div>
-						<div class="itemAct xmark" onclick="actSelectImg(this, 'xmarkAct')"> 
-							<img src="assets/img/slide_6.jpg"> <!--¡PIÉNSALO BIEN! Este no es un ejemplo de energía hidráulica.-->
-							<img class="resAct" src="">
-						</div>
+				<i class="inst mb-2">Seleccione las tres (3) recomendaciones que corresponden a la Energía Neumática</i>
+				<div class="ctItem text-parrafocasos" id='actividad_h_04' >
+					<div>
+						<p onclick="Questions4(this, false)">a. El área de recursos humanos no prestará atención a Matías y le dirán que regrese al trabajo.</p> <!--respuesta correcta-->
+						<p onclick="Questions4(this, true)">b. Llevar el pelo largo siempre recogido y bien sujeto.</p> 
+						<p onclick="Questions4(this, true)">c. Aplique el dispositivo de bloqueo asignado, tal como un candado, bridas ciegas deslizantes para mantener el equipo en una posición segura.</p> <!--respuesta correcta-->
+						<p onclick="Questions4(this, true)">d. Antes de iniciar cualquier trabajo en baja tensión, se considerará que todos los cables conductores llevan corriente eléctrica, por lo que se comprobará previamente, mediante un verificador, la ausencia de tensión.</p> <!--respuesta correcta-->
+						<p onclick="Questions4(this, false)">e. Si la máquina o el equipo está en funcionamiento, apáguelo siguiendo los procedimientos normales de apagado del fabricante o del empleador.</p> <!--respuesta correcta-->
 					</div>
-
-					<div class="result">
-						<p>Respuestas correctas</p>
-						<h4><span class="good"></span>/<span class="total"></span></h4>
+					<i class="inst" id='respuesta4' style="display:none;">Mensaje</i>
+					<i class="inst_mal" id='respuesta_mal4' style="display:none;">Mensaje</i>
+					<!-- <button class="btn" id='btn-valid4' onclick="valid4(3)">Validar</button> -->
+					<div style="display: flex;">
+						<button class="btn" id='btn-valid4' onclick="valid4(3)"><i class="fa fa-check"></i> Validar</button>
+						<button class="btn" id="reiniciar4" style="display: none;" onclick="reiniciarActividad($('#actividad_h_04'), [], 2,4)"><i class="fas fa-sync"></i> Reiniciar</button>
 					</div>
 				</div>
-				<div class="pc-slideflex2">
-					<button class="btn btn-reiniciar"> <i class="fas fa-sync"></i> Reiniciar</button>
-				</div>
+				
 				<br>
 			  		<button class="btn btn-finalizar" disabled style="color: #fff; background: #009A3D; padding: 10px 30px; border-radius: 30px 0px 30px 30px; border: none; font-size: 1.2rem; box-shadow: rgb(0 160 175 / 30%) 0px 8px 24px;">Finalizar</button>
 			
