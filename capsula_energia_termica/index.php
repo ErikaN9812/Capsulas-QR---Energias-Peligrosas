@@ -322,9 +322,11 @@
                 nombre_capsula: res.nombre_capsula,
                 cedula: res.cedula
               }).toString();
-
               window.location.href = "actividad.php?" + params;
-            }else{
+
+            }else if(res.message == '2'){
+						  window.location.href = "realizado.php";
+					  }else{
               window.reload();
             }
           }

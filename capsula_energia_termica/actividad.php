@@ -1,3 +1,23 @@
+<?php
+	$CI = require('../../ci_instance.php');
+	require('../../config.php');
+
+	$cedula = $CI->db->escape($_GET['cedula']);
+	$nombre_capsula = $CI->db->escape($_GET['nombre_capsula']);
+
+	$sql = "SELECT *
+			FROM capsulas_qr 
+			WHERE cedula = $cedula
+			AND nombre_capsula = $nombre_capsula 
+			AND preguntas_correctas IS NOT NULL";
+
+	$realizado = @$CI->db->query($sql)->result_array();
+
+	if(!empty($realizado)){
+		header("Location: realizado.php");
+		exit();
+	}
+?>
 <!DOCTYPE html>
 <html>
 
@@ -308,10 +328,11 @@
 					preguntas_correctas:preguntas_correctas,
 				},
 				success: function(res){
-					if (res.message === '1') {
+					if (res.message == '1') {
 						window.location.href = "fin.php";
 					}else{
 						window.reload();
+
 					}
 				}
 			});    
