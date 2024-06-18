@@ -501,8 +501,8 @@ body {
 
 @media (max-width: 768px) {
 .ctActivityDragDrop .listOpcDrop p {
-  line-height: 1.5em;
-  text-align: left; 
+  line-height: 1.8em;
+  text-align: justify; 
   max-width: 100%;
 }
 
