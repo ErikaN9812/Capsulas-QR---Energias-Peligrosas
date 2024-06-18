@@ -222,13 +222,13 @@ $("#drag1").draggable({
 
 /*Lista despegable*/
 const options = [
-  'eléctricos',
-  'cables',
   'charcos',
   'húmedos',
   'provisionales',
+  'eléctricos',
+  'protección',
+  'cables',
   'dañados',
-  'protección'
 ];
 
 const selects = document.querySelectorAll('.word-select');
