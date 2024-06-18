@@ -1,3 +1,23 @@
+<?php
+	$CI = require('../../ci_instance.php');
+	require('../../config.php');
+
+	$cedula = $CI->db->escape($_GET['cedula']);
+	$nombre_capsula = $CI->db->escape($_GET['nombre_capsula']);
+
+	$sql = "SELECT *
+			FROM capsulas_qr 
+			WHERE cedula = $cedula
+			AND nombre_capsula = $nombre_capsula 
+			AND preguntas_correctas IS NOT NULL";
+
+	$realizado = @$CI->db->query($sql)->result_array();
+
+	if(!empty($realizado)){
+		header("Location: realizado.php");
+		exit();
+	}
+?>
 <!DOCTYPE html>
 <html>
 
@@ -54,7 +74,8 @@
 </head>
 
 <body>
-
+	<input type="text" id="nombre_capsula" value="<?=$nombre_capsula = isset($_GET['nombre_capsula']) ? $_GET['nombre_capsula'] : '';?>" hidden>
+	<input type="text" id="cedula" value="<?=isset($_GET['cedula']) ? $_GET['cedula'] : '';?>" hidden>
 	<!-- header -->
 	<div class="contentHeader">
 		<div>
@@ -149,7 +170,7 @@
 				<img src="assets/img/pastilla.png" alt="" class="imagen-40 pc-mostrar">
 			</div>
 			<div class="col-lg-6 col-md-12">
-				<i class="inst mb-2">Selecciona las imágenes que corresponden a formas de Energía Hidráulica:</i>
+				<i class="inst mb-2">De las 6 imágenes disponibles, elige 3 que representen formas de energía hidráulica</i>
 				<div class="actSelectImg text-center">
 					
 					<div class="grid-container">
@@ -157,7 +178,7 @@
 							<img src="assets/img/slide_1.jpg"> <!--¡PIÉNSALO BIEN! Este no es un ejemplo de energía hidráulica.-->
 							<img class="resAct" src="">
 						</div>
-						<div class="itemAct check track-element" onclick="actSelectImg(this, 'checkAct')"> 
+						<div class="itemAct check" onclick="actSelectImg(this, 'checkAct')"> 
 							<img src="assets/img/slide_2.jpg">  <!--¡ES CORRECTO! Es un ejemplo de energía hidráulica.-->
 							<img class="resAct" src="">
 						</div>
@@ -179,16 +200,16 @@
 						</div>
 					</div>
 
-					<div class="result">
-						<p>Respuestas correctas</p>
-						<h4><span class="good"></span>/<span class="total"></span></h4>
+					<div style="text-align:center;">
+						<p><strong><span id="respuestas_correctas">0</span> respuestas correctas de 3</strong></p>
 					</div>
 				</div>
 				<div class="pc-slideflex2">
-					<button class="btn btn-reiniciar"> <i class="fas fa-sync"></i> Reiniciar</button>
+					<button class="btn btn-reiniciar" onclick="reiniciarActividad();"> <i class="fas fa-sync"></i> Reiniciar</button>
+					<button class="btn btn-finalizar" disabled style="color: #fff; background: #009A3D; padding: 10px 30px; border-radius: 30px 0px 30px 30px; border: none; font-size: 1.2rem; box-shadow: rgb(0 160 175 / 30%) 0px 8px 24px;">Finalizar</button>
+				
 				</div>
 				<br>
-			  		<button class="btn btn-finalizar" disabled style="color: #fff; background: #009A3D; padding: 10px 30px; border-radius: 30px 0px 30px 30px; border: none; font-size: 1.2rem; box-shadow: rgb(0 160 175 / 30%) 0px 8px 24px;">Finalizar</button>
 			
 			</div>
 
@@ -232,14 +253,32 @@
 	<script>
 
 		createCirclesMovil();
-		function btnPrev() {
-			// window.location.href = "index.php?course_code=<?= $course_code; ?>";
-			window.location.href = "index.html";
-		};
 
 		$(".btn-finalizar").on("click", function(){
-			window.location.href = "fin.html";
-		});
+			let nombre_capsula = $('#nombre_capsula').val();
+			let cedula = $('#cedula').val();  
+			let numero_preguntas = 3;  
+			let preguntas_correctas = $('#respuestas_correctas').text();  
+
+			$.ajax({
+				type: "POST",
+				url: "../../functions_helpers.php?capsula_qr=energia_hidraulica&update_capsula=1",
+				dataType: "json",
+				data:{
+					nombre_capsula:nombre_capsula,
+					cedula:cedula,
+					numero_preguntas:numero_preguntas,
+					preguntas_correctas:preguntas_correctas,
+				},
+				success: function(res){
+					if (res.message == '1') {
+						window.location.href = "fin.php";
+					}else{
+						window.reload();
+					}
+				}
+			});    
+      	});
 
 	</script>
 </body>
