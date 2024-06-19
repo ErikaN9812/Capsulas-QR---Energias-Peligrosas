@@ -140,3 +140,65 @@ function pausarMultimedia(){
     });
 }
 
+
+/*actividad de seleccion multiple de audios*/
+const correctAnswers = {
+    audio1: true,
+    audio2: false,
+    audio3: true,
+    audio4: false,
+    audio5: true
+};
+
+const userAnswers = {};
+
+function selectAnswer(audioId, answer) {
+    userAnswers[audioId] = answer;
+    const audioItem = document.getElementById(audioId);
+    const btnSi = audioItem.querySelector('.btn-si');
+    const btnNo = audioItem.querySelector('.btn-no');
+
+    if (answer) {
+        btnSi.classList.add('selected');
+        btnNo.classList.remove('selected');
+    } else {
+        btnNo.classList.add('selected');
+        btnSi.classList.remove('selected');
+    }
+}
+
+function validateAnswers() {
+    let correctCount = 0;
+
+    for (const [audioId, correctAnswer] of Object.entries(correctAnswers)) {
+        const userAnswer = userAnswers[audioId];
+        const audioItem = document.getElementById(audioId);
+        const messageDiv = audioItem.querySelector('.message');
+
+        if (userAnswer === correctAnswer) {
+            audioItem.classList.add('correct');
+            correctCount++;
+            if (userAnswer) {
+                messageDiv.innerText = "¡Correcto! Sí corresponde a un tipo de Energía Peligrosa";
+            } else {
+                messageDiv.innerText = "¡Correcto! No pertenece a un tipo de Energía Peligrosa";
+            }
+        } else {
+            audioItem.classList.add('incorrect');
+            messageDiv.innerText = "¡Piénsalo bien! Tu selección es incorrecta.";
+        }
+    }
+
+    const resultDiv = document.getElementById('result');
+    resultDiv.innerText = `Obtuviste ${correctCount} de 5 audios seleccionados correctamente`;
+}
+
+function pauseOtherAudios(currentAudio) {
+    const audios = document.querySelectorAll('audio');
+    audios.forEach(audio => {
+        if (audio !== currentAudio) {
+            audio.pause();
+            audio.currentTime = 0;
+        }
+    });
+}
