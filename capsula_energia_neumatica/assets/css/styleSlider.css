@@ -49,6 +49,9 @@
     top: 2%;
     bottom: 2%;
 }
+#respuesta4{
+  font-weight: bold;
+}
 @media (max-width: 992px) {
     .current > div {
         align-items: center;
