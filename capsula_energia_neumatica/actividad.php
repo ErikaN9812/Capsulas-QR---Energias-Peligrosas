@@ -1,5 +1,5 @@
 <?php
-	/*$CI = require('../../ci_instance.php');
+	$CI = require('../../ci_instance.php');
 	require('../../config.php');
 
 	$cedula = $CI->db->escape($_GET['cedula']);
@@ -16,7 +16,7 @@
 	if(!empty($realizado)){
 		header("Location: realizado.php");
 		exit();
-	}*/
+	}
 ?>
 <!DOCTYPE html>
 <html>
