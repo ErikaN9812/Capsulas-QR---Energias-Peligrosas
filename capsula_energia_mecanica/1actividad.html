@@ -1,25 +1,6 @@
-<!--<?php
-	$CI = require('../../ci_instance.php');
-	require('../../config.php');
-
-	$cedula = $CI->db->escape($_GET['cedula']);
-	$nombre_capsula = $CI->db->escape($_GET['nombre_capsula']);
-
-	$sql = "SELECT *
-			FROM capsulas_qr 
-			WHERE cedula = $cedula
-			AND nombre_capsula = $nombre_capsula 
-			AND preguntas_correctas IS NOT NULL";
-
-	$realizado = @$CI->db->query($sql)->result_array();
-
-	if(!empty($realizado)){
-		header("Location: realizado.php");
-		exit();
-	}
-?>-->
 <!DOCTYPE html>
 <html>
+
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -73,8 +54,7 @@
 </head>
 
 <body>
-	<input type="text" id="nombre_capsula" value="<?=$nombre_capsula = isset($_GET['nombre_capsula']) ? $_GET['nombre_capsula'] : '';?>" hidden>
-	<input type="text" id="cedula" value="<?=isset($_GET['cedula']) ? $_GET['cedula'] : '';?>" hidden>
+
 	<!-- header -->
 	<div class="contentHeader">
 		<div>
@@ -126,21 +106,21 @@
 						<span class="indPagMb"></span>
 					</div>	
 					<div class="col-lg-12 col-md-12">
-						<h1 class="tituloh1-center">Energía Eléctrica </h1>
+						<h1 class="tituloh1-center">Energía Térmica </h1>
 						<hr>
-						<p class="parrafo-center">Observa atentamente este video que te permitirá conocer este tipo de ENERGÍA PELIGROSA en nuestra operación, y las recomendaciones para prevenir sus riesgos:</p>		
+						<i class="inst mb-2">Observa atentamente este video que te permitirá conocer este tipo de ENERGÍA PELIGROSA en nuestra operación, y las recomendaciones para prevenir sus riesgos:</i>		
 					</div>	
 					
 					<div class="col-lg-6 col-md-12">
 						
 						<div class="media-espanol contenedor-center">
-							<video controls poster="assets/img/poster.jpg" class="mx-auto videocontainer">
-								<source src="assets/video/Energia_Electrica.mp4" type="video/mp4">
+							<video controls poster class="mx-auto videocontainer">
+								<source src="assets/video/Energia_Termica.mp4" type="video/mp4">
 							</video>
 						</div>
 						<div class="media-ingles contenedor-center">
-							<video controls poster="assets/img/poster_ingles.jpg" class="mx-auto videocontainer">
-								<source src="assets/video/Energia_Electrica_ingles.mp4" type="video/mp4">
+							<video controls poster class="mx-auto videocontainer">
+								<source src="assets/video/Energia_Termica_ingles.mp4" type="video/mp4">
 							</video>
 						</div>
 						<i class="inst mb-2 mobile-mostrar">Continuemos, haz clic en las flechas para avanzar</i>		
@@ -169,67 +149,100 @@
 				<img src="assets/img/pastilla.png" alt="" class="imagen-40 pc-mostrar">
 			</div>
 			<div class="col-lg-6 col-md-12">
-				<i class="inst mb-2">Selecciona la opción correcta en la lista desplegable de acuerdo con el siguiente texto:</i>
-				<div class="activity">
-					<p>
-					  Debe evitarse la utilización de equipos 
-					  <span class="custom-select-wrapper">
-						<select id="drop1" class="custom-select word-select">
-						  <option value="" disabled selected>Seleccione...</option> <!--electricos-->
-						</select> 
-					  </span>
-					  en caso de lluvia o humedad cuando los 
-					  <span class="custom-select-wrapper">
-						<select id="drop2" class="custom-select word-select">
-						  <option value="" disabled selected>Seleccione...</option> <!--cables-->
-						</select>
-					  </span>
-					  u otro material eléctrico atraviesen  
-					  <span class="custom-select-wrapper">
-						<select id="drop3" class="custom-select word-select">
-						  <option value="" disabled selected>Seleccione...</option><!--charcos-->
-						</select>
-					  </span>, 
-					  los pies pisen agua o alguna parte del cuerpo esté mojada.
-					  <br>En ambientes 
-					  <span class="custom-select-wrapper">
-						<select id="drop4" class="custom-select word-select">
-						  <option value="" disabled selected>Seleccione...</option><!--húmedos-->
-						</select>
-					  </span>
-					  hay que asegurarse de que todos los elementos de la instalación responden a las condiciones de utilización.
-					  Debe evitarse realizar reparaciones 
-					  <span class="custom-select-wrapper">
-						<select id="drop5" class="custom-select word-select">
-						  <option value="" disabled selected>Seleccione...</option><!--provisionales-->
-						</select>
-					  </span>. 
-					  <br>Los cables 
-					  <span class="custom-select-wrapper">
-						<select id="drop6" class="custom-select word-select">
-						  <option value="" disabled selected>Seleccione...</option><!--dañados-->
-						</select>
-					  </span>
-					  hay que reemplazarlos por otros nuevos. 
-					  Toda máquina portátil eléctrica deberá disponer de un sistema de 
-					  <span class="custom-select-wrapper">
-						<select id="drop7" class="custom-select word-select">
-						  <option value="" disabled selected>Seleccione...</option><!--protección-->
-						</select>
-					  </span>. El más usual es el doble aislamiento.
-					</p>
+				<i class="inst mb-2">Responde con Falso o Verdadero las siguientes afirmaciones:</i>
+				<div class="actVorF ">
+					<div class="counta">
+						<span class="number">1</span>/<span class="tol"></span>
+					</div>
+					<div class="itemQ view">
+						<div class="row">
+						<div class="col-lg-8 col-md-6"  style="display: flex; justify-content: center;">
+						<p class="parrafo-center"><b>Ítem 1</b>
+							<br>
+							En nuestra operación se encuentran formas de energía térmica como calderas, exhostos e intercambiadores de calor 
+						</p>
+						</div>
+						<div class="col-lg-4 col-md-6 text-center" style="display: flex; justify-content: center;">
+						<img src="assets/img/carl-evaluacion.png" id="img-copast-01" class="imagen-60">
+						</div>
+						</div>
+						<hr>
+						<div class="check mt-2 text-center"  style="display: flex; justify-content: center;">
+							<button class="btn" onclick="actVorF(this, 'correct')">Verdadero</button>
+							<button class="btn" onclick="actVorF(this, 'incorrect')">Falso</button>
+						</div>
+					</div>
+					<div class="itemQ">
+						<div class="row">
+							<div class="col-lg-8 col-md-6"  style="display: flex; justify-content: center;">
+								<p class="parrafo-center"> <b>Ítem 2</b>
+									<br>
+									No debemos hacer mantenimiento a los equipos que presentan energía térmica
+								</p>
+							</div>
+							<div class="col-lg-4 col-md-6 text-center" style="display: flex; justify-content: center;">
+									<img src="assets/img/carl-evaluacion.png" id="img-copast-02" class="imagen-60">
+							</div>
+						</div>
+						<hr>
+						<div class="check mt-2 text-center"  style="display: flex; justify-content: center;">
+							<button class="btn" onclick="actVorF(this, 'incorrect')">Verdadero</button>
+							<button class="btn" onclick="actVorF(this, 'correct')">Falso</button>
+						</div>
+					</div>
+
+					<div class="itemQ">
+						<div class="row">
+							<div class="col-lg-8 col-md-6"  style="display: flex; justify-content: center;">
+								<p class="parrafo-center"> <b>Ítem 3</b>
+									<br>
+									La hidratación adecuada es una de las formas de cuidarse en presencia de esta energía peligrosa 
+								</p>
+							</div>
+							<div class="col-lg-4 col-md-6 text-center" style="display: flex; justify-content: center;">
+								<img src="assets/img/carl-evaluacion.png" id="img-copast-03" class="imagen-60">
+							</div>
+						</div>
+						<hr>
+						<div class="check mt-2 text-center"  style="display: flex; justify-content: center;">
+							<button class="btn" onclick="actVorF(this, 'correct')">Verdadero</button>
+							<button class="btn" onclick="actVorF(this, 'incorrect')">Falso</button>
+						</div>
+					</div>
+
+					<div class="itemQ">
+						<div class="row">
+							<div class="col-lg-8 col-md-6"  style="display: flex; justify-content: center;">
+								<p class="parrafo-center"><b>Ítem 4</b>
+									<br>
+									El LOTO para este tipo de energía peligrosa es el Bloqueo mecánico en válvulas para evitar paso 
+								</p>
+							</div>
+							<div class="col-lg-4 col-md-6 text-center" style="display: flex; justify-content: center;">
+								<img src="assets/img/carl-evaluacion.png" id="img-copast-04" class="imagen-60">
+							</div>
+						</div>
+						<hr>
+						<div class="check mt-2 text-center"  style="display: flex; justify-content: center;">
+							<button class="btn" onclick="actVorF(this, 'correct')">Verdadero</button>
+							<button class="btn" onclick="actVorF(this, 'incorrect')">Falso</button>
+						</div>
+					</div>
+					
+
+					<div class="actFin" style="display:none;">
+						<br>
+						<p class="parrafo-res">Respuesta correctas</p>
+						<h1></h1>
+					</div>
+					<br>
+					<!-- <div class="btn-reintentar text-center" style="display: flex; justify-content: center; display:none; padding:15px; cursor: pointer;">
+						<a class="btn-reiniciar" onclick="reiniciarActividadGrafica(this);">
+							<i class="fa fa-repeat"></i> Reiniciar</button></a>
+					</div> -->
+
 				</div>
-				<br>
-				<div style="text-align:center;">
-					<p hidden id="p_respuestas"><strong><span id="respuestas_correctas"></span> respuestas correctas de 7</strong></p>
-				</div>
-				<br>
-				<div class="pc-slideflex2">
-					<button class="btn btn-validar" onclick="validateSelects();" ><i class="fas fa-check"></i> Validar</button>
-					<button class="btn btn-reiniciar" onclick="resetSelects();"> <i class="fas fa-sync"></i> Reiniciar</button>
-				</div>
-				<br>
-			  <button class="btn btn-finalizar" disabled style="color: #fff; background: #009A3D; padding: 10px 30px; border-radius: 30px 0px 30px 30px; border: none; font-size: 1.2rem; box-shadow: rgb(0 160 175 / 30%) 0px 8px 24px;">Finalizar</button>
+				<button class="btn btn-finalizar" disabled style="color: #fff; background: #009A3D; padding: 10px 30px; border-radius: 30px 0px 30px 30px; border: none; font-size: 1.2rem; box-shadow: rgb(0 160 175 / 30%) 0px 8px 24px;">Finalizar</button>
 			</div>
 			</div>
 		</div>
@@ -265,38 +278,20 @@
 	<script src="assets/js/sessvars.js"> </script>
 	<script src="assets/js/touch-dnd.js"></script>
 	<script src="assets/js/script.js"></script>
+
 	<script src="assets/js/interactividad.js"></script>
 	
 	<script>
 
 		createCirclesMovil();
+		function btnPrev() {
+			// window.location.href = "index.php?course_code=<?= $course_code; ?>";
+			window.location.href = "index.html";
+		};
 
 		$(".btn-finalizar").on("click", function(){
-			let nombre_capsula = $('#nombre_capsula').val();
-			let cedula = $('#cedula').val();  
-			let numero_preguntas = 7;  
-			let preguntas_correctas_2 = $('#respuestas_correctas').text();  
-
-			$.ajax({
-				type: "POST",
-				url: "../../functions_helpers.php?capsula_qr=energia_termica&update_capsula=1",
-				dataType: "json",
-				data:{
-					nombre_capsula:nombre_capsula,
-					cedula:cedula,
-					numero_preguntas:numero_preguntas,
-					preguntas_correctas:preguntas_correctas_2,
-				},
-				success: function(res){
-					if (res.message == '1') {
-						window.location.href = "fin.php";
-					}else{
-						window.reload();
-
-					}
-				}
-			});    
-      	});
+			window.location.href = "fin.html";
+		});
 
 	</script>
 </body>
