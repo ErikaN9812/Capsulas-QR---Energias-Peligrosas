@@ -90,6 +90,9 @@
     display: flex;
 }
 
+.pc-slideflex2{
+    display:flex;
+}
 /*width responsive*/
 
 @media(max-width: 734px){
@@ -119,6 +122,10 @@
     .pc-slideflex{
         display:flex;
         flex-direction: column;
+    }
+
+    .pc-slideflex2{
+        display:flex;
     }
 
 }
@@ -456,7 +463,27 @@ button.btn {
     border-radius: 30px;
     border: none;
     font-size: 16px;
-    color: #fff ;
+    color: #fff !important;
+    box-shadow: rgb(0 160 175 / 30%) 0px 8px 24px;
+}
+
+.btn-validar{
+    color: #fff;
+    background: #009A3D57;
+    padding: 10px 30px;
+    border-radius: 30px 30px 30px 30px;
+    border: none;
+    font-size: 16px;
+    box-shadow: rgb(0 160 175 / 30%) 0px 8px 24px;
+}
+
+.btn-reiniciar{
+    color: #fff;
+    background: #009A3D57;
+    padding: 10px 30px;
+    border-radius: 30px 30px 30px 30px;
+    border: none;
+    font-size: 16px;
     box-shadow: rgb(0 160 175 / 30%) 0px 8px 24px;
 }
 
@@ -697,7 +724,6 @@ button.btn-sm {
 
 /*Contenedores*/
 .contenedor-center{
-    padding-top: 5%;
     display: flex; /* Utiliza flexbox */
     justify-content: center; /* Centra el contenido horizontalmente */
 }
@@ -808,8 +834,6 @@ button.btn-sm {
         display: none;
     }
 
-
-/*--------------*/
 /*content header*/
 .contentHeaderfin {
     width: 100%;
@@ -1294,18 +1318,7 @@ iframe:after {
 
 .parrafo-center{
     text-align: center;
-}
-
-.parrafo-res{
-    font-size: 25px;
-    line-height: 1.2em;
-    font-weight: 600;
-    text-align: center;
-    color: var(--grey);
-}
-
-.number{
-    margin-left: 5%;
+    line-height: 1.3em;
 }
 
 .listadoinstruccion li{
@@ -1786,6 +1799,17 @@ iframe:after {
       font-weight: bold;
   }
 
+  .correctAnswer {
+    background-color: #009e25 !important;
+    border: 1px solid green !important;
+    color: white !important;
+  }
+  .incorrectAnswer {
+    background-color: #a34f56 !important;
+    border: 1px solid red !important;
+    color: white !important;
+  }
+
     	  
 /* Estilo personalizado para las ventanas emergentes - TOUR*/
 	.custom-tooltip {
@@ -1819,6 +1843,9 @@ iframe:after {
 		color: #000000;
 		text-align: center;
 	}
+
+    /*actividad arrastra palabras*/
+   
 
 
     @media screen and (max-width: 600px) {
@@ -2022,7 +2049,6 @@ iframe:after {
         overflow: hidden;
         border-radius: 10px;
         width: 100%;
-        object-fit: contain;
     }
     .actVorF .check {
         display: flex;
@@ -2034,12 +2060,8 @@ iframe:after {
 
     @media(max-width: 734px){
         .actVorF .itemQ {
-         
+            display: none;
             padding: 5px;
-        }
-
-        .parrafo-center{
-            line-height: 1.2em;
         }
 
     }
