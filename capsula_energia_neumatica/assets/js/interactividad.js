@@ -13,41 +13,6 @@ $(document).ready(function() {
   
 });
 
-let corret = 0;
-  function actVorF(el, res) {
-    $(".actVorF button").attr("disabled", "disabled");
-    //mostrar respuesta
-    if (res == "correct") {
-      $(el).parents(".itemQ").find("img").attr("src", "assets/img/true.jpg");
-      corret = corret + 1;
-    } else {
-      $(el).parents(".itemQ").find("img").attr("src", "assets/img/false.jpg");
-    }
-
-    setTimeout(() => {
-      $(el).parents(".itemQ").addClass("hideT");
-      $(".actVorF .inc").html($(".hideT").length + 1);
-      //mostrar la siguiente pregunta
-      $(".itemQ").removeClass("view");
-      let view = ".actVorF > div:nth-child(" + ($(".hideT").length + 2) + ")";
-      $(view).addClass("view");
-      // mostrar resultados finales
-      if ($(".itemQ").length == $(".hideT").length) {
-        $(".actVorF .inc").html($(".hideT").length);
-        $(".actFin").show();
-        $(".btn-reintentar").show();
-        $(".actFin .p-res").css("font-size", "30px");
-        $(".actFin .p-res").css("text-align", "center");
-        $(".actFin h1").css("text-align", "center");
-        $(".actFin button").css("text-align", "center");
-        $(".actFin h1").html(corret + " de " + $(".itemQ").length);
-        $('.btn-finalizar').attr('disabled', false);
-        // localStorage.setItem("slider28", "ok");
-      }
-      $(".actVorF button").removeAttr("disabled");
-    }, "1000");
-  }
-
 
 function aniSl19(e) {
 
@@ -139,3 +104,89 @@ function pausarMultimedia(){
 
     });
 }
+
+
+
+  var results4 = [];
+  var elements4 = [];
+
+  function Questions4(el, e) {
+      var index = elements4.indexOf(el);
+      if (index === -1) {
+          elements4.push(el);
+          results4.push(e);
+      } else {
+          results4[index] = e;
+      }
+      
+      $(el).addClass('act');
+  }
+
+
+  function valid4(numCorrect4) {
+    var correctCount4 = 0;
+    // var malCount = 0;
+    for (var i = 0; i < elements4.length; i++) {
+        if (results4[i] ) {
+            $(elements4[i]).addClass('true');
+            correctCount4++;
+        }else if(correctCount4 >=1 && correctCount4 < numCorrect4){
+          $(elements4[i]).addClass('false');
+          
+        } else {
+            $(elements4[i]).addClass('false');
+        }
+    }
+
+    if (correctCount4 == numCorrect4) {
+        for (var i = 0; i < elements4.length; i++) {
+            $(elements4[i]).removeClass('false');
+            $(elements4[i]).removeClass('act');
+        }
+        $('#respuesta_mal4').hide();
+    }
+    $('#respuestas_correctas').val(correctCount4);
+    $('#reiniciar4').attr('disabled',false);
+    $('.btn-finalizar').attr('disabled',false);
+    $('#respuesta4').html(correctCount4 + ' respuestas correctas de '+numCorrect4);
+    $('#respuesta4').show();
+  }
+
+  function reiniciarActividad(actividad='', posicionesIniciales='',tipo=0,idActividad=0) {
+
+    //Multiple Respuestas
+    if(tipo==2){
+      actividad = $('#actividad_h_0' + idActividad);
+      if(idActividad==1){
+        elements = []; 
+        results = []; 
+        correctCount = 0;
+        actividad.find('.act').removeClass('act');
+        actividad.find('.true').removeClass('true');
+        actividad.find('.false').removeClass('false'); 
+        $('#btn-valid').show();
+        $('#respuesta').hide();
+        $('#respuesta_mal').hide(); 
+        $('#reiniciar').hide();
+        $('#btn-valid').show();
+
+      }else{
+        elements = 'elements' + idActividad;
+        this[elements] = [];
+
+        results = 'results' + idActividad;
+        this[results] = [];
+
+        correctCount = 'correctCount' + idActividad;
+        this[correctCount] = 0;
+      
+        actividad.find('.act').removeClass('act');
+        actividad.find('.true').removeClass('true'); 
+        actividad.find('.false').removeClass('false'); 
+        $('#respuesta3').hide();
+        $('#reiniciar4').attr('disabled',true);
+        $('.btn-finalizar').attr('disabled',true);
+      }
+    }
+    
+  }

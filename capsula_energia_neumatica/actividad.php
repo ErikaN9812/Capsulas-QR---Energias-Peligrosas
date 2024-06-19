@@ -1,3 +1,23 @@
+<?php
+	$CI = require('../../ci_instance.php');
+	require('../../config.php');
+
+	$cedula = $CI->db->escape($_GET['cedula']);
+	$nombre_capsula = $CI->db->escape($_GET['nombre_capsula']);
+
+	$sql = "SELECT *
+			FROM capsulas_qr 
+			WHERE cedula = $cedula
+			AND nombre_capsula = $nombre_capsula 
+			AND preguntas_correctas IS NOT NULL";
+
+	$realizado = @$CI->db->query($sql)->result_array();
+
+	if(!empty($realizado)){
+		header("Location: realizado.php");
+		exit();
+	}
+?>
 <!DOCTYPE html>
 <html>
 
@@ -54,7 +74,8 @@
 </head>
 
 <body>
-
+<input type="text" id="nombre_capsula" value="<?=$nombre_capsula = isset($_GET['nombre_capsula']) ? $_GET['nombre_capsula'] : '';?>" hidden>
+<input type="text" id="cedula" value="<?=isset($_GET['cedula']) ? $_GET['cedula'] : '';?>" hidden>
 	<!-- header -->
 	<div class="contentHeader">
 		<div>
@@ -152,18 +173,18 @@
 				<i class="inst mb-2">Seleccione las tres (3) recomendaciones que corresponden a la Energía Neumática</i>
 				<div class="ctItem text-parrafocasos" id='actividad_h_04' >
 					<div>
-						<p onclick="Questions4(this, false)">a. El área de recursos humanos no prestará atención a Matías y le dirán que regrese al trabajo.</p> <!--respuesta correcta-->
-						<p onclick="Questions4(this, true)">b. Llevar el pelo largo siempre recogido y bien sujeto.</p> 
+						<p onclick="Questions4(this, true)">a. El área de recursos humanos no prestará atención a Matías y le dirán que regrese al trabajo.</p> <!--respuesta correcta-->
+						<p onclick="Questions4(this, false)">b. Llevar el pelo largo siempre recogido y bien sujeto.</p> 
 						<p onclick="Questions4(this, true)">c. Aplique el dispositivo de bloqueo asignado, tal como un candado, bridas ciegas deslizantes para mantener el equipo en una posición segura.</p> <!--respuesta correcta-->
 						<p onclick="Questions4(this, true)">d. Antes de iniciar cualquier trabajo en baja tensión, se considerará que todos los cables conductores llevan corriente eléctrica, por lo que se comprobará previamente, mediante un verificador, la ausencia de tensión.</p> <!--respuesta correcta-->
-						<p onclick="Questions4(this, false)">e. Si la máquina o el equipo está en funcionamiento, apáguelo siguiendo los procedimientos normales de apagado del fabricante o del empleador.</p> <!--respuesta correcta-->
+						<p onclick="Questions4(this, true)">e. Si la máquina o el equipo está en funcionamiento, apáguelo siguiendo los procedimientos normales de apagado del fabricante o del empleador.</p> <!--respuesta correcta-->
 					</div>
-					<i class="inst" id='respuesta4' style="display:none;">Mensaje</i>
-					<i class="inst_mal" id='respuesta_mal4' style="display:none;">Mensaje</i>
-					<!-- <button class="btn" id='btn-valid4' onclick="valid4(3)">Validar</button> -->
+					<i class="inst" id='respuesta4' style="display:none;"></i>
+					<input type="text" id="respuestas_correctas" hidden value="">
+
 					<div style="display: flex;">
-						<button class="btn" id='btn-valid4' onclick="valid4(3)"><i class="fa fa-check"></i> Validar</button>
-						<button class="btn" id="reiniciar4" style="display: none;" onclick="reiniciarActividad($('#actividad_h_04'), [], 2,4)"><i class="fas fa-sync"></i> Reiniciar</button>
+						<button class="btn" id='btn-valid4' onclick="valid4(4)"><i class="fa fa-check"></i> Validar</button>
+						<button class="btn" id="reiniciar4" onclick="reiniciarActividad($('#actividad_h_04'), [], 2,4)" disabled><i class="fas fa-sync"></i> Reiniciar</button>
 					</div>
 				</div>
 				
@@ -212,13 +233,30 @@
 	<script>
 
 		createCirclesMovil();
-		function btnPrev() {
-			// window.location.href = "index.php?course_code=<?= $course_code; ?>";
-			window.location.href = "index.html";
-		};
 
 		$(".btn-finalizar").on("click", function(){
-			window.location.href = "fin.html";
+			let nombre_capsula = $('#nombre_capsula').val();
+			let cedula = $('#cedula').val();  
+			let numero_preguntas = 4;  
+			let preguntas_correctas = $('#respuestas_correctas').val();  
+			$.ajax({
+				type: "POST",
+				url: "../../functions_helpers.php?capsula_qr=energia_neumatica&update_capsula=1",
+				dataType: "json",
+				data:{
+					nombre_capsula:nombre_capsula,
+					cedula:cedula,
+					numero_preguntas:numero_preguntas,
+					preguntas_correctas:preguntas_correctas,
+				},
+				success: function(res){
+					if (res.message == '1') {
+						window.location.href = "fin.php";
+					}else{
+						window.reload();
+					}
+				}
+			});    
 		});
 
 	</script>
