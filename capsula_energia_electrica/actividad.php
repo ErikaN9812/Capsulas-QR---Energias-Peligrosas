@@ -229,6 +229,7 @@
 					<button class="btn btn-reiniciar" onclick="resetSelects();"> <i class="fas fa-sync"></i> Reiniciar</button>
 				</div>
 				<br>
+				<i class="instfinalizar  mb-2">Haz clic en Finalizar para guardar tu resultado</i>
 			  <button class="btn btn-finalizar" disabled style="color: #fff; background: #009A3D; padding: 10px 30px; border-radius: 30px 0px 30px 30px; border: none; font-size: 1.2rem; box-shadow: rgb(0 160 175 / 30%) 0px 8px 24px;">Finalizar</button>
 			</div>
 			</div>

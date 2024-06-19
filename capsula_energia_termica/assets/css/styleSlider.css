@@ -21,6 +21,33 @@
     text-align: center;
     margin-top: 8px;
 }
+
+.current i.instfinalizar {
+  font-size: 13px;
+  padding: 5px  10px;
+  border-radius: 5px;
+  background: #fdbf6030;
+  color: #ff6c28;
+  display: block;
+  text-align: center;
+  margin-top: 8px;
+  animation: zoomInOut 2s infinite;
+}
+
+
+@keyframes zoomInOut {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+
 .current hr {
     width: 100%;
     margin: 10px 0;
