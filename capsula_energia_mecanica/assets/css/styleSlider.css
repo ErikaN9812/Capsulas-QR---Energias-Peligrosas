@@ -18,8 +18,21 @@
     color: #ff6c28;
     display: block;
     text-align: center;
-    margin-top: 8px
+    margin-top: 8px;
 }
+
+.current i.instfinalizar {
+  font-size: 13px;
+  padding: 5px  10px;
+  border-radius: 5px;
+  background: #fdbf6030;
+  color: #ff6c28;
+  display: block;
+  text-align: center;
+  margin-top: 8px;
+  animation: zoomInOut 2s infinite;
+}
+
 .current hr {
     width: 100%;
     margin: 10px 0;
@@ -57,6 +70,18 @@
     .container .ctImg {
         height: 300px;
     }
+}
+
+@keyframes zoomInOut {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
 }
 
 
@@ -1196,7 +1221,7 @@
   /*actividad lista despegable*/
 
   .activity {
-    padding: 2%;
+    padding: 1%;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   }
@@ -1254,3 +1279,139 @@
     background-color: #fff;
     font-size: 15px;
   }
+
+  .imgpastilla{
+    width: 60%;
+    margin: 0 auto;
+  }
+
+  /*activida de seleccion multiple de audios*/
+.button-container {
+    display: flex;
+    justify-content: center;
+}
+
+.btn-si,
+.btn-no {
+    margin: 5px;
+    padding: 10px 30px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.audio-container {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+  width: 90%;
+}
+
+.audio-item {
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin: 10px;
+    padding: 10px;
+    width: 250px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+audio {
+    width: 100%;
+}
+
+button {
+    margin: 5px;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #ddd;
+}
+
+button:active {
+    background-color: #ccc;
+}
+
+.btn-si.selected {
+    background-color: #005ABB;;
+    color: white;
+}
+
+.btn-no.selected {
+    background-color: #005ABB;;
+    color: white;
+}
+
+.correct {
+    background-color: lightgreen;
+}
+
+.incorrect {
+    background-color: lightcoral;
+}
+
+.message {
+    margin-top: 10px;
+    font-size: 14px;
+    font-weight: bold;
+    color: #353535;
+    text-align: center;
+    line-height: 1.2em;
+}
+
+#result {
+    margin-top: 20px;
+    font-size: 18px;
+    font-weight: bold;
+    color: #8f8f8f;
+    text-align: center;
+}
+
+
+@media (max-width: 600px) {
+  .audio-container {
+      grid-template-columns: 1fr;
+  }
+
+  .audio-item {
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin: 10px;
+    padding: 10px;
+    width: 300px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+button:hover {
+  background-color: #ddd;
+}
+
+button:active {
+  background-color: #ccc;
+}
+
+.btn-si.selected {
+  background-color: #005ABB;;
+  color: white;
+}
+
+.btn-no.selected {
+  background-color: #005ABB;;
+  color: white;
+}
+
+.correct {
+  background-color: lightgreen;
+}
+
+.incorrect {
+  background-color: lightcoral;
+}
+
+}

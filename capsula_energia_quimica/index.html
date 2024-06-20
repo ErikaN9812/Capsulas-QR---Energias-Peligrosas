@@ -263,10 +263,10 @@
       <div class="columns">
         <div class="column">
           <img src="assets/img/logoW.png" class="logo-home">
-          <h1 class="titulo mostrar-web" style="color: #badde1">Cápsula de refuerzo de Energía Térmica </h1>
-          <img src="assets/img/pastilla_termica.png" alt="" class="imgpastilla">
+          <h1 class="titulo mostrar-web" style="color: #badde1">Cápsula de refuerzo de Energía Química</h1>
+          <img src="assets/img/capsula_quimica.png" alt="" class="imgpastilla">
 
-          <h1 class="titulo mostrar-mobile" style="color: #badde1">Cápsula de refuerzo de Energía Térmica </h1>
+          <h1 class="titulo mostrar-mobile" style="color: #badde1; line-height: 1.3em;">Cápsula de refuerzo de <br>Energía Química </h1>
           <hr style="width: 80%; margin: 0 auto; margin-top: 2%;" class="mobile-mostrar">
           <br>
           <div class="mobile-mostrar">
@@ -287,7 +287,7 @@
             <label for="cedula" class="labelform">Cédula:</label>
             <input type="number" id="cedula" name="cedula" required class="inputform">
             
-            <button class="button btn-enviar">Enviar</button>
+            <button class="button btn-enviar">Ingresar</button>
             <br>
             <br>
             <br>
@@ -299,31 +299,39 @@
   <script>
     $( document ).ready(function() {
       $(".btn-enviar").on("click", function(){
-        window.location.href = "actividad.html";
-        // let nombre = $('#nombre').val();
-        // let cedula = $('#cedula').val();  
+        // window.location.href = "actividad.html";
+        let nombre = $('#nombre').val();
+        let cedula = $('#cedula').val();  
 
-        // if(nombre == '' || cedula == ''){
-        //   alert('¡Debe rellenar todos los datos!');
-        //   return false;
-        // }
+        if(nombre == '' || cedula == ''){
+          alert('¡Debe rellenar todos los datos!');
+          return false;
+        }
 
-        // $.ajax({
-        //   type: "POST",
-        //   url: "../../functions_helpers.php?capsula_qr=energia_electrica",
-        //   dataType: "json",
-        //   data:{
-        //     nombre:nombre,
-        //     cedula:cedula
-        //   },
-        //   success: function(res){
-        //     if (res.message === '1') {
-        //       window.location.href = "actividad.php";
-        //     }else{
-        //       window.reload();
-        //     }
-        //   }
-        // });    
+        $.ajax({
+          type: "POST",
+          url: "../../functions_helpers.php?capsula_qr=energia_electrica",
+          dataType: "json",
+          data:{
+            nombre:nombre,
+            cedula:cedula
+          },
+          success: function(res){
+            if (res.message === '1') {
+
+            let params = new URLSearchParams({
+              nombre_capsula: res.nombre_capsula,
+              cedula: res.cedula
+            }).toString();
+            
+              window.location.href = "actividad.php?" + params;
+            }else if(res.message == '2'){
+              window.location.href = "realizado.php";
+            }else{
+              window.reload();
+            }
+          }
+        });    
       });
     });
   </script>
