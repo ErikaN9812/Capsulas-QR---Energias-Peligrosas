@@ -173,17 +173,17 @@
 				<i class="inst mb-2">Seleccione las tres (3) recomendaciones que corresponden a la Energía Neumática</i>
 				<div class="ctItem text-parrafocasos" id='actividad_h_04' >
 					<div>
-						<p onclick="Questions4(this, false)">a. Los pistones suspendidos en pleno movimiento pueden almacenar energía de la gravedad.</p> <!--respuesta correcta-->
-						<p onclick="Questions4(this, true)">b. Llevar el pelo largo siempre recogido y bien sujeto.</p> 
+						<p onclick="Questions4(this, true)">a. Los pistones suspendidos en pleno movimiento pueden almacenar energía de la gravedad.</p> <!--respuesta correcta-->
+						<p onclick="Questions4(this, false)">b. Llevar el pelo largo siempre recogido y bien sujeto.</p> 
 						<p onclick="Questions4(this, true)">c. Aplique el dispositivo de bloqueo asignado, (candados o bridas) para mantener el equipo en una posición segura.</p> <!--respuesta correcta-->
-						<p onclick="Questions4(this, true)">d. Antes de iniciar cualquier trabajo en baja tensión, se considerará que todos los cables conductores llevan corriente eléctrica.</p> 
-						<p onclick="Questions4(this, false)">e. Si la máquina o el equipo está en funcionamiento, apáguelo siguiendo los procedimientos normales de apagado del fabricante o del empleador.</p> <!--respuesta correcta-->
+						<p onclick="Questions4(this, false)">d. Antes de iniciar cualquier trabajo en baja tensión, se considerará que todos los cables conductores llevan corriente eléctrica.</p> 
+						<p onclick="Questions4(this, true)">e. Si la máquina o el equipo está en funcionamiento, apáguelo siguiendo los procedimientos normales de apagado del fabricante o del empleador.</p> <!--respuesta correcta-->
 					</div>
 					<i class="inst" id='respuesta4' style="display:none;"></i>
 					<input type="text" id="respuestas_correctas" hidden value="">
 
 					<div style="display: flex;">
-						<button class="btn" id='btn-valid4' onclick="valid4(4)"><i class="fa fa-check"></i> Validar</button>
+						<button class="btn" id='btn-valid4' onclick="valid4(3)"><i class="fa fa-check"></i> Validar</button>
 						<button class="btn" id="reiniciar4" onclick="reiniciarActividad($('#actividad_h_04'), [], 2,4)" disabled><i class="fas fa-sync"></i> Reiniciar</button>
 					</div>
 				</div>
@@ -237,7 +237,7 @@
 		$(".btn-finalizar").on("click", function(){
 			let nombre_capsula = $('#nombre_capsula').val();
 			let cedula = $('#cedula').val();  
-			let numero_preguntas = 4;  
+			let numero_preguntas = 3;  
 			let preguntas_correctas = $('#respuestas_correctas').val();  
 			$.ajax({
 				type: "POST",
