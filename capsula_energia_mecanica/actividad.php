@@ -225,13 +225,11 @@
 					</div>
 				</div>
 				<div id="result"></div>
+				<input type="hidden" value="" id="respuestas_correctas">
 				<br>
-				<!--<div style="text-align:center;">
-					<p hidden id="p_respuestas"><strong><span id="respuestas_correctas"></span> audios seleccionados correctamente de <b>5</b></strong></p>
-				</div>-->
 				<div class="pc-slideflex2">
 					<button class="btn btn-validar"  id="validate-btn" onclick="validateAnswers()"><i class="fas fa-check"></i> Validar</button>
-					<button class="btn btn-reiniciar" onclick="resetSelects();"> <i class="fas fa-sync"></i> Reiniciar</button>
+					<button class="btn btn-reiniciar" onclick="resetActividad();"> <i class="fas fa-sync"></i> Reiniciar</button>
 				</div>
 				<div>
 					<br>
@@ -282,18 +280,18 @@
 		$(".btn-finalizar").on("click", function(){
 			let nombre_capsula = $('#nombre_capsula').val();
 			let cedula = $('#cedula').val();  
-			let numero_preguntas = 7;  
-			let preguntas_correctas_2 = $('#respuestas_correctas').text();  
+			let numero_preguntas = 5;  
+			let preguntas_correctas= $('#respuestas_correctas').val();  
 
 			$.ajax({
 				type: "POST",
-				url: "../../functions_helpers.php?capsula_qr=energia_termica&update_capsula=1",
+				url: "../../functions_helpers.php?capsula_qr=energia_mecanica&update_capsula=1",
 				dataType: "json",
 				data:{
 					nombre_capsula:nombre_capsula,
 					cedula:cedula,
 					numero_preguntas:numero_preguntas,
-					preguntas_correctas:preguntas_correctas_2,
+					preguntas_correctas:preguntas_correctas,
 				},
 				success: function(res){
 					if (res.message == '1') {

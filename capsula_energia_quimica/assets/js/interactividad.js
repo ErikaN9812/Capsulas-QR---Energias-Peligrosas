@@ -1,7 +1,6 @@
 $(document).ready(function() {
     aniSl19(1);
    
-
     // sistemaVotacion();
     pausarMultimedia();
     mediaIdioma();
@@ -42,7 +41,15 @@ let corret = 0;
         $(".actFin button").css("text-align", "center");
         $(".actFin h1").html(corret + " de " + $(".itemQ").length);
         $('.btn-finalizar').attr('disabled', false);
-        // localStorage.setItem("slider28", "ok");
+        
+        $('#numero_preguntas').val($(".hideT").length);
+        $('#respuestas_correctas').val(corret);
+        $(".reiniciar").show();
+        
+        if(corret < $(".hideT").length){
+            $(".btn-reintentar").show();
+        }
+
       }
       $(".actVorF button").removeAttr("disabled");
     }, "1000");
@@ -138,5 +145,28 @@ function pausarMultimedia(){
         });
 
     });
+}
+
+
+function reiniciarActividad(el) {
+    corret = 0;
+    $(".actFin").hide();
+    $(".reiniciar").hide();
+    $('.btn-finalizar').attr('disabled', true);
+    $(".itemQ").removeClass("hideT view");
+    $(".itemQ").removeClass("view");
+
+    $(el).parents(".itemQ").addClass("hideT");
+    $(".actVorF .inc").html(1);
+
+    let view = ".actVorF > div:nth-child(2)";
+    $(view).addClass("view");
+
+    for (let i = 1; i <= 4; i++) {
+      let imgID = "#img-copast-" + (i < 10 ? "0" : "") + i;
+    
+      $(imgID).attr("src", "assets/img/carl_quimica.png");
+      
+    }
 }
 

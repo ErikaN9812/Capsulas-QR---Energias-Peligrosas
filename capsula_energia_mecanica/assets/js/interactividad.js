@@ -13,41 +13,6 @@ $(document).ready(function() {
   
 });
 
-let corret = 0;
-  function actVorF(el, res) {
-    $(".actVorF button").attr("disabled", "disabled");
-    //mostrar respuesta
-    if (res == "correct") {
-      $(el).parents(".itemQ").find("img").attr("src", "assets/img/true.jpg");
-      corret = corret + 1;
-    } else {
-      $(el).parents(".itemQ").find("img").attr("src", "assets/img/false.jpg");
-    }
-
-    setTimeout(() => {
-      $(el).parents(".itemQ").addClass("hideT");
-      $(".actVorF .inc").html($(".hideT").length + 1);
-      //mostrar la siguiente pregunta
-      $(".itemQ").removeClass("view");
-      let view = ".actVorF > div:nth-child(" + ($(".hideT").length + 2) + ")";
-      $(view).addClass("view");
-      // mostrar resultados finales
-      if ($(".itemQ").length == $(".hideT").length) {
-        $(".actVorF .inc").html($(".hideT").length);
-        $(".actFin").show();
-        $(".btn-reintentar").show();
-        $(".actFin .p-res").css("font-size", "30px");
-        $(".actFin .p-res").css("text-align", "center");
-        $(".actFin h1").css("text-align", "center");
-        $(".actFin button").css("text-align", "center");
-        $(".actFin h1").html(corret + " de " + $(".itemQ").length);
-        $('.btn-finalizar').attr('disabled', false);
-        // localStorage.setItem("slider28", "ok");
-      }
-      $(".actVorF button").removeAttr("disabled");
-    }, "1000");
-  }
-
 
 function aniSl19(e) {
 
@@ -168,7 +133,7 @@ function selectAnswer(audioId, answer) {
 }
 
 function validateAnswers() {
-    let correctCount = 0;
+    var correctCount = 0;
 
     for (const [audioId, correctAnswer] of Object.entries(correctAnswers)) {
         const userAnswer = userAnswers[audioId];
@@ -191,6 +156,8 @@ function validateAnswers() {
 
     const resultDiv = document.getElementById('result');
     resultDiv.innerText = `Obtuviste ${correctCount} de 5 audios seleccionados correctamente`;
+    $('#respuestas_correctas').val(correctCount);
+    $('.btn-finalizar').attr('disabled',false);
 }
 
 function pauseOtherAudios(currentAudio) {
@@ -201,4 +168,65 @@ function pauseOtherAudios(currentAudio) {
             audio.currentTime = 0;
         }
     });
+}
+
+function resetActividad(){
+    $('.audio-container').empty();
+    var newContent = `
+        <div class="audio-item" id="audio1">
+            <audio controls onplay="pauseOtherAudios(this)">
+                <source src="assets/audio/actividad-1-ok.mp3" type="audio/mpeg">
+            </audio>
+            <div class="button-container">
+                <button class="btn-si" onclick="selectAnswer('audio1', true)">Sí</button>
+                <button class="btn-no" onclick="selectAnswer('audio1', false)">No</button>
+            </div>
+            <div class="message"></div>
+        </div>
+        <div class="audio-item" id="audio2">
+            <audio controls onplay="pauseOtherAudios(this)">
+                <source src="assets/audio/actividad-2.mal.mp3" type="audio/mpeg">
+            </audio>
+            <div class="button-container">
+            <button class="btn-si" onclick="selectAnswer('audio2', true)">Sí</button>
+            <button class="btn-no" onclick="selectAnswer('audio2', false)">No</button>
+            </div>
+            <div class="message"></div>
+        </div>
+        <div class="audio-item" id="audio3">
+            <audio controls onplay="pauseOtherAudios(this)">
+                <source src="assets/audio/actividad-3-ok.mp3" type="audio/mpeg">
+            </audio>
+            <div class="button-container">
+            <button class="btn-si" onclick="selectAnswer('audio3', true)">Sí</button>
+            <button class="btn-no" onclick="selectAnswer('audio3', false)">No</button>
+            </div>
+            <div class="message"></div>
+        </div>
+        <div class="audio-item" id="audio4">
+            <audio controls onplay="pauseOtherAudios(this)">
+                <source src="assets/audio/actividad-4-mal.mp3" type="audio/mpeg">
+            </audio>
+            <div class="button-container">
+            <button class="btn-si" onclick="selectAnswer('audio4', true)">Sí</button>
+            <button class="btn-no" onclick="selectAnswer('audio4', false)">No</button>
+            </div>
+            <div class="message"></div>
+        </div>
+        <div class="audio-item" id="audio5">
+            <audio controls onplay="pauseOtherAudios(this)">
+                <source src="assets/audio/actividad-5-ok.mp3" type="audio/mpeg">
+            </audio>
+            <div class="button-container">
+                <button class="btn-si" onclick="selectAnswer('audio5', true)">Sí</button>
+                <button class="btn-no" onclick="selectAnswer('audio5', false)">No</button>
+            </div>
+            <div class="message"></div>
+        </div>
+    `;
+
+    $(".audio-container").append(newContent);
+    correctCount = 0;
+    $('#result').text('');
+    $('.btn-finalizar').attr('disabled',true);
 }

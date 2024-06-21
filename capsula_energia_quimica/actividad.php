@@ -1,4 +1,4 @@
-<!--<?php
+<?php
 	$CI = require('../../ci_instance.php');
 	require('../../config.php');
 
@@ -17,7 +17,7 @@
 		header("Location: realizado.php");
 		exit();
 	}
-?>-->
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -273,16 +273,17 @@
 						<br>
 						<p class="parrafo-res">Respuesta correctas</p>
 						<h1></h1>
-						<input type="text" id="numero_preguntas" value="" hidden>
-						<input type="text" id="preguntas_correctas" value="" hidden>
 					</div>
 					<br>
-					<div class="btn-reintentar text-center" style="display: flex; justify-content: center; display:none; padding:15px; cursor: pointer;">
-						<a class="btn-reiniciar" onclick="reiniciarActividad(this);">
-						<i class="fa fa-repeat"></i> Reiniciar</button></a>
+					<div class="reiniciar"style="display:none;">
+						<div style="display: flex; justify-content: center; padding:15px; cursor: pointer;">
+							<button class="btn btn-reiniciar" onclick="reiniciarActividad(this);" ><i class="fa fa-repeat"> </i>Reinciar</button>
+						</div>
 					</div>
+					
 				</div>
-				
+				<input type="text" id="numero_preguntas" value="" hidden>
+				<input type="text" id="respuestas_correctas" value="" hidden>
 				<!--<div class="pc-slideflex2">
 					<button class="btn btn-reiniciar" onclick="resetSelects();"> <i class="fas fa-sync"></i> Reiniciar</button>
 				</div>-->
@@ -335,18 +336,18 @@
 		$(".btn-finalizar").on("click", function(){
 			let nombre_capsula = $('#nombre_capsula').val();
 			let cedula = $('#cedula').val();  
-			let numero_preguntas = 7;  
-			let preguntas_correctas_2 = $('#respuestas_correctas').text();  
+			let numero_preguntas = $('#numero_preguntas').val();  
+			let preguntas_correctas = $('#respuestas_correctas').val();  
 
 			$.ajax({
 				type: "POST",
-				url: "../../functions_helpers.php?capsula_qr=energia_termica&update_capsula=1",
+				url: "../../functions_helpers.php?capsula_qr=energia_quimica&update_capsula=1",
 				dataType: "json",
 				data:{
 					nombre_capsula:nombre_capsula,
 					cedula:cedula,
 					numero_preguntas:numero_preguntas,
-					preguntas_correctas:preguntas_correctas_2,
+					preguntas_correctas:preguntas_correctas,
 				},
 				success: function(res){
 					if (res.message == '1') {
