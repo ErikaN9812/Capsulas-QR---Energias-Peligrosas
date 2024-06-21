@@ -44,7 +44,12 @@ let corret = 0;
         
         $('#numero_preguntas').val($(".hideT").length);
         $('#respuestas_correctas').val(corret);
+        $('#respuestas_correctas_modal').text(corret);
         $(".reiniciar").show();
+        $('#p_respuestas_modal').attr('hidden', false);
+
+        
+        $('#surveymd01').modal('show');
         
         if(corret < $(".hideT").length){
             $(".btn-reintentar").show();
@@ -168,5 +173,7 @@ function reiniciarActividad(el) {
       $(imgID).attr("src", "assets/img/carl_quimica.png");
       
     }
+    $('#surveymd01').modal('hide');
+
 }
 

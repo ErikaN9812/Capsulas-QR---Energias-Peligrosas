@@ -204,6 +204,8 @@ function resetSelects() {
   $('.btn-finalizar').attr('disabled', true);
   respuestas_correctas = 0;
   $('#respuestas_correctas').text(0);
+  $('#surveymd01').modal('hide');
+
 }
 
 selects.forEach(select => {
@@ -228,6 +230,9 @@ function validateSelects() {
 
   $('#p_respuestas').attr('hidden', false);
   $('#respuestas_correctas').text(respuestas_correctas);
+  $('#p_respuestas_modal').attr('hidden', false);
+  $('#respuestas_correctas_modal').text(respuestas_correctas);
   $('.btn-finalizar').attr('disabled', false);
   respuestas_correctas = 0;
+  $('#surveymd01').modal('show');
 }

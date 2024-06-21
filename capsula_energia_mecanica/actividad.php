@@ -233,11 +233,44 @@
 				</div>
 				<div>
 					<br>
-					<i class="instfinalizar  mb-2">Haz clic en Finalizar para guardar tu resultado</i>
-					<button class="btn btn-finalizar" disabled >Finalizar</button>
+					<i class="instfinalizar  mb-2">Haz clic en el botón para guardar tu resultado</i>
+					<button class="btn btn-finalizar" disabled ><i class="fas fa-check-circle"></i> Guardar Resultado</button>
 				</div>	
 			</div>
 		</div>
+
+		<!--Modal-->
+		<div class="modal fade" id="surveymd01" tabindex="-1" aria-hidden="true">
+				<div class="modal-dialog modal-dialog-centered modal-lg">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h5 class="modal-title">RESULTADO ACTIVIDAD</h5>
+							<button type="button" class="btn-close" data-bs-dismiss="modal"
+								aria-label="Close"></button>
+						</div>
+						<div class="modal-body">
+							<div style="text-align:center;">
+								<p><b>Tu puntuación en la actividad fue de:</b></p>
+								<p hidden id="p_respuestas_modal" style="color:#181818"><strong>Obtuviste <span id="respuestas_correctas_modal"></span> de 5 audios seleccionados correctamente</strong></p>
+								<p class="instfinalizar"><em></em></p>
+								<i class="inst mb-2" style="font-size: 16px!important;"><em>Recuerda que este puntaje se guardará</em></i>
+							</div>
+							<br>
+							<div style="text-align:center;">
+								<p>¿Te gustaría volver a realizar la actividad?</p>
+								<button class="btn btn-reiniciar" onclick="resetActividad();"> <i class="fas fa-sync"></i> Reiniciar</button>
+							</div>
+							<div style="text-align:center;">
+								<br><br>
+								<p >De lo contrario, haz clic en el botón</p>
+								<button class="btn btn-finalizar" disabled style="color: #fff; background: #009A3D; padding: 10px 30px; border-radius: 30px 0px 30px 30px; border: none; font-size: 1.2rem; box-shadow: rgb(0 160 175 / 30%) 0px 8px 24px;">
+									<i class="fas fa-check-circle"></i> Guardar Resultado</button>
+							</div>
+							<br>
+						</div>
+					</div>
+				</div>
+			</div>
 	</div>
 
 

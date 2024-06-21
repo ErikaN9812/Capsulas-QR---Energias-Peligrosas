@@ -152,11 +152,13 @@ function actSelectImg(el, data) {
     if(data=='checkAct'){
         contActividadCorrectas++;
         $('#respuestas_correctas').text(contActividadCorrectas);
+        $('#respuestas_correctas_modal').text(contActividadCorrectas);
     }
 
     if (contActividad >= 3) {
         $('.actSelectImg .itemAct').not('.checkAct, .xmarkAct').addClass('back-gris');
         $('.btn-finalizar').attr('disabled',false);
+        $('#surveymd01').modal('show');
     }
   } 
   
@@ -200,4 +202,5 @@ function reiniciarActividad(){
     contActividad = 0;
     contActividadCorrectas = 0; 
     $('.btn-finalizar').attr('disabled',true);
+    $('#surveymd01').modal('hide');
 }

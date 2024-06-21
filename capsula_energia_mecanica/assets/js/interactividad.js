@@ -157,7 +157,10 @@ function validateAnswers() {
     const resultDiv = document.getElementById('result');
     resultDiv.innerText = `Obtuviste ${correctCount} de 5 audios seleccionados correctamente`;
     $('#respuestas_correctas').val(correctCount);
+    $('#respuestas_correctas_modal').text(correctCount);
+    $('#p_respuestas_modal').attr('hidden', false);
     $('.btn-finalizar').attr('disabled',false);
+    $('#surveymd01').modal('show');
 }
 
 function pauseOtherAudios(currentAudio) {
@@ -229,4 +232,5 @@ function resetActividad(){
     correctCount = 0;
     $('#result').text('');
     $('.btn-finalizar').attr('disabled',true);
+    $('#surveymd01').modal('hide');
 }
