@@ -180,6 +180,11 @@
 						<p onclick="Questions4(this, true)">e. Si la máquina o el equipo está en funcionamiento, apáguelo siguiendo los procedimientos normales de apagado del fabricante o del empleador.</p> <!--respuesta correcta-->
 					</div>
 					<i class="inst" id='respuesta4' style="display:none;"></i>
+					<br>
+					<p hidden id="p_resultado" style="text-align: center; color:#181818">
+						Su resultado porcentual es del: 
+						<strong><span id="resultado"></span>%</strong>
+					</p>
 					<input type="text" id="respuestas_correctas" hidden value="">
 
 					<div style="display: flex;">
@@ -208,6 +213,11 @@
 							<div style="text-align:center;">
 								<p><b>Tu puntuación en la actividad fue de:</b></p>
 								<p hidden id="p_respuestas_modal" style="color:#181818"><strong><span id="respuestas_correctas_modal"></span> respuesta(s) correctas de 3</strong></p>
+								<br>
+								<p hidden id="p_resultado_modal" style="color:#181818">
+									Su resultado porcentual es del: 
+									<strong><span id="resultado_modal"></span>%</strong>
+								</p>
 								<p class="instfinalizar"><em></em></p>
 								<i class="inst mb-2" style="font-size: 16px!important;"><em>Recuerda que este puntaje se guardará</em></i>
 							</div>

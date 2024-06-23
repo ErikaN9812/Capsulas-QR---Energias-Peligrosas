@@ -126,7 +126,7 @@
 						<span class="indPagMb"></span>
 					</div>	
 					<div class="col-lg-12 col-md-12">
-						<h1 class="tituloh1-center">Energía Química</h1>
+						<h1 class="tituloh1-center">Energía Mecánica </h1>
 						<hr>
 						<p class="parrafo-center">Observa atentamente este video que te permitirá conocer este tipo de ENERGÍA PELIGROSA en nuestra operación, y las recomendaciones para prevenir sus riesgos:</p>		
 					</div>	
@@ -134,13 +134,13 @@
 					<div class="col-lg-6 col-md-12">
 						
 						<div class="media-espanol contenedor-center">
-							<video controls poster="assets/img/poster_quimica.jpg" class="mx-auto videocontainer">
-								<source src="assets/video/energia_quimica.mp4" type="video/mp4">
+							<video controls poster="assets/img/poster_mecanica.jpg" class="mx-auto videocontainer">
+								<source src="assets/video/energia_mecanica.mp4" type="video/mp4">
 							</video>
 						</div>
 						<div class="media-ingles contenedor-center">
-							<video controls poster="assets/img/poster_quimica_ingles.jpg" class="mx-auto videocontainer">
-								<source src="assets/video/energia_quimica_ingles.mp4" type="video/mp4">
+							<video controls poster="assets/img/poster_mecanica_ingles.jpg" class="mx-auto videocontainer">
+								<source src="assets/video/energia_mecanica_ingles.mp4" type="video/mp4">
 							</video>
 						</div>
 						<i class="inst mb-2 mobile-mostrar">Continuemos, haz clic en las flechas para avanzar</i>		
@@ -169,161 +169,118 @@
 				<img src="assets/img/pastilla.png" alt="" class="imgpastilla pc-mostrar">
 			</div>
 			<div class="col-lg-6 col-md-12">
-				<i class="inst mb-2">Responde con Falso o Verdadero las siguientes afirmaciones:</i>
-				<div class="actVorF ">
-					<div class="counta">
-						<span class="inc number">1</span>/<span class="tol"></span>
-					</div>
-					<div class="itemQ view">
-						<div class="row">
-						<div class="col-lg-8 col-md-6"  style="display: flex; justify-content: center;">
-						<p class="parrafo-center">
-							<br>
-							Energía química es la capacidad de una sustancia para hacer el trabajo de producir calor a través de un cambio en su composición  
-						</p>
-						</div>
-						<div class="col-lg-4 col-md-6 text-center" style="display: flex; justify-content: center;">
-						<img src="assets/img/carl_quimica.png" id="img-copast-01" class="imagen-60">
-						</div>
-						</div>
-						<hr>
-						<div class="check mt-2 text-center"  style="display: flex; justify-content: center;">
-							<button class="btnpregunta" onclick="actVorF(this, 'correct')">Verdadero</button> <!--respuesta correcta-->
-							<button class="btnpregunta" onclick="actVorF(this, 'incorrect')">Falso</button>
-						</div>
-					</div>
-					<div class="itemQ">
-						<div class="row">
-							<div class="col-lg-8 col-md-6"  style="display: flex; justify-content: center;">
-								<p class="parrafo-center"> 
-									<br>
-									En nuestra operación se encuentran formas de energía química en los laboratorios, puntos de inyección y tanques de proceso 
-								</p>
+				<i class="inst mb-2">Escucha los audios y selecciona con 'SÍ' o 'NO' aquellos que correspondan a las formas de bloqueo y etiquetado de este tipo de Energías Peligrosas:</i>
+				<div class="">
+					<div class="audio-container">
+						<div class="audio-item" id="audio1">
+							<audio controls onplay="pauseOtherAudios(this)">
+								<source src="assets/audio/actividad-1-ok.mp3" type="audio/mpeg">
+							</audio>
+							<div class="button-container">
+								<button class="btn-si" onclick="selectAnswer('audio1', true)">Sí</button>
+								<button class="btn-no" onclick="selectAnswer('audio1', false)">No</button>
 							</div>
-							<div class="col-lg-4 col-md-6 text-center" style="display: flex; justify-content: center;">
-									<img src="assets/img/carl_quimica.png" id="img-copast-02" class="imagen-60">
-							</div>
+							<div class="message"></div>
 						</div>
-						<hr>
-						<div class="check mt-2 text-center"  style="display: flex; justify-content: center;">
-							<button class="btnpregunta" onclick="actVorF(this, 'correct')">Verdadero</button>  <!--respuesta correcta-->
-							<button class="btnpregunta" onclick="actVorF(this, 'incorrect')">Falso</button>
-						</div>
-					</div>
-
-					<div class="itemQ">
-						<div class="row">
-							<div class="col-lg-8 col-md-6"  style="display: flex; justify-content: center;">
-								<p class="parrafo-center"> 
-									<br>
-									Cualquier persona de la operación puede manipular las sustancias químicas sin ninguna preparación previa 
-								</p>
+						<div class="audio-item" id="audio2">
+							<audio controls onplay="pauseOtherAudios(this)">
+								<source src="assets/audio/actividad-2.mal.mp3" type="audio/mpeg">
+							</audio>
+							<div class="button-container">
+							<button class="btn-si" onclick="selectAnswer('audio2', true)">Sí</button>
+							<button class="btn-no" onclick="selectAnswer('audio2', false)">No</button>
 							</div>
-							<div class="col-lg-4 col-md-6 text-center" style="display: flex; justify-content: center;">
-								<img src="assets/img/carl_quimica.png" id="img-copast-03" class="imagen-60">
-							</div>
+							<div class="message"></div>
 						</div>
-						<hr>
-						<div class="check mt-2 text-center"  style="display: flex; justify-content: center;">
-							<button class="btnpregunta" onclick="actVorF(this, 'incorrect')">Verdadero</button>
-							<button class="btnpregunta" onclick="actVorF(this, 'correct')">Falso</button> <!--respuesta correcta-->
+						<div class="audio-item" id="audio3">
+							<audio controls onplay="pauseOtherAudios(this)">
+								<source src="assets/audio/actividad-3-ok.mp3" type="audio/mpeg">
+							</audio>
+							<div class="button-container">
+							<button class="btn-si" onclick="selectAnswer('audio3', true)">Sí</button>
+							<button class="btn-no" onclick="selectAnswer('audio3', false)">No</button>
+							</div>
+							<div class="message"></div>
+						</div>
+						<div class="audio-item" id="audio4">
+							<audio controls onplay="pauseOtherAudios(this)">
+								<source src="assets/audio/actividad-4-mal.mp3" type="audio/mpeg">
+							</audio>
+							<div class="button-container">
+							<button class="btn-si" onclick="selectAnswer('audio4', true)">Sí</button>
+							<button class="btn-no" onclick="selectAnswer('audio4', false)">No</button>
+							</div>
+							<div class="message"></div>
+						</div>
+						<div class="audio-item" id="audio5">
+							<audio controls onplay="pauseOtherAudios(this)">
+								<source src="assets/audio/actividad-5-ok.mp3" type="audio/mpeg">
+							</audio>
+							<div class="button-container">
+								<button class="btn-si" onclick="selectAnswer('audio5', true)">Sí</button>
+								<button class="btn-no" onclick="selectAnswer('audio5', false)">No</button>
+							</div>
+							<div class="message"></div>
 						</div>
 					</div>
-
-					<div class="itemQ">
-						<div class="row">
-							<div class="col-lg-8 col-md-6"  style="display: flex; justify-content: center;">
-								<p class="parrafo-center">
-									<br>
-									Se debe hacer bloqueo y etiquetado debe hacerse en todos los dispositivos y equipos que tengan energía química sin excepción 
-								</p>
-							</div>
-							<div class="col-lg-4 col-md-6 text-center" style="display: flex; justify-content: center;">
-								<img src="assets/img/carl_quimica.png" id="img-copast-04" class="imagen-60">
-							</div>
-						</div>
-						<hr>
-						<div class="check mt-2 text-center"  style="display: flex; justify-content: center;"> 
-							<button class="btnpregunta" onclick="actVorF(this, 'correct')">Verdadero</button> <!--respuesta correcta-->
-							<button class="btnpregunta" onclick="actVorF(this, 'incorrect')">Falso</button>
-						</div>
-					</div>
-
-					<div class="itemQ">
-						<div class="row">
-							<div class="col-lg-8 col-md-6"  style="display: flex; justify-content: center;">
-								<p class="parrafo-center">
-									<br>
-									El uso de EPP (Elementos de Protección Personal) es opciones para el manejo de sustancias químicas o equipos relacionados 
-								</p>
-							</div>
-							<div class="col-lg-4 col-md-6 text-center" style="display: flex; justify-content: center;">
-								<img src="assets/img/carl_quimica.png" id="img-copast-04" class="imagen-60">
-							</div>
-						</div>
-						<hr>
-						<div class="check mt-2 text-center"  style="display: flex; justify-content: center;">
-							<button class="btnpregunta" onclick="actVorF(this, 'incorrect')">Verdadero</button>
-							<button class="btnpregunta" onclick="actVorF(this, 'correct')">Falso</button> <!--respuesta correcta-->
-						</div>
-					</div>
-					
-					
-					<div class="actFin" style="display:none;">
-						<br>
-						<p class="parrafo-res">Respuesta correctas</p>
-						<h1></h1>
-					</div>
-					<br>
-					<div class="reiniciar"style="display:none;">
-						<div style="display: flex; justify-content: center; padding:15px; cursor: pointer;">
-							<button class="btn btn-reiniciar" onclick="reiniciarActividad(this);" ><i class="fa fa-repeat"> </i>Reinciar</button>
-						</div>
-					</div>
-					
 				</div>
-				<input type="text" id="numero_preguntas" value="" hidden>
-				<input type="text" id="respuestas_correctas" value="" hidden>
+				<div id="result"></div>
+				<br>
+				<p hidden id="p_resultado" style="text-align: center; color:#181818">
+					Su resultado porcentual es del: 
+					<strong><span id="resultado"></span>%</strong>
+				</p>
+				<input type="hidden" value="" id="respuestas_correctas">
+				<br>
+				<div class="pc-slideflex2">
+					<button class="btn btn-validar"  id="validate-btn" onclick="validateAnswers()"><i class="fas fa-check"></i> Validar</button>
+					<button class="btn btn-reiniciar" onclick="resetActividad();"> <i class="fas fa-sync"></i> Reiniciar</button>
+				</div>
 				<div>
 					<br>
 					<i class="instfinalizar  mb-2">Haz clic en el botón para guardar tu resultado</i>
-					<button class="btn btn-finalizar" disabled ><i class="fas fa-check-circle"></i>Guardar Resultado</button>
+					<button class="btn btn-finalizar" disabled ><i class="fas fa-check-circle"></i> Guardar Resultado</button>
 				</div>	
 			</div>
 		</div>
 
 		<!--Modal-->
 		<div class="modal fade" id="surveymd01" tabindex="-1" aria-hidden="true">
-			<div class="modal-dialog modal-dialog-centered modal-lg">
-				<div class="modal-content">
-					<div class="modal-header">
-						<h5 class="modal-title">RESULTADO ACTIVIDAD</h5>
-						<button type="button" class="btn-close" data-bs-dismiss="modal"
-							aria-label="Close"></button>
-					</div>
-					<div class="modal-body">
-						<div style="text-align:center;">
-							<p><b>Tu puntuación en la actividad fue de:</b></p>
-							<p hidden id="p_respuestas_modal" style="color:#181818"><strong><span id="respuestas_correctas_modal"></span> respuesta(s) correctas de 5</strong></p>
-							<p class="instfinalizar"><em></em></p>
-							<i class="inst mb-2" style="font-size: 16px!important;"><em>Recuerda que este puntaje se guardará</em></i>
+				<div class="modal-dialog modal-dialog-centered modal-lg">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h5 class="modal-title">RESULTADO ACTIVIDAD</h5>
+							<button type="button" class="btn-close" data-bs-dismiss="modal"
+								aria-label="Close"></button>
 						</div>
-						<br>
-						<div style="text-align:center;">
-							<p>¿Te gustaría volver a realizar la actividad?</p>
-							<button class="btn btn-reiniciar" onclick="reiniciarActividad(this);"> <i class="fas fa-sync"></i> Reiniciar</button>
+						<div class="modal-body">
+							<div style="text-align:center;">
+								<p><b>Tu puntuación en la actividad fue de:</b></p>
+								<p hidden id="p_respuestas_modal" style="color:#181818"><strong>Obtuviste <span id="respuestas_correctas_modal"></span> de 5 audios seleccionados correctamente</strong></p>
+								<br>
+								<p hidden id="p_resultado_modal" style="color:#181818">
+									Su resultado porcentual es del: 
+									<strong><span id="resultado_modal"></span>%</strong>
+								</p>
+								<p class="instfinalizar"><em></em></p>
+								<i class="inst mb-2" style="font-size: 16px!important;"><em>Recuerda que este puntaje se guardará</em></i>
+							</div>
+							<br>
+							<div style="text-align:center;">
+								<p>¿Te gustaría volver a realizar la actividad?</p>
+								<button class="btn btn-reiniciar" onclick="resetActividad();"> <i class="fas fa-sync"></i> Reiniciar</button>
+							</div>
+							<div style="text-align:center;">
+								<br><br>
+								<p >De lo contrario, haz clic en el botón</p>
+								<button class="btn btn-finalizar" disabled style="color: #fff; background: #009A3D; padding: 10px 30px; border-radius: 30px 0px 30px 30px; border: none; font-size: 1.2rem; box-shadow: rgb(0 160 175 / 30%) 0px 8px 24px;">
+									<i class="fas fa-check-circle"></i> Guardar Resultado</button>
+							</div>
+							<br>
 						</div>
-						<div style="text-align:center;">
-							<br><br>
-							<p >De lo contrario, haz clic en el botón</p>
-							<button class="btn btn-finalizar" disabled style="color: #fff; background: #009A3D; padding: 10px 30px; border-radius: 30px 0px 30px 30px; border: none; font-size: 1.2rem; box-shadow: rgb(0 160 175 / 30%) 0px 8px 24px;">
-								<i class="fas fa-check-circle"></i> Guardar Resultado</button>
-						</div>
-						<br>
 					</div>
 				</div>
 			</div>
-		</div>
 	</div>
 
 
@@ -366,12 +323,12 @@
 		$(".btn-finalizar").on("click", function(){
 			let nombre_capsula = $('#nombre_capsula').val();
 			let cedula = $('#cedula').val();  
-			let numero_preguntas = $('#numero_preguntas').val();  
-			let preguntas_correctas = $('#respuestas_correctas').val();  
+			let numero_preguntas = 5;  
+			let preguntas_correctas= $('#respuestas_correctas').val();  
 
 			$.ajax({
 				type: "POST",
-				url: "../../functions_helpers.php?capsula_qr=energia_quimica&update_capsula=1",
+				url: "../../functions_helpers.php?capsula_qr=energia_mecanica&update_capsula=1",
 				dataType: "json",
 				data:{
 					nombre_capsula:nombre_capsula,

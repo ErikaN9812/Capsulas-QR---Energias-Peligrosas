@@ -201,6 +201,7 @@ function resetSelects() {
   });
 
   $('#p_respuestas').attr('hidden', true);
+  $('#p_resultado').attr('hidden', true);
   $('.btn-finalizar').attr('disabled', true);
   respuestas_correctas = 0;
   $('#respuestas_correctas').text(0);
@@ -233,6 +234,11 @@ function validateSelects() {
   $('#p_respuestas_modal').attr('hidden', false);
   $('#respuestas_correctas_modal').text(respuestas_correctas);
   $('.btn-finalizar').attr('disabled', false);
+  let resultado= (respuestas_correctas / 7)*100;
+  $('#p_resultado_modal').attr('hidden', false);
+  $('#p_resultado').attr('hidden', false);
+  $('#resultado_modal').text(Math.round(resultado));
+  $('#resultado').text(Math.round(resultado));
   respuestas_correctas = 0;
   $('#surveymd01').modal('show');
 }

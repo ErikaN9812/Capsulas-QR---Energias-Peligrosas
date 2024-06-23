@@ -159,6 +159,11 @@ function validateAnswers() {
     $('#respuestas_correctas').val(correctCount);
     $('#respuestas_correctas_modal').text(correctCount);
     $('#p_respuestas_modal').attr('hidden', false);
+    let resultado= (correctCount / 5)*100;
+    $('#p_resultado_modal').attr('hidden', false);
+    $('#p_resultado').attr('hidden', false);
+    $('#resultado_modal').text(Math.round(resultado));
+    $('#resultado').text(Math.round(resultado));
     $('.btn-finalizar').attr('disabled',false);
     $('#surveymd01').modal('show');
 }
@@ -232,5 +237,6 @@ function resetActividad(){
     correctCount = 0;
     $('#result').text('');
     $('.btn-finalizar').attr('disabled',true);
+    $('#p_resultado').attr('hidden', true);
     $('#surveymd01').modal('hide');
 }
