@@ -255,23 +255,25 @@
 						</div>
 						<div class="modal-body">
 							<div style="text-align:center;">
-								<p><b>Tu puntuación en la actividad fue de:</b></p>
-								<p hidden id="p_respuestas_modal" style="color:#181818"><strong>Obtuviste <span id="respuestas_correctas_modal"></span> de 5 audios seleccionados correctamente</strong></p>
-								<br>
+								<p>Tu puntuación en la actividad fue de:</p>
+								<p hidden id="p_respuestas_modal" style="color:#181818"><strong><span id="respuestas_correctas_modal"></span> de 5 audios seleccionados correctamente</strong></p>
+								<hr style="width: 80%; margin: 2% auto; border: 1px solid #8f8f8f">
 								<p hidden id="p_resultado_modal" style="color:#181818">
 									Su resultado porcentual es del: 
 									<strong><span id="resultado_modal"></span>%</strong>
 								</p>
 								<p class="instfinalizar"><em></em></p>
-								<i class="inst mb-2" style="font-size: 16px!important;"><em>Recuerda que este puntaje se guardará</em></i>
+								<i class="inst mb-2" style="font-size: 15px!important;"><em>Recuerda que este puntaje se guardará</em></i>
 							</div>
 							<br>
 							<div style="text-align:center;">
 								<p>¿Te gustaría volver a realizar la actividad?</p>
-								<button class="btn btn-reiniciar" onclick="resetActividad();"> <i class="fas fa-sync"></i> Reiniciar</button>
+								<button class="btn btn-reiniciar" onclick="resetActividad();" style="background-color: #47a76d !important"> <i class="fas fa-sync"></i> Reiniciar</button>
+								<br>
 							</div>
 							<div style="text-align:center;">
-								<br><br>
+								<hr style="width: 80%; margin: 2% auto; border: 1px solid #8f8f8f">
+								<br>
 								<p >De lo contrario, haz clic en el botón</p>
 								<button class="btn btn-finalizar" disabled style="color: #fff; background: #009A3D; padding: 10px 30px; border-radius: 30px 0px 30px 30px; border: none; font-size: 1.2rem; box-shadow: rgb(0 160 175 / 30%) 0px 8px 24px;">
 									<i class="fas fa-check-circle"></i> Guardar Resultado</button>
