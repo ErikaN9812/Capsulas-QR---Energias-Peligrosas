@@ -150,6 +150,14 @@ function pausarMultimedia(){
     $('.btn-finalizar').attr('disabled',false);
     $('#respuesta4').html(correctCount4 + ' respuestas correctas de '+numCorrect4);
     $('#respuesta4').show();
+    $('#p_respuestas_modal').attr('hidden', false);
+    $('#respuestas_correctas_modal').text(correctCount4);
+    let resultado= (correctCount4 / 3)*100;
+    $('#p_resultado_modal').attr('hidden', false);
+    $('#p_resultado').attr('hidden', false);
+    $('#resultado_modal').text(Math.round(resultado));
+    $('#resultado').text(Math.round(resultado));
+    $('#surveymd01').modal('show');
   }
 
   function reiniciarActividad(actividad='', posicionesIniciales='',tipo=0,idActividad=0) {
@@ -186,6 +194,8 @@ function pausarMultimedia(){
         $('#respuesta3').hide();
         $('#reiniciar4').attr('disabled',true);
         $('.btn-finalizar').attr('disabled',true);
+        $('#p_resultado').attr('hidden', true);
+        $('#surveymd01').modal('hide');
       }
     }
     

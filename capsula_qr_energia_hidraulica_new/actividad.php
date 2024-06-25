@@ -1,4 +1,4 @@
-<!--<?php
+<?php
 	$CI = require('../../ci_instance.php');
 	require('../../config.php');
 
@@ -17,9 +17,10 @@
 		header("Location: realizado.php");
 		exit();
 	}
-?>-->
+?>
 <!DOCTYPE html>
 <html>
+
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -126,7 +127,7 @@
 						<span class="indPagMb"></span>
 					</div>	
 					<div class="col-lg-12 col-md-12">
-						<h1 class="tituloh1-center">Energía Mecánica </h1>
+						<h1 class="tituloh1-center">Energía Hidráulica</h1>
 						<hr>
 						<p class="parrafo-center">Observa atentamente este video que te permitirá conocer este tipo de ENERGÍA PELIGROSA en nuestra operación, y las recomendaciones para prevenir sus riesgos:</p>		
 					</div>	
@@ -134,13 +135,13 @@
 					<div class="col-lg-6 col-md-12">
 						
 						<div class="media-espanol contenedor-center">
-							<video controls poster="assets/img/poster_mecanica.jpg" class="mx-auto videocontainer">
-								<source src="assets/video/energia_mecanica.mp4" type="video/mp4">
+							<video controls poster="assets/img/poster_hidraulica.jpg" class="mx-auto videocontainer">
+								<source src="assets/video/energia_hidraulica.mp4" type="video/mp4">
 							</video>
 						</div>
 						<div class="media-ingles contenedor-center">
-							<video controls poster="assets/img/poster_mecanica_ingles.jpg" class="mx-auto videocontainer">
-								<source src="assets/video/energia_mecanica_ingles.mp4" type="video/mp4">
+							<video controls poster="assets/img/poster_hidraulica_ingles.jpg" class="mx-auto videocontainer">
+								<source src="assets/video/energia_hidraulica_ingles.mp4" type="video/mp4">
 							</video>
 						</div>
 						<i class="inst mb-2 mobile-mostrar">Continuemos, haz clic en las flechas para avanzar</i>		
@@ -166,81 +167,97 @@
 			<div class="col-lg-6 col-md-12">
 				<h1 class="tituloh1-center">Actividad de refuerzo</h1>
 				<p class="parrafo-center" >Ahora apliquemos lo visto en el video anterior, realizando esta actividad de refuerzo</p>
-				<img src="assets/img/pastilla.png" alt="" class="imgpastilla pc-mostrar">
+				<img src="assets/img/pastilla.png" alt="" class="imagen-40 pc-mostrar">
 			</div>
 			<div class="col-lg-6 col-md-12">
-				<i class="inst mb-2">Escucha los audios y selecciona con 'SÍ' o 'NO' aquellos que correspondan a las formas de bloqueo y etiquetado de este tipo de Energías Peligrosas:</i>
-				<div class="">
-					<div class="audio-container">
-						<div class="audio-item" id="audio1">
-							<audio controls onplay="pauseOtherAudios(this)">
-								<source src="assets/audio/actividad-1-ok.mp3" type="audio/mpeg">
-							</audio>
-							<div class="button-container">
-								<button class="btn-si" onclick="selectAnswer('audio1', true)">Sí</button>
-								<button class="btn-no" onclick="selectAnswer('audio1', false)">No</button>
-							</div>
-							<div class="message"></div>
+				<i class="inst mb-2">De las 6 imágenes disponibles, elige 3 que representen formas de energía hidráulica</i>
+				<div class="actSelectImg text-center">
+					
+					<div class="grid-container">
+						<div class="itemAct xmark" onclick="actSelectImg(this, 'xmarkAct')"> 
+							<img src="assets/img/slide_1.jpg"> <!--¡PIÉNSALO BIEN! Este no es un ejemplo de energía hidráulica.-->
+							<img class="resAct" src="">
 						</div>
-						<div class="audio-item" id="audio2">
-							<audio controls onplay="pauseOtherAudios(this)">
-								<source src="assets/audio/actividad-2.mal.mp3" type="audio/mpeg">
-							</audio>
-							<div class="button-container">
-							<button class="btn-si" onclick="selectAnswer('audio2', true)">Sí</button>
-							<button class="btn-no" onclick="selectAnswer('audio2', false)">No</button>
-							</div>
-							<div class="message"></div>
+						<div class="itemAct check" onclick="actSelectImg(this, 'checkAct')"> 
+							<img src="assets/img/slide_2.jpg">  <!--¡ES CORRECTO! Es un ejemplo de energía hidráulica.-->
+							<img class="resAct" src="">
 						</div>
-						<div class="audio-item" id="audio3">
-							<audio controls onplay="pauseOtherAudios(this)">
-								<source src="assets/audio/actividad-3-ok.mp3" type="audio/mpeg">
-							</audio>
-							<div class="button-container">
-							<button class="btn-si" onclick="selectAnswer('audio3', true)">Sí</button>
-							<button class="btn-no" onclick="selectAnswer('audio3', false)">No</button>
-							</div>
-							<div class="message"></div>
+						<div class="itemAct xmark" onclick="actSelectImg(this, 'xmarkAct')">
+							<img src="assets/img/slide_3.jpg"> <!--¡PIÉNSALO BIEN! Este no es un ejemplo de energía hidráulica.-->
+							<img class="resAct" src="">
 						</div>
-						<div class="audio-item" id="audio4">
-							<audio controls onplay="pauseOtherAudios(this)">
-								<source src="assets/audio/actividad-4-mal.mp3" type="audio/mpeg">
-							</audio>
-							<div class="button-container">
-							<button class="btn-si" onclick="selectAnswer('audio4', true)">Sí</button>
-							<button class="btn-no" onclick="selectAnswer('audio4', false)">No</button>
-							</div>
-							<div class="message"></div>
+						<div class="itemAct check" onclick="actSelectImg(this, 'checkAct')">
+							<img src="assets/img/slide_4.jpg"> <!--¡ES CORRECTO! Es un ejemplo de energía hidráulica.-->
+							<img class="resAct" src="">
 						</div>
-						<div class="audio-item" id="audio5">
-							<audio controls onplay="pauseOtherAudios(this)">
-								<source src="assets/audio/actividad-5-ok.mp3" type="audio/mpeg">
-							</audio>
-							<div class="button-container">
-								<button class="btn-si" onclick="selectAnswer('audio5', true)">Sí</button>
-								<button class="btn-no" onclick="selectAnswer('audio5', false)">No</button>
+						<div class="itemAct check" onclick="actSelectImg(this, 'checkAct')">
+							<img src="assets/img/slide_5.jpg"> <!--¡ES CORRECTO! Es un ejemplo de energía hidráulica.-->
+							<img class="resAct" src="">
+						</div>
+						<div class="itemAct xmark" onclick="actSelectImg(this, 'xmarkAct')"> 
+							<img src="assets/img/slide_6.jpg"> <!--¡PIÉNSALO BIEN! Este no es un ejemplo de energía hidráulica.-->
+							<img class="resAct" src="">
+						</div>
+					</div>
+
+					<div style="text-align:center;">
+						<p><strong><span id="respuestas_correctas">0</span> respuestas correctas de 3</strong></p>
+						<br>
+						<p hidden id="p_resultado" style="color:#181818">
+							Su resultado porcentual es del: 
+							<strong><span id="resultado"></span>%</strong>
+						</p>
+					</div>
+				</div>
+				<div class="pc-slideflex2">
+					<button class="btn btn-reiniciar" onclick="reiniciarActividad();"> <i class="fas fa-sync"></i> Reiniciar</button>
+					
+				</div>
+				<br>
+				<i class="instfinalizar  mb-2">Haz clic en el botón para guardar tu resultado</i>
+				<button class="btn btn-finalizar" disabled style="color: #fff; background: #009A3D; padding: 10px 30px; border-radius: 30px 0px 30px 30px; border: none; font-size: 1.2rem; box-shadow: rgb(0 160 175 / 30%) 0px 8px 24px;">Guardar Resultado</button>
+				<br>
+			</div>
+
+			</div>
+				<!--Modal-->
+				<div class="modal fade" id="surveymd01" tabindex="-1" aria-hidden="true">
+				<div class="modal-dialog modal-dialog-centered modal-lg">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h5 class="modal-title">RESULTADO ACTIVIDAD</h5>
+							<button type="button" class="btn-close" data-bs-dismiss="modal"
+								aria-label="Close"></button>
+						</div>
+						<div class="modal-body">
+							<div style="text-align:center;">
+								<p><b>Tu puntuación en la actividad fue de:</b></p>
+								<p><strong><span id="respuestas_correctas_modal">0</span> respuestas correctas de 3</strong></p>
+								<br>
+								<p hidden id="p_resultado_modal" style="color:#181818">
+									Su resultado porcentual es del: 
+									<strong><span id="resultado_modal"></span>%</strong>
+								</p>
+								<p class="instfinalizar"><em></em></p>
+								<i class="inst mb-2" style="font-size: 16px!important;"><em>Recuerda que este puntaje se guardará</em></i>
 							</div>
-							<div class="message"></div>
+							<br>
+							<div style="text-align:center;">
+								<p>¿Te gustaría volver a realizar la actividad?</p>
+								<button class="btn btn-reiniciar" onclick="reiniciarActividad();"> <i class="fas fa-sync"></i> Reiniciar</button>
+							</div>
+							<div style="text-align:center;">
+								<br><br>
+								<p >De lo contrario, haz clic en el botón</p>
+								<button class="btn btn-finalizar" disabled style="color: #fff; background: #009A3D; padding: 10px 30px; border-radius: 30px 0px 30px 30px; border: none; font-size: 1.2rem; box-shadow: rgb(0 160 175 / 30%) 0px 8px 24px;">
+									<i class="fas fa-check-circle"></i> Guardar Resultado</button>
+							</div>
+							<br>
 						</div>
 					</div>
 				</div>
-				<div id="result"></div>
-				<br>
-				<!--<div style="text-align:center;">
-					<p hidden id="p_respuestas"><strong><span id="respuestas_correctas"></span> audios seleccionados correctamente de <b>5</b></strong></p>
-				</div>-->
-				<div class="pc-slideflex2">
-					<button class="btn btn-validar"  id="validate-btn" onclick="validateAnswers()"><i class="fas fa-check"></i> Validar</button>
-					<button class="btn btn-reiniciar" onclick="resetSelects();"> <i class="fas fa-sync"></i> Reiniciar</button>
-				</div>
-				<div>
-					<br>
-					<i class="instfinalizar  mb-2">Haz clic en Finalizar para guardar tu resultado</i>
-					<button class="btn btn-finalizar" disabled >Finalizar</button>
-				</div>	
 			</div>
 		</div>
-	</div>
 
 
 	<!-- sliderfinal NO REMOVER -->   
@@ -273,6 +290,7 @@
 	<script src="assets/js/sessvars.js"> </script>
 	<script src="assets/js/touch-dnd.js"></script>
 	<script src="assets/js/script.js"></script>
+
 	<script src="assets/js/interactividad.js"></script>
 	
 	<script>
@@ -282,25 +300,24 @@
 		$(".btn-finalizar").on("click", function(){
 			let nombre_capsula = $('#nombre_capsula').val();
 			let cedula = $('#cedula').val();  
-			let numero_preguntas = 7;  
-			let preguntas_correctas_2 = $('#respuestas_correctas').text();  
+			let numero_preguntas = 3;  
+			let preguntas_correctas = $('#respuestas_correctas').text();  
 
 			$.ajax({
 				type: "POST",
-				url: "../../functions_helpers.php?capsula_qr=energia_termica&update_capsula=1",
+				url: "../../functions_helpers.php?capsula_qr=energia_hidraulica&update_capsula=1",
 				dataType: "json",
 				data:{
 					nombre_capsula:nombre_capsula,
 					cedula:cedula,
 					numero_preguntas:numero_preguntas,
-					preguntas_correctas:preguntas_correctas_2,
+					preguntas_correctas:preguntas_correctas,
 				},
 				success: function(res){
 					if (res.message == '1') {
 						window.location.href = "fin.php";
 					}else{
 						window.reload();
-
 					}
 				}
 			});    

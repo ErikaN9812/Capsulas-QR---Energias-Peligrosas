@@ -1,7 +1,6 @@
 $(document).ready(function() {
     aniSl19(1);
    
-
     // sistemaVotacion();
     pausarMultimedia();
     mediaIdioma();
@@ -10,7 +9,7 @@ $(document).ready(function() {
         $(".actVorF .tol").html($(".itemQ").length);
     }, "2000");
 
-    populateSelects();
+  
 });
 
 let corret = 0;
@@ -42,7 +41,25 @@ let corret = 0;
         $(".actFin button").css("text-align", "center");
         $(".actFin h1").html(corret + " de " + $(".itemQ").length);
         $('.btn-finalizar').attr('disabled', false);
-        // localStorage.setItem("slider28", "ok");
+        
+        $('#numero_preguntas').val($(".hideT").length);
+        $('#respuestas_correctas').val(corret);
+        $('#respuestas_correctas_modal').text(corret);
+        $(".reiniciar").show();
+        $('#p_respuestas_modal').attr('hidden', false);
+
+        let resultado= (corret / 5)*100;
+        $('#p_resultado_modal').attr('hidden', false);
+        $('#p_resultado').attr('hidden', false);
+        $('#resultado_modal').text(Math.round(resultado));
+        $('#resultado').text(Math.round(resultado));
+        
+        $('#surveymd01').modal('show');
+        
+        if(corret < $(".hideT").length){
+            $(".btn-reintentar").show();
+        }
+
       }
       $(".actVorF button").removeAttr("disabled");
     }, "1000");
@@ -141,93 +158,28 @@ function pausarMultimedia(){
 }
 
 
-/*Lista despegable*/
-const options = [
-  'charcos',
-  'húmedos',
-  'provisionales',
-  'eléctricos',
-  'protección',
-  'cables',
-  'dañados',
-];
+function reiniciarActividad(el) {
+    corret = 0;
+    $(".actFin").hide();
+    $(".reiniciar").hide();
+    $('.btn-finalizar').attr('disabled', true);
+    $(".itemQ").removeClass("hideT view");
+    $(".itemQ").removeClass("view");
 
-const correctAnswers = {
-  drop1: 'eléctricos',
-  drop2: 'cables',
-  drop3: 'charcos',
-  drop4: 'húmedos',
-  drop5: 'provisionales',
-  drop6: 'dañados',
-  drop7: 'protección'
-};
+    $(el).parents(".itemQ").addClass("hideT");
+    $(".actVorF .inc").html(1);
 
+    let view = ".actVorF > div:nth-child(2)";
+    $(view).addClass("view");
 
-const selects = document.querySelectorAll('.word-select');
-
-function populateSelects() {
-  selects.forEach(select => {
-    options.forEach(option => {
-      const opt = document.createElement('option');
-      opt.value = option;
-      opt.textContent = option;
-      select.appendChild(opt);
-    });
-  });
-}
-
-function updateSelects() {
-  const selectedValues = Array.from(selects).map(select => select.value);
-  selects.forEach(select => {
-    Array.from(select.options).forEach(option => {
-      if (selectedValues.includes(option.value) && option.value !== select.value) {
-        option.style.display = 'none';
-      } else {
-        option.style.display = 'block';
-      }
-    });
-  });
-}
-
-function resetSelects() {
-  selects.forEach(select => {
-    select.value = '';
-    Array.from(select.options).forEach(option => {
-      option.style.display = 'block';
-      select.classList.remove('incorrectAnswer');
-      select.classList.remove('correctAnswer');
-
-    });
-  });
-
-  $('#p_respuestas').attr('hidden', true);
-  $('.btn-finalizar').attr('disabled', true);
-  respuestas_correctas = 0;
-  $('#respuestas_correctas').text(0);
-}
-
-selects.forEach(select => {
-  select.addEventListener('change', updateSelects);
-});
-
-
-function validateSelects() {
-  let respuestas_correctas = 0;
-  selects.forEach(select => {
-    const selectId = select.id;
-
-    if (select.value === correctAnswers[selectId]) {
-      select.classList.add('correctAnswer');
-      select.classList.remove('incorrectAnswer');
-      respuestas_correctas++;
-    } else {
-      select.classList.add('incorrectAnswer');
-      select.classList.remove('correctAnswer');
+    for (let i = 1; i <= 4; i++) {
+      let imgID = "#img-copast-" + (i < 10 ? "0" : "") + i;
+    
+      $(imgID).attr("src", "assets/img/carl_quimica.png");
+      
     }
-  });
+    $('#p_resultado_modal').attr('hidden', true);
+    $('#surveymd01').modal('hide');
 
-  $('#p_respuestas').attr('hidden', false);
-  $('#respuestas_correctas').text(respuestas_correctas);
-  $('.btn-finalizar').attr('disabled', false);
-  respuestas_correctas = 0;
 }
+

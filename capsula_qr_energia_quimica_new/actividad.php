@@ -1,4 +1,4 @@
-<!--<?php
+<?php
 	$CI = require('../../ci_instance.php');
 	require('../../config.php');
 
@@ -17,7 +17,7 @@
 		header("Location: realizado.php");
 		exit();
 	}
-?>-->
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -273,24 +273,65 @@
 						<br>
 						<p class="parrafo-res">Respuesta correctas</p>
 						<h1></h1>
-						<input type="text" id="numero_preguntas" value="" hidden>
-						<input type="text" id="preguntas_correctas" value="" hidden>
+						<br>
+						<p hidden id="p_resultado" style="text-align: center; color:#181818">
+							Su resultado porcentual es del: 
+							<strong><span id="resultado"></span>%</strong>
+						</p>
 					</div>
 					<br>
-					<div class="btn-reintentar text-center" style="display: flex; justify-content: center; display:none; padding:15px; cursor: pointer;">
-						<a class="btn-reiniciar" onclick="reiniciarActividad(this);">
-						<i class="fa fa-repeat"></i> Reiniciar</button></a>
+					<div class="reiniciar"style="display:none;">
+						<div style="display: flex; justify-content: center; padding:15px; cursor: pointer;">
+							<button class="btn btn-reiniciar" onclick="reiniciarActividad(this);" ><i class="fa fa-repeat"> </i>Reinciar</button>
+						</div>
 					</div>
+					
 				</div>
-				
-				<!--<div class="pc-slideflex2">
-					<button class="btn btn-reiniciar" onclick="resetSelects();"> <i class="fas fa-sync"></i> Reiniciar</button>
-				</div>-->
+				<input type="text" id="numero_preguntas" value="" hidden>
+				<input type="text" id="respuestas_correctas" value="" hidden>
 				<div>
 					<br>
-					<i class="instfinalizar  mb-2">Haz clic en Finalizar para guardar tu resultado</i>
-					<button class="btn btn-finalizar" disabled >Finalizar</button>
+					<i class="instfinalizar  mb-2">Haz clic en el botón para guardar tu resultado</i>
+					<button class="btn btn-finalizar" disabled ><i class="fas fa-check-circle"></i>Guardar Resultado</button>
 				</div>	
+			</div>
+		</div>
+
+		<!--Modal-->
+		<div class="modal fade" id="surveymd01" tabindex="-1" aria-hidden="true">
+			<div class="modal-dialog modal-dialog-centered modal-lg">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title">RESULTADO ACTIVIDAD</h5>
+						<button type="button" class="btn-close" data-bs-dismiss="modal"
+							aria-label="Close"></button>
+					</div>
+					<div class="modal-body">
+						<div style="text-align:center;">
+							<p><b>Tu puntuación en la actividad fue de:</b></p>
+							<p hidden id="p_respuestas_modal" style="color:#181818"><strong><span id="respuestas_correctas_modal"></span> respuesta(s) correctas de 5</strong></p>
+							<br>
+								<p hidden id="p_resultado_modal" style="color:#181818">
+									Su resultado porcentual es del: 
+									<strong><span id="resultado_modal"></span>%</strong>
+								</p>
+							<p class="instfinalizar"><em></em></p>
+							<i class="inst mb-2" style="font-size: 16px!important;"><em>Recuerda que este puntaje se guardará</em></i>
+						</div>
+						<br>
+						<div style="text-align:center;">
+							<p>¿Te gustaría volver a realizar la actividad?</p>
+							<button class="btn btn-reiniciar" onclick="reiniciarActividad(this);"> <i class="fas fa-sync"></i> Reiniciar</button>
+						</div>
+						<div style="text-align:center;">
+							<br><br>
+							<p >De lo contrario, haz clic en el botón</p>
+							<button class="btn btn-finalizar" disabled style="color: #fff; background: #009A3D; padding: 10px 30px; border-radius: 30px 0px 30px 30px; border: none; font-size: 1.2rem; box-shadow: rgb(0 160 175 / 30%) 0px 8px 24px;">
+								<i class="fas fa-check-circle"></i> Guardar Resultado</button>
+						</div>
+						<br>
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>
@@ -335,18 +376,18 @@
 		$(".btn-finalizar").on("click", function(){
 			let nombre_capsula = $('#nombre_capsula').val();
 			let cedula = $('#cedula').val();  
-			let numero_preguntas = 7;  
-			let preguntas_correctas_2 = $('#respuestas_correctas').text();  
+			let numero_preguntas = $('#numero_preguntas').val();  
+			let preguntas_correctas = $('#respuestas_correctas').val();  
 
 			$.ajax({
 				type: "POST",
-				url: "../../functions_helpers.php?capsula_qr=energia_termica&update_capsula=1",
+				url: "../../functions_helpers.php?capsula_qr=energia_quimica&update_capsula=1",
 				dataType: "json",
 				data:{
 					nombre_capsula:nombre_capsula,
 					cedula:cedula,
 					numero_preguntas:numero_preguntas,
-					preguntas_correctas:preguntas_correctas_2,
+					preguntas_correctas:preguntas_correctas,
 				},
 				success: function(res){
 					if (res.message == '1') {

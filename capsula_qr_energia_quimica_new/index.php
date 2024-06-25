@@ -310,7 +310,7 @@
 
         $.ajax({
           type: "POST",
-          url: "../../functions_helpers.php?capsula_qr=energia_electrica",
+          url: "../../functions_helpers.php?capsula_qr=energia_quimica",
           dataType: "json",
           data:{
             nombre:nombre,

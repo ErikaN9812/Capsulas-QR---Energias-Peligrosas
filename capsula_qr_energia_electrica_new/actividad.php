@@ -20,7 +20,6 @@
 ?>
 <!DOCTYPE html>
 <html>
-
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -74,8 +73,8 @@
 </head>
 
 <body>
-<input type="text" id="nombre_capsula" value="<?=$nombre_capsula = isset($_GET['nombre_capsula']) ? $_GET['nombre_capsula'] : '';?>" hidden>
-<input type="text" id="cedula" value="<?=isset($_GET['cedula']) ? $_GET['cedula'] : '';?>" hidden>
+	<input type="text" id="nombre_capsula" value="<?=$nombre_capsula = isset($_GET['nombre_capsula']) ? $_GET['nombre_capsula'] : '';?>" hidden>
+	<input type="text" id="cedula" value="<?=isset($_GET['cedula']) ? $_GET['cedula'] : '';?>" hidden>
 	<!-- header -->
 	<div class="contentHeader">
 		<div>
@@ -127,7 +126,7 @@
 						<span class="indPagMb"></span>
 					</div>	
 					<div class="col-lg-12 col-md-12">
-						<h1 class="tituloh1-center">Energía Neumática</h1>
+						<h1 class="tituloh1-center">Energía Eléctrica </h1>
 						<hr>
 						<p class="parrafo-center">Observa atentamente este video que te permitirá conocer este tipo de ENERGÍA PELIGROSA en nuestra operación, y las recomendaciones para prevenir sus riesgos:</p>		
 					</div>	
@@ -135,13 +134,13 @@
 					<div class="col-lg-6 col-md-12">
 						
 						<div class="media-espanol contenedor-center">
-							<video controls poster="assets/img/poster_neumatica.png" class="mx-auto videocontainer">
-								<source src="assets/video/Energia_Neumatica.mp4" type="video/mp4">
+							<video controls poster="assets/img/poster.jpg" class="mx-auto videocontainer">
+								<source src="assets/video/Energia_Electrica.mp4" type="video/mp4">
 							</video>
 						</div>
 						<div class="media-ingles contenedor-center">
-							<video controls poster="assets/img/poster_neumatica_ingles.png" class="mx-auto videocontainer">
-								<source src="assets/video/Energia_Neumatica_Ingles.mp4" type="video/mp4">
+							<video controls poster="assets/img/poster_ingles.jpg" class="mx-auto videocontainer">
+								<source src="assets/video/Energia_Electrica_ingles.mp4" type="video/mp4">
 							</video>
 						</div>
 						<i class="inst mb-2 mobile-mostrar">Continuemos, haz clic en las flechas para avanzar</i>		
@@ -156,7 +155,7 @@
 		<!--End slider01 Reflexionemos-->
 
 		<!--slider 02 actividad-->
-		<div class="container preguntas_01">
+		<div class="container">
 			<div class="row">
 				<div>
 					<p class="indPag">
@@ -170,31 +169,114 @@
 				<img src="assets/img/pastilla.png" alt="" class="imagen-40 pc-mostrar">
 			</div>
 			<div class="col-lg-6 col-md-12">
-				<i class="inst mb-2">Seleccione las tres (3) recomendaciones que corresponden a la Energía Neumática</i>
-				<div class="ctItem text-parrafocasos" id='actividad_h_04' >
-					<div>
-						<p onclick="Questions4(this, false)">a. Los pistones suspendidos en pleno movimiento pueden almacenar energía de la gravedad.</p> <!--respuesta correcta-->
-						<p onclick="Questions4(this, true)">b. Llevar el pelo largo siempre recogido y bien sujeto.</p> 
-						<p onclick="Questions4(this, true)">c. Aplique el dispositivo de bloqueo asignado, (candados o bridas) para mantener el equipo en una posición segura.</p> <!--respuesta correcta-->
-						<p onclick="Questions4(this, true)">d. Antes de iniciar cualquier trabajo en baja tensión, se considerará que todos los cables conductores llevan corriente eléctrica.</p> 
-						<p onclick="Questions4(this, false)">e. Si la máquina o el equipo está en funcionamiento, apáguelo siguiendo los procedimientos normales de apagado del fabricante o del empleador.</p> <!--respuesta correcta-->
-					</div>
-					<i class="inst" id='respuesta4' style="display:none;"></i>
-					<input type="text" id="respuestas_correctas" hidden value="">
-
-					<div style="display: flex;">
-						<button class="btn" id='btn-valid4' onclick="valid4(4)"><i class="fa fa-check"></i> Validar</button>
-						<button class="btn" id="reiniciar4" onclick="reiniciarActividad($('#actividad_h_04'), [], 2,4)" disabled><i class="fas fa-sync"></i> Reiniciar</button>
-					</div>
+				<i class="inst mb-2">Selecciona la opción correcta en la lista desplegable de acuerdo con el siguiente texto:</i>
+				<div class="activity">
+					<p>
+					  Debe evitarse la utilización de equipos 
+					  <span class="custom-select-wrapper">
+						<select id="drop1" class="custom-select word-select">
+						  <option value="" disabled selected>Seleccione...</option> <!--electricos-->
+						</select> 
+					  </span>
+					  en caso de lluvia o humedad cuando los 
+					  <span class="custom-select-wrapper">
+						<select id="drop2" class="custom-select word-select">
+						  <option value="" disabled selected>Seleccione...</option> <!--cables-->
+						</select>
+					  </span>
+					  u otro material eléctrico atraviesen  
+					  <span class="custom-select-wrapper">
+						<select id="drop3" class="custom-select word-select">
+						  <option value="" disabled selected>Seleccione...</option><!--charcos-->
+						</select>
+					  </span>, 
+					  los pies pisen agua o alguna parte del cuerpo esté mojada.
+					  <br>En ambientes 
+					  <span class="custom-select-wrapper">
+						<select id="drop4" class="custom-select word-select">
+						  <option value="" disabled selected>Seleccione...</option><!--húmedos-->
+						</select>
+					  </span>
+					  hay que asegurarse de que todos los elementos de la instalación responden a las condiciones de utilización.
+					  Debe evitarse realizar reparaciones 
+					  <span class="custom-select-wrapper">
+						<select id="drop5" class="custom-select word-select">
+						  <option value="" disabled selected>Seleccione...</option><!--provisionales-->
+						</select>
+					  </span>. 
+					  <br>Los cables 
+					  <span class="custom-select-wrapper">
+						<select id="drop6" class="custom-select word-select">
+						  <option value="" disabled selected>Seleccione...</option><!--dañados-->
+						</select>
+					  </span>
+					  hay que reemplazarlos por otros nuevos. 
+					  Toda máquina portátil eléctrica deberá disponer de un sistema de 
+					  <span class="custom-select-wrapper">
+						<select id="drop7" class="custom-select word-select">
+						  <option value="" disabled selected>Seleccione...</option><!--protección-->
+						</select>
+					  </span>. El más usual es el doble aislamiento.
+					</p>
 				</div>
 				<br>
-				<i class="instfinalizar  mb-2">Haz clic en Finalizar para guardar tu resultado</i>
-			  	<button class="btn btn-finalizar" disabled style="color: #fff; background: #009A3D; padding: 10px 30px; border-radius: 30px 0px 30px 30px; border: none; font-size: 1.2rem; box-shadow: rgb(0 160 175 / 30%) 0px 8px 24px;">Finalizar</button>
-			
+				<div style="text-align:center;">
+					<p hidden id="p_respuestas"><strong><span id="respuestas_correctas"></span> respuestas correctas de 7</strong></p>
+					<br>
+					<p hidden id="p_resultado" style="color:#181818">
+						Su resultado porcentual es del: 
+						<strong><span id="resultado"></span>%</strong>
+					</p>
+				</div>
+				<br>
+				<div class="pc-slideflex2">
+					<button class="btn btn-validar" onclick="validateSelects();"><i class="fas fa-check"></i> Validar</button>
+					<button class="btn btn-reiniciar" onclick="resetSelects();"> <i class="fas fa-sync"></i> Reiniciar</button>
+				</div>
+				<br>
+				<i class="instfinalizar  mb-2">Haz clic en el botón para guardar tu resultado</i>
+			  <button class="btn btn-finalizar" disabled style="color: #fff; background: #009A3D; padding: 10px 30px; border-radius: 30px 0px 30px 30px; border: none; font-size: 1.2rem; box-shadow: rgb(0 160 175 / 30%) 0px 8px 24px;"><i class="fas fa-check-circle"></i>Guardar Resultado</button>
+			</div>
 			</div>
 
+			<!--Modal-->
+			<div class="modal fade" id="surveymd01" tabindex="-1" aria-hidden="true">
+				<div class="modal-dialog modal-dialog-centered modal-lg">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h5 class="modal-title">RESULTADO ACTIVIDAD</h5>
+							<button type="button" class="btn-close" data-bs-dismiss="modal"
+								aria-label="Close"></button>
+						</div>
+						<div class="modal-body">
+							<div style="text-align:center;">
+								<p><b>Tu puntuación en la actividad fue de:</b></p>
+								<p hidden id="p_respuestas_modal" style="color:#181818"><strong><span id="respuestas_correctas_modal"></span> respuesta(s) correctas de 7</strong></p>
+								<br>
+								<p hidden id="p_resultado_modal" style="color:#181818">
+									Su resultado porcentual es del: 
+									<strong><span id="resultado_modal"></span>%</strong>
+								</p>
+								<p class="instfinalizar"><em></em></p>
+								<i class="inst mb-2" style="font-size: 16px!important;"><em>Recuerda que este puntaje se guardará</em></i>
+							</div>
+							<br>
+							<div style="text-align:center;">
+								<p>¿Te gustaría volver a realizar la actividad?</p>
+								<button class="btn btn-reiniciar" onclick="resetSelects();"> <i class="fas fa-sync"></i> Reiniciar</button>
+							</div>
+							<div style="text-align:center;">
+								<br><br>
+								<p >De lo contrario, haz clic en el botón</p>
+								<button class="btn btn-finalizar" disabled style="color: #fff; background: #009A3D; padding: 10px 30px; border-radius: 30px 0px 30px 30px; border: none; font-size: 1.2rem; box-shadow: rgb(0 160 175 / 30%) 0px 8px 24px;">
+									<i class="fas fa-check-circle"></i> Guardar Resultado</button>
+							</div>
+							<br>
+						</div>
+					</div>
+				</div>
 			</div>
-		</div>
+	</div>
 
 
 	<!-- sliderfinal NO REMOVER -->   
@@ -227,7 +309,6 @@
 	<script src="assets/js/sessvars.js"> </script>
 	<script src="assets/js/touch-dnd.js"></script>
 	<script src="assets/js/script.js"></script>
-
 	<script src="assets/js/interactividad.js"></script>
 	
 	<script>
@@ -237,27 +318,29 @@
 		$(".btn-finalizar").on("click", function(){
 			let nombre_capsula = $('#nombre_capsula').val();
 			let cedula = $('#cedula').val();  
-			let numero_preguntas = 4;  
-			let preguntas_correctas = $('#respuestas_correctas').val();  
+			let numero_preguntas = 7;  
+			let preguntas_correctas_2 = $('#respuestas_correctas').text();  
+
 			$.ajax({
 				type: "POST",
-				url: "../../functions_helpers.php?capsula_qr=energia_neumatica&update_capsula=1",
+				url: "../../functions_helpers.php?capsula_qr=energia_termica&update_capsula=1",
 				dataType: "json",
 				data:{
 					nombre_capsula:nombre_capsula,
 					cedula:cedula,
 					numero_preguntas:numero_preguntas,
-					preguntas_correctas:preguntas_correctas,
+					preguntas_correctas:preguntas_correctas_2,
 				},
 				success: function(res){
 					if (res.message == '1') {
 						window.location.href = "fin.php";
 					}else{
 						window.reload();
+
 					}
 				}
 			});    
-		});
+      	});
 
 	</script>
 </body>

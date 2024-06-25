@@ -139,66 +139,76 @@ function pausarMultimedia(){
 
     });
 }
+var contActividad = 0;
+var contActividadCorrectas = 0; 
+/*actividad seleccionar imagenes*/
+function actSelectImg(el, data) {
 
-
-/*actividad de seleccion multiple de audios*/
-const correctAnswers = {
-    audio1: true,
-    audio2: false,
-    audio3: true,
-    audio4: false,
-    audio5: true
-};
-
-const userAnswers = {};
-
-function selectAnswer(audioId, answer) {
-    userAnswers[audioId] = answer;
-    const audioItem = document.getElementById(audioId);
-    const btnSi = audioItem.querySelector('.btn-si');
-    const btnNo = audioItem.querySelector('.btn-no');
-
-    if (answer) {
-        btnSi.classList.add('selected');
-        btnNo.classList.remove('selected');
-    } else {
-        btnNo.classList.add('selected');
-        btnSi.classList.remove('selected');
-    }
-}
-
-function validateAnswers() {
-    let correctCount = 0;
-
-    for (const [audioId, correctAnswer] of Object.entries(correctAnswers)) {
-        const userAnswer = userAnswers[audioId];
-        const audioItem = document.getElementById(audioId);
-        const messageDiv = audioItem.querySelector('.message');
-
-        if (userAnswer === correctAnswer) {
-            audioItem.classList.add('correct');
-            correctCount++;
-            if (userAnswer) {
-                messageDiv.innerText = "¡Correcto! Sí corresponde a un tipo de Energía Peligrosa";
-            } else {
-                messageDiv.innerText = "¡Correcto! No pertenece a un tipo de Energía Peligrosa";
-            }
-        } else {
-            audioItem.classList.add('incorrect');
-            messageDiv.innerText = "¡Piénsalo bien! Tu selección es incorrecta.";
-        }
+    if(contActividad < 3){
+        $(el).addClass(data).find('.resAct').attr('src','assets/img/' + data + '.png');
+        contActividad++;
     }
 
-    const resultDiv = document.getElementById('result');
-    resultDiv.innerText = `Obtuviste ${correctCount} de 5 audios seleccionados correctamente`;
-}
+    if(data=='checkAct'){
+        contActividadCorrectas++;
+        $('#respuestas_correctas').text(contActividadCorrectas);
+        $('#respuestas_correctas_modal').text(contActividadCorrectas);
 
-function pauseOtherAudios(currentAudio) {
-    const audios = document.querySelectorAll('audio');
-    audios.forEach(audio => {
-        if (audio !== currentAudio) {
-            audio.pause();
-            audio.currentTime = 0;
-        }
-    });
+       
+    }
+
+    if (contActividad >= 3) {
+        $('.actSelectImg .itemAct').not('.checkAct, .xmarkAct').addClass('back-gris');
+        $('.btn-finalizar').attr('disabled',false);
+        let resultado= (contActividadCorrectas / 3)*100;
+        $('#p_resultado_modal').attr('hidden', false);
+        $('#p_resultado').attr('hidden', false);
+        $('#resultado_modal').text(Math.round(resultado));
+        $('#resultado').text(Math.round(resultado));
+        $('#surveymd01').modal('show');
+    }
+  } 
+  
+function reiniciarActividad(){ 
+    $('.actSelectImg').empty();
+
+    var newContent = `
+        <div class="grid-container">
+            <div class="itemAct xmark" onclick="actSelectImg(this, 'xmarkAct')"> 
+                <img src="assets/img/slide_1.jpg"> <!--¡PIÉNSALO BIEN! Este no es un ejemplo de energía hidráulica.-->
+                <img class="resAct" src="">
+            </div>
+            <div class="itemAct check" onclick="actSelectImg(this, 'checkAct')"> 
+                <img src="assets/img/slide_2.jpg">  <!--¡ES CORRECTO! Es un ejemplo de energía hidráulica.-->
+                <img class="resAct" src="">
+            </div>
+            <div class="itemAct xmark" onclick="actSelectImg(this, 'xmarkAct')">
+                <img src="assets/img/slide_3.jpg"> <!--¡PIÉNSALO BIEN! Este no es un ejemplo de energía hidráulica.-->
+                <img class="resAct" src="">
+            </div>
+            <div class="itemAct check" onclick="actSelectImg(this, 'checkAct')">
+                <img src="assets/img/slide_4.jpg"> <!--¡ES CORRECTO! Es un ejemplo de energía hidráulica.-->
+                <img class="resAct" src="">
+            </div>
+            <div class="itemAct check" onclick="actSelectImg(this, 'checkAct')">
+                <img src="assets/img/slide_5.jpg"> <!--¡ES CORRECTO! Es un ejemplo de energía hidráulica.-->
+                <img class="resAct" src="">
+            </div>
+            <div class="itemAct xmark" onclick="actSelectImg(this, 'xmarkAct')"> 
+                <img src="assets/img/slide_6.jpg"> <!--¡PIÉNSALO BIEN! Este no es un ejemplo de energía hidráulica.-->
+                <img class="resAct" src="">
+            </div>
+        </div>
+
+        <div style="text-align:center;">
+            <p><strong><span id="respuestas_correctas">0</span> respuestas correctas de 3</strong></p>
+        </div>
+    `;
+
+    $(".actSelectImg").append(newContent);
+    contActividad = 0;
+    contActividadCorrectas = 0; 
+    $('.btn-finalizar').attr('disabled',true);
+    $('#p_resultado').attr('hidden', true);
+    $('#surveymd01').modal('hide');
 }

@@ -310,7 +310,7 @@
 
         $.ajax({
           type: "POST",
-          url: "../../functions_helpers.php?capsula_qr=energia_electrica",
+          url: "../../functions_helpers.php?capsula_qr=energia_mecanica",
           dataType: "json",
           data:{
             nombre:nombre,
@@ -323,7 +323,6 @@
               nombre_capsula: res.nombre_capsula,
               cedula: res.cedula
             }).toString();
-            
               window.location.href = "actividad.php?" + params;
             }else if(res.message == '2'){
               window.location.href = "realizado.php";

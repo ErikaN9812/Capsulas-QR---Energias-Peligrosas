@@ -10,7 +10,7 @@ $(document).ready(function() {
         $(".actVorF .tol").html($(".itemQ").length);
     }, "2000");
 
-  
+    populateSelects();
 });
 
 let corret = 0;
@@ -140,3 +140,105 @@ function pausarMultimedia(){
     });
 }
 
+
+/*Lista despegable*/
+const options = [
+  'charcos',
+  'húmedos',
+  'provisionales',
+  'eléctricos',
+  'protección',
+  'cables',
+  'dañados',
+];
+
+const correctAnswers = {
+  drop1: 'eléctricos',
+  drop2: 'cables',
+  drop3: 'charcos',
+  drop4: 'húmedos',
+  drop5: 'provisionales',
+  drop6: 'dañados',
+  drop7: 'protección'
+};
+
+
+const selects = document.querySelectorAll('.word-select');
+
+function populateSelects() {
+  selects.forEach(select => {
+    options.forEach(option => {
+      const opt = document.createElement('option');
+      opt.value = option;
+      opt.textContent = option;
+      select.appendChild(opt);
+    });
+  });
+}
+
+function updateSelects() {
+  const selectedValues = Array.from(selects).map(select => select.value);
+  selects.forEach(select => {
+    Array.from(select.options).forEach(option => {
+      if (selectedValues.includes(option.value) && option.value !== select.value) {
+        option.style.display = 'none';
+      } else {
+        option.style.display = 'block';
+      }
+    });
+  });
+}
+
+function resetSelects() {
+  selects.forEach(select => {
+    select.value = '';
+    Array.from(select.options).forEach(option => {
+      option.style.display = 'block';
+      select.classList.remove('incorrectAnswer');
+      select.classList.remove('correctAnswer');
+
+    });
+  });
+
+  $('#p_respuestas').attr('hidden', true);
+  $('#p_resultado').attr('hidden', true);
+  $('.btn-finalizar').attr('disabled', true);
+  respuestas_correctas = 0;
+  $('#respuestas_correctas').text(0);
+  $('#surveymd01').modal('hide');
+
+}
+
+selects.forEach(select => {
+  select.addEventListener('change', updateSelects);
+});
+
+
+function validateSelects() {
+  let respuestas_correctas = 0;
+  selects.forEach(select => {
+    const selectId = select.id;
+
+    if (select.value === correctAnswers[selectId]) {
+      select.classList.add('correctAnswer');
+      select.classList.remove('incorrectAnswer');
+      respuestas_correctas++;
+    } else {
+      select.classList.add('incorrectAnswer');
+      select.classList.remove('correctAnswer');
+    }
+  });
+
+  $('#p_respuestas').attr('hidden', false);
+  $('#respuestas_correctas').text(respuestas_correctas);
+  $('#p_respuestas_modal').attr('hidden', false);
+  $('#respuestas_correctas_modal').text(respuestas_correctas);
+  $('.btn-finalizar').attr('disabled', false);
+  let resultado= (respuestas_correctas / 7)*100;
+  $('#p_resultado_modal').attr('hidden', false);
+  $('#p_resultado').attr('hidden', false);
+  $('#resultado_modal').text(Math.round(resultado));
+  $('#resultado').text(Math.round(resultado));
+  respuestas_correctas = 0;
+  $('#surveymd01').modal('show');
+}
