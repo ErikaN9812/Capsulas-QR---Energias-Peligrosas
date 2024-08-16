@@ -268,7 +268,7 @@
 								<br>							
 							</div>	
 							<div style="text-align:center;">
-							<hr style="width: 80%; margin: 2% auto; border: 1px solid #8f8f8f">
+								<hr style="width: 80%; margin: 2% auto; border: 1px solid #8f8f8f">
 								<br>
 								<p >De lo contrario, haz clic en el botón</p>
 								<button class="btn btn-finalizar" disabled style="color: #fff; background: #009A3D; padding: 10px 30px; border-radius: 30px 0px 30px 30px; border: none; font-size: 1.2rem; box-shadow: rgb(0 160 175 / 30%) 0px 8px 24px;">
